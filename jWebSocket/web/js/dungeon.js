@@ -33,7 +33,7 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container)
 	this.tilesTexture.flipY = false;
 	
 	//dungeon's level 0 texture
-	this.levelsTexture[0] = THREE.ImageUtils.loadTexture(texturePath + '/tiles.png');
+	this.levelsTexture[0] = THREE.ImageUtils.loadTexture(texturePath + '/000.png');
 	this.levelsTexture[0].magFilter = THREE.NearestFilter;
 	this.levelsTexture[0].minFilter = THREE.NearestFilter;
 	this.levelsTexture[0].flipY = false;
@@ -59,4 +59,8 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container)
 	this.scene.add(this.dungeonPlane);
 
 	this.scene.add(new THREE.AxisHelper); //TEMP
+};
+
+RUINS.DungeonRenderer.prototype.render = function(clockDelta) {
+	this.renderer.render(this.scene, this.camera);
 };

@@ -72,7 +72,7 @@ RUINS.UTILS.bezierCurve = function(points, image, color) {
 	var xMin=points[0].x;
 	var xMax=points[0].x;
 	
-	for(i=1;i<points.length;i++)
+	for(var i=1;i<points.length;i++)
 	{
 		if(xMin>points[i-1].x)
 		{

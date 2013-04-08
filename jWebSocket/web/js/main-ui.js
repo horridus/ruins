@@ -6,10 +6,16 @@ mainui.initGUI = function() {
 	mainui.createLoginArea();
 };
 
-mainui.animate = function() {
-	requestAnimationFrame(mainui.animate);
+mainui.animateWorld = function() {
+	requestAnimationFrame(mainui.animateWorld);
 	mainui.mapRenderer.update(mainui.clock.getDelta());
 	mainui.mapRenderer.render(mainui.clock.getDelta());
+};
+
+mainui.animateDungeon = function() {
+	requestAnimationFrame(mainui.animateDungeon);
+	//mainui.mapRenderer.update(mainui.clock.getDelta());
+	mainui.dungeonRenderer.render(mainui.clock.getDelta());
 };
 
 mainui.createLoginArea = function() {
@@ -202,7 +208,7 @@ mainui.showWorld = function(id) {
 		main.map = new RUINS.Map(img.width, imgData.data);
 		mainui.mapRenderer = new RUINS.MapRenderer(main.map, $('#column1').width(), $('#column1').height(), '/worlds/' + id, container);
 
-		mainui.animate();
+		mainui.animateWorld();
 
 		mainui.updateDate();
 	});
@@ -212,16 +218,10 @@ mainui.showWorld = function(id) {
 
 mainui.showDungeon = function(dungeonData) {
 	var container = mainui.clearContent();
+	main.dungeon = new RUINS.Dungeon(dungeonData.id, dungeonData.name, dungeonData.size, dungeonData.data);
+	mainui.dungeonRenderer = new RUINS.DungeonRenderer(main.dungeon, $('#column1').width(), $('#column1').height(), '/dungeons/' + dungeonData.id, container);
 	
-	///TEMP////////////////////////////////////////////////////
-	var img = $(new Image());
-	img.load(function() {
-		
-	});
-	
-	img.attr('src', '/dungeons/' + dungeonData.id + '/000.png');
-	container.append(img);
-	///////////////////////////////////////////////////////////
+	mainui.animateDungeon();
 };
 
 mainui.updateDate = function() {
