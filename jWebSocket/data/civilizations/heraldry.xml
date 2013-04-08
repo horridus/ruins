@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<heraldry>
+    <coat>
+        <colors pattern="1" primary="#FFD700" secondary="#228B22"/>
+        <flag src="/flags/ad.png"/>
+    </coat>
+    <coat>
+        <colors pattern="2" primary="#FF0000" secondary="#00FF00"/>
+        <flag src="/flags/ad.png"/>
+    </coat>
+    <coat>
+        <colors pattern="3" primary="#4B0082" secondary="#1E90FF"/>
+        <flag src="/flags/ad.png"/>
+    </coat>
+    <coat>
+        <colors pattern="4" primary="#7FFF00" secondary="#A9A9A9"/>
+        <flag src="/flags/ad.png"/>
+    </coat>
+</heraldry>

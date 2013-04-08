@@ -1,0 +1,123 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background: #222;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 16px;
+    color: #fff;
+}
+
+fieldset {
+	border: 0px;
+}
+
+a img{ border: 0px; }
+
+a { text-decoration: none;}
+
+input {
+    background: #333;
+    font-family: Verdana;
+    font-size: 0.7em;
+    padding: 3px;
+    color: #f4f4f4;
+    border: 2px solid #555;
+}
+
+image, canvas {
+    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+}
+
+.center { margin: 0 auto; text-align: center;}
+
+#header {
+	margin-top: 15px;
+	widht: 100%;
+	height: 50px;
+}
+
+#container {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: -o-box;
+	-o-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+#column0 {
+	width: 180px;
+	padding: 5px;
+	margin-left: 5px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	border: 1px solid #444;
+}
+
+#column1 {
+	width: 750px;
+	height: 750px;
+	padding: 5px;
+	margin-left: 5px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+}
+
+#column2 {
+	width: 180px;
+	padding: 5px;
+	margin-left: 5px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	border: 1px solid #444;
+}
+
+#navlist {
+}
+		
+#navlist li a {
+    display: block;
+    height: 15px;
+    width: 100px; 
+    padding: 5px;
+    margin: 2px;
+    background: inherit;
+    color: #999;
+    text-transform: lowercase;
+    font-size: 0.7em;
+}
+ 
+#navlist li a:hover {
+    color: #f4f4f4;
+    background: #333;
+}
+ 
+#navlist li .active {
+    color: #999;
+    background: #333;
+}
+
+#footer {
+    text-align: center;
+    color: #666;
+    margin-top: 30px;
+    font-size: 0.7em;
+}
+ 
+#footer p { color: #666;}
+#footer a { color: #666;}
+#footer a:hover { color: #f4f4f4;}

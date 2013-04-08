@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<districts>
+<district category="start" id="basicStartingBlock">
+    <oncreation>
+        <effect>
+            var support = settlement.support() + 50;
+            settlement.setSupport(support);
+        </effect>
+    </oncreation>
+    <ondestruction>
+        <effect>
+            var support = settlement.support() - 50;
+            settlement.setSupport(support);
+        </effect>
+    </ondestruction>
+</district>
+<district category="living" id="basicLivingBlock">
+    <oncreation>
+        <effect>
+            var support = settlement.support() + 50;
+            settlement.setSupport(support);
+        </effect>
+    </oncreation>
+    <ondestruction>
+        <effect>
+            var support = settlement.support() - 50;
+            settlement.setSupport(support);
+        </effect>
+    </ondestruction>
+</district>
+</districts>

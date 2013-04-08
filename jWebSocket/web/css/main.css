@@ -1,0 +1,109 @@
+@CHARSET "UTF-8";
+
+.rounded {
+	border: 1px solid #ccc;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.rightLabel {
+	margin-left: 5px;
+}
+
+.icon {
+	vertical-align: middle;
+	display: inline !important;
+}
+
+#loginContainer {
+}
+
+#loginContainer input
+{
+    padding: 5px 5px 5px 5px;
+    margin: 0 0 5px 0;
+    width: 150px;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    font-size: xx-small;
+}
+
+#loggedContainer label
+{
+    padding: 5px 5px 5px 5px;
+    margin: 0 0 10px 0;
+    width: 150px;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    font-size: xx-small;
+}
+
+#loginButtons input
+{
+	padding: 5px 5px 5px 5px;
+    margin: 0 0 10px 0;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    font-size: xx-small;
+}
+
+#content label
+{
+	font-size: 0.7em;
+	margin-right: 4px;
+}
+
+#content input[type=text]
+{
+    padding: 5px 5px 5px 5px;
+    margin: 0 0 0px 0;
+    width: 150px;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    font-size: xx-small;
+    vertical-align: middle;
+    text-align:right; 
+}
+
+#content input[type=radio]]
+{
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+#content select
+{
+    padding: 5px 5px 5px 5px;
+    margin: 0 0 0px 0;
+    width: 150px;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    font-size: xx-small;
+    vertical-align: middle;
+}

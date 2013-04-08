@@ -1,0 +1,44 @@
+I ::= haiku;
+
+S ::=    -- #random(1, 29) di Mese #random(1500, 1800) - #grammar(comunilombardi) -- \n
+   		^@(
+        (Poesia3 \n ^(Poesia1 | Poesia2))
+        
+        
+        
+        |(Poesia3 \n  ^ACTION \n  ^(Poesia1 | Poesia2))
+        ) \n
+        //^#name("goblin", 2) (#name("roman", 3) | #name("elven", 3) | #name("goblin", 3))
+        ^#name((goblin|nomiemiliani), (2|3)) (#name((roman|elven|goblin), 3)|#name(cognomiemiliani, 2))
+;
+
+Mese ::= (Amejun|Tasuma|Ciguea|Maenil|Selianne|Valiania|Mezian|Atamille|Badramin|Vagdarin|Elamaes|Dabnarder|Opriagan-nas);
+
+Poesia1 ::= Object di Obj12 \n ^Verb d'^Obj11;
+Poesia2 ::= (Verb d'^Obj11 \n ^(Object di Obj12 | _));
+Poesia3 ::= APlace AObject AVERB;
+
+Object ::= ((bosco | fiume | regno | confine | dolore | o spazio | custode geloso) | ((alba | aurora | alcova) | la (catacomba | rovina | tomba | marea )));
+
+Obj11 ::= (autunno | inverno | estate);
+Obj12 ::= (luce | fuoco | primavera | neve | ghiaccio | metallo);
+
+Verb ::= (((osservar | veder | contemplar | ammirar | ancora amar | venerar | trafigger | posseder | raccontar) (e | ti))
+         | concepire | ancora morire | carpire | ricordare  | conservare
+         | soffrire | credere | nascere | fremere | tremare
+         | memore | vittima | incubo | seguace | segreto | dubbio | mancanza | assenza | solitudine
+         | frenesia | brivido | fremente);
+
+ACTION ::= (((uccider|affogar|(ri|s)^cordar|dimenticar|fuggir|narrar|attender|aspettar|immaginar|creder|sgozzar|soffocar)^(e|ti))
+			|vivere|sognar^(e|ti)|raccontare)  ((forse|ancora ((una volta | e ancora) | _)) | _);
+APlace ::= (quando | (la'|_) dove);
+
+
+AObject ::= ((un | il) AMObj | (un | l)  ^AFObj);
+AMObj ::= (cuore | sospiro ((di|nel) vento | _) | sogno | vento | vuoto | crepuscolo);
+AFObj ::= (
+            "'" ^(anima | ombra | onda | alternativa | assenza | oscura (madre|sorella|signora))
+          | a ((goccia di rugiada) | lacrima | marea | foglia | memoria | tenebra | notte | sera | tomba)
+          );
+
+AVERB ::= (brucia|arde|(s|ri|_)^compare|nasce|svanisce|(si|_) nasconde|(s|ri|_)^vela|attende|aspetta|sogna);

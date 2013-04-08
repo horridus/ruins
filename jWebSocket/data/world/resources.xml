@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+<resourcedescriptors>
+    <resource id="WOOD">
+        <name>timber</name>
+        <effects>
+        	<effect type="growth" percentage="5"/>
+        </effects>
+    </resource>
+    <resource id="GEMS">
+        <name>gems</name>
+    </resource>
+    <resource id="GOLD">
+        <name>gold</name>
+    </resource>
+    <resource id="IRON">
+        <name>iron</name>
+    </resource>
+    <resource id="SLVR">
+        <name>silver</name>
+    </resource>
+    <resource id="CPPR">
+        <name>copper</name>
+    </resource>
+    <resource id="COAL">
+        <name>coal</name>
+    </resource>
+    <resource id="CTTN">
+        <name>cotton</name>
+    </resource>
+    <resource id="FRUI">
+        <name>fruit</name>
+    </resource>
+    <resource id="CORN">
+        <name>corn</name>
+        <effects>
+            <effect type="growth" percentage="10"/>
+        </effects>
+    </resource>
+    <resource id="COWS">
+        <name>cows</name>
+        <effects>
+        	<effect type="growth" percentage="10"/>
+        </effects>
+    </resource>
+</resourcedescriptors>
+
+<biomesdescriptors>
+	<ice></ice>
+	<ocean></ocean>
+	<lake></lake>
+	
+	<coast>
+	   <resource id="CORN" presence="10"/>
+	</coast>
+	
+	<grassland>
+	   <resource id="CORN" presence="20"/>
+	   <resource id="COWS" presence="10"/>
+	</grassland>
+	
+	<mountains>
+	   <resource id="COWS" presence="5"/>
+	   <resource id="WOOD" presence="5"/>
+       <resource id="GOLD" presence="5"/>
+       <resource id="IRON" presence="15"/>
+       <resource id="SLVR" presence="5"/>
+       <resource id="CPPR" presence="15"/>
+       <resource id="COAL" presence="15"/>
+	</mountains>
+	
+	<high_mountains>
+	   <resource id="GEMS" presence="5"/>
+	   <resource id="GOLD" presence="5"/>
+	   <resource id="IRON" presence="15"/>
+	   <resource id="SLVR" presence="5"/>
+	   <resource id="CPPR" presence="15"/>
+	   <resource id="COAL" presence="15"/>
+	</high_mountains>
+	
+	<volcanos></volcanos>
+	
+	<sand_desert></sand_desert>
+	
+	<rock_desert>
+	   <resource id="GOLD" presence="5"/>
+       <resource id="IRON" presence="15"/>
+       <resource id="SLVR" presence="5"/>
+       <resource id="CPPR" presence="15"/>
+       <resource id="COAL" presence="15"/>
+	</rock_desert>
+	
+	<badlands>
+	   <resource id="GOLD" presence="5"/>
+       <resource id="IRON" presence="15"/>
+       <resource id="SLVR" presence="5"/>
+       <resource id="CPPR" presence="15"/>
+       <resource id="COAL" presence="15"/>
+	</badlands>
+	
+	<savanna>
+	   <resource id="FRUI" presence="10"/>
+	</savanna>
+	
+	<shrubland>
+	   <resource id="CTTN" presence="10"/>
+	   <resource id="FRUI" presence="5"/>
+	</shrubland>
+	
+	<tundra></tundra>
+	
+	<taiga>
+	   <resource id="WOOD" presence="75"/>
+	</taiga>
+	
+	<marsh>
+	   <resource id="COAL" presence="15"/>
+	</marsh>
+	
+	<swamp></swamp>
+	<glacier></glacier>
+	
+	<rain_forest>
+	   <resource id="WOOD"/>
+	   <resource id="FRUI" presence="15"/>
+	</rain_forest>
+	
+	<deciduous_forest>
+	   <resource id="WOOD"/>
+	   <resource id="FRUI" presence="10"/>
+	</deciduous_forest>
+    
+    <coniferous_forest>
+       <resource id="WOOD"/>
+       <resource id="FRUI" presence="10"/>
+    </coniferous_forest>
+    
+</biomesdescriptors>
+</resources>

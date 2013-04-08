@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<biomes>
+    <biome name="ice"               envresistance="-40" migrationfail="80" />
+    <biome name="ocean"             envresistance="-50" migrationfail="100" />
+    <biome name="lake"              envresistance="-50" migrationfail="100" />
+    <biome name="coast"             envresistance="50"  migrationfail="10" />
+    <biome name="grassland"         envresistance="50"  migrationfail="10" />
+    <biome name="mountains"         envresistance="-10" migrationfail="30" />
+    <biome name="high_mountains"    envresistance="-35" migrationfail="60" />
+    <biome name="volcanos"          envresistance="-45" migrationfail="60" />
+    <biome name="sand_desert"       envresistance="-30" migrationfail="50" />
+    <biome name="rock_desert"       envresistance="-30" migrationfail="50" />
+    <biome name="badlands"          envresistance="-15" migrationfail="40" />
+    <biome name="savanna"           envresistance="25"  migrationfail="25" />
+    <biome name="shrubland"         envresistance="30"  migrationfail="20" />
+    <biome name="tundra"            envresistance="-15" migrationfail="50" />
+    <biome name="taiga"             envresistance="-10" migrationfail="50" />
+    <biome name="marsh"             envresistance="-5"  migrationfail="30" />
+    <biome name="swamp"             envresistance="-15" migrationfail="40" />
+    <biome name="glacier"           envresistance="-45" migrationfail="60" />
+    <biome name="rain_forest"       envresistance="15"  migrationfail="30" />
+    <biome name="deciduous_forest," envresistance="25"  migrationfail="20" />
+    <biome name="coniferous_forest" envresistance="25"  migrationfail="20" />
+</biomes>

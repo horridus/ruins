@@ -1,0 +1,9 @@
+I ::= settlement;
+
+S ::= (RuleA);
+
+RuleA ::= @CompositeName;
+
+CompositeName ::= (deep|high|safe|black)^(water|tower|roof|haven|rock);
+Adj ::= (beauty|fat|dark|red);
+

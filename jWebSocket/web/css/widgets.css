@@ -1,0 +1,36 @@
+.button {
+	padding: 5px 5px 5px 5px;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    font-size: xx-small;
+    text-align: center;
+}
+
+.date {
+	vertical-align: middle;
+}
+
+.dateIcon {
+	width: 16px;
+	height: 16px;
+	margin-left: 4px;
+	vertical-align: middle;
+}
+
+.dateBox {
+	display: block;
+	padding: 2px 2px 2px 2px;
+	margin-bottom: 2px;
+	border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-size: x-small;
+    text-align: center;
+	width: 90px;
+}

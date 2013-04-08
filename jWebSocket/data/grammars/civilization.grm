@@ -1,0 +1,11 @@
+I ::= civilization;
+
+S ::= @(TribeRule | DwellersRule | PeoplesRule );
+
+TribeRule ::= (tribe of the (@Adj | _) @Noun | Adj^Noun tribe) ;
+DwellersRule ::= (dwellers of the (@Adj | _) @Noun | Adj^Noun^"'s" dwellers);
+PeoplesRule ::= (peoples of the (@Adj | _) @Noun | Adj^Noun^"'s" peoples);
+//RaceRule ::= ?($(race) == goblin):( #name(goblin, 3) ):( #name(roman, 3) )^"'s" tribe;
+
+Adj ::= (gnarled | curved | red | old | new | deep | steel | stone | rusty | long | grim | ancient | great);
+Noun ::= (stick | moon | forest | plain | arrow | sword | spear | sea | land | rock | cave | dark | dragon | god | temple)^(s|_);

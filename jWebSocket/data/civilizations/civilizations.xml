@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<civilizations>
+	<civilization>
+		<species>human</species>
+		<growthRate>5</growthRate>
+		<preferredBiomes>
+		  <biome name="grassland"/>
+		  <biome name="coast"/>
+		</preferredBiomes>
+		
+		<iconsFolder>/icons/human</iconsFolder>
+	</civilization>
+	
+	<civilization>
+		<species>gnoll</species>
+		<growthRate>10</growthRate>
+		<preferredBiomes>
+          <biome name="grassland"/>
+          <biome name="savanna"/>
+          <biome name="shrubland"/>
+        </preferredBiomes>
+        
+		<iconsFolder>/icons/gnoll</iconsFolder>
+	</civilization>	
+</civilizations>
