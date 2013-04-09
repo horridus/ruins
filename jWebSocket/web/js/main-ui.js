@@ -13,7 +13,7 @@ mainui.animateWorld = function() {
 };
 
 mainui.animateDungeon = function() {
-	requestAnimationFrame(mainui.animateDungeon);
+	//requestAnimationFrame(mainui.animateDungeon);
 	//mainui.mapRenderer.update(mainui.clock.getDelta());
 	mainui.dungeonRenderer.render(mainui.clock.getDelta());
 };
@@ -219,7 +219,7 @@ mainui.showWorld = function(id) {
 mainui.showDungeon = function(dungeonData) {
 	var container = mainui.clearContent();
 	main.dungeon = new RUINS.Dungeon(dungeonData.id, dungeonData.name, dungeonData.size, dungeonData.data);
-	mainui.dungeonRenderer = new RUINS.DungeonRenderer(main.dungeon, $('#column1').width(), $('#column1').height(), '/dungeons/' + dungeonData.id, container);
+	mainui.dungeonRenderer = new RUINS.DungeonRenderer(main.dungeon, $('#column1').width(), $('#column1').height(), '/dungeons/' + dungeonData.id, container, 32);
 	
 	mainui.animateDungeon();
 };

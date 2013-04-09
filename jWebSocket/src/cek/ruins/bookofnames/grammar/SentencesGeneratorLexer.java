@@ -1,4 +1,4 @@
-// $ANTLR 3.4 /home/cek/workspace/jWebSocket/SentencesGenerator.g 2013-04-08 22:29:58
+// $ANTLR 3.4 /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g 2013-04-09 11:01:56
 
   package cek.ruins.bookofnames.grammar;
 
@@ -47,15 +47,15 @@ public class SentencesGeneratorLexer extends Lexer {
     public SentencesGeneratorLexer(CharStream input, RecognizerSharedState state) {
         super(input,state);
     }
-    public String getGrammarFileName() { return "/home/cek/workspace/jWebSocket/SentencesGenerator.g"; }
+    public String getGrammarFileName() { return "/home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g"; }
 
     // $ANTLR start "ASSIGNMENT"
     public final void mASSIGNMENT() throws RecognitionException {
         try {
             int _type = ASSIGNMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:11:12: ( '::=' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:11:14: '::='
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:11:12: ( '::=' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:11:14: '::='
             {
             match("::="); 
 
@@ -77,8 +77,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = SELECTION_SEPARATOR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:12:21: ( '|' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:12:23: '|'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:12:21: ( '|' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:12:23: '|'
             {
             match('|'); 
 
@@ -98,8 +98,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:13:7: ( '$(' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:13:9: '$('
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:13:7: ( '$(' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:13:9: '$('
             {
             match("$("); 
 
@@ -121,8 +121,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:14:7: ( '(' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:14:9: '('
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:14:7: ( '(' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:14:9: '('
             {
             match('('); 
 
@@ -142,8 +142,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:15:7: ( ')' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:15:9: ')'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:15:7: ( ')' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:15:9: ')'
             {
             match(')'); 
 
@@ -163,8 +163,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:16:7: ( ',' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:16:9: ','
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:16:7: ( ',' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:16:9: ','
             {
             match(','); 
 
@@ -184,8 +184,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:17:7: ( ':' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:17:9: ':'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:17:7: ( ':' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:17:9: ':'
             {
             match(':'); 
 
@@ -205,8 +205,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:18:7: ( ';' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:18:9: ';'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:18:7: ( ';' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:18:9: ';'
             {
             match(';'); 
 
@@ -226,8 +226,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:19:7: ( '==' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:19:9: '=='
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:19:7: ( '==' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:19:9: '=='
             {
             match("=="); 
 
@@ -249,8 +249,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:20:7: ( '?(' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:20:9: '?('
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:20:7: ( '?(' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:20:9: '?('
             {
             match("?("); 
 
@@ -272,8 +272,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:21:7: ( 'I' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:21:9: 'I'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:21:7: ( 'I' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:21:9: 'I'
             {
             match('I'); 
 
@@ -293,8 +293,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:22:7: ( 'S' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:22:9: 'S'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:22:7: ( 'S' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:22:9: 'S'
             {
             match('S'); 
 
@@ -314,8 +314,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = PREMODIFIER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:28:13: ( '^' | '@' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:28:13: ( '^' | '@' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:
             {
             if ( input.LA(1)=='@'||input.LA(1)=='^' ) {
                 input.consume();
@@ -343,8 +343,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = POSTMODIFIER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:32:14: ( '§' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:33:11: '§'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:32:14: ( '§' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:33:11: '§'
             {
             match('\u00A7'); 
 
@@ -364,12 +364,12 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = COMMANDS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:36:10: ( '#' ( 'name' | 'grammar' | 'random' | 'todo' ) )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:37:7: '#' ( 'name' | 'grammar' | 'random' | 'todo' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:36:10: ( '#' ( 'name' | 'grammar' | 'random' | 'todo' ) )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:37:7: '#' ( 'name' | 'grammar' | 'random' | 'todo' )
             {
             match('#'); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:37:11: ( 'name' | 'grammar' | 'random' | 'todo' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:37:11: ( 'name' | 'grammar' | 'random' | 'todo' )
             int alt1=4;
             switch ( input.LA(1) ) {
             case 'n':
@@ -402,7 +402,7 @@ public class SentencesGeneratorLexer extends Lexer {
 
             switch (alt1) {
                 case 1 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:37:12: 'name'
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:37:12: 'name'
                     {
                     match("name"); 
 
@@ -411,7 +411,7 @@ public class SentencesGeneratorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:37:21: 'grammar'
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:37:21: 'grammar'
                     {
                     match("grammar"); 
 
@@ -420,7 +420,7 @@ public class SentencesGeneratorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:37:33: 'random'
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:37:33: 'random'
                     {
                     match("random"); 
 
@@ -429,7 +429,7 @@ public class SentencesGeneratorLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:37:44: 'todo'
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:37:44: 'todo'
                     {
                     match("todo"); 
 
@@ -457,8 +457,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = LINEFEED;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:40:10: ( '\\\\n' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:40:12: '\\\\n'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:40:10: ( '\\\\n' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:40:12: '\\\\n'
             {
             match("\\n"); 
 
@@ -480,8 +480,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = EMPTY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:42:7: ( '_' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:42:9: '_'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:42:7: ( '_' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:42:9: '_'
             {
             match('_'); 
 
@@ -501,8 +501,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = WORD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:44:6: ( ( ( 'a' .. 'z' | '0' .. '9' | '-' ) | ( '\\u0080' .. '\\ufffe' ) ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' | '\\'' | '-' )* )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:45:7: ( ( 'a' .. 'z' | '0' .. '9' | '-' ) | ( '\\u0080' .. '\\ufffe' ) ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' | '\\'' | '-' )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:44:6: ( ( ( 'a' .. 'z' | '0' .. '9' | '-' ) | ( '\\u0080' .. '\\ufffe' ) ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' | '\\'' | '-' )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:45:7: ( ( 'a' .. 'z' | '0' .. '9' | '-' ) | ( '\\u0080' .. '\\ufffe' ) ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' | '\\'' | '-' )*
             {
             if ( input.LA(1)=='-'||(input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'a' && input.LA(1) <= 'z')||(input.LA(1) >= '\u0080' && input.LA(1) <= '\uFFFE') ) {
                 input.consume();
@@ -514,7 +514,7 @@ public class SentencesGeneratorLexer extends Lexer {
             }
 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:45:53: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' | '\\'' | '-' )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:45:53: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' | '\\'' | '-' )*
             loop2:
             do {
                 int alt2=2;
@@ -527,7 +527,7 @@ public class SentencesGeneratorLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:
             	    {
             	    if ( input.LA(1)=='\''||input.LA(1)=='-'||(input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z')||(input.LA(1) >= '\u0080' && input.LA(1) <= '\uFFFE') ) {
             	        input.consume();
@@ -564,8 +564,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:47:4: ( ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) ) )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:48:7: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:47:4: ( ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) ) )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:48:7: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
             {
             if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||(input.LA(1) >= '\f' && input.LA(1) <= '\r')||input.LA(1)==' ' ) {
                 input.consume();
@@ -595,8 +595,8 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = RULEID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:50:8: ( ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' )* )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:51:7: ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:50:8: ( ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:51:7: ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' )*
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z') ) {
                 input.consume();
@@ -608,7 +608,7 @@ public class SentencesGeneratorLexer extends Lexer {
             }
 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:51:17: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:51:17: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '\\u0080' .. '\\ufffe' )*
             loop3:
             do {
                 int alt3=2;
@@ -621,7 +621,7 @@ public class SentencesGeneratorLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:
             	    {
             	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z')||(input.LA(1) >= '\u0080' && input.LA(1) <= '\uFFFE') ) {
             	        input.consume();
@@ -658,10 +658,10 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:54:9: ( ( '//' (~ ( '\\r' | '\\n' ) )* | '/*' ( . )* '*/' ) )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:55:7: ( '//' (~ ( '\\r' | '\\n' ) )* | '/*' ( . )* '*/' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:54:9: ( ( '//' (~ ( '\\r' | '\\n' ) )* | '/*' ( . )* '*/' ) )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:55:7: ( '//' (~ ( '\\r' | '\\n' ) )* | '/*' ( . )* '*/' )
             {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:55:7: ( '//' (~ ( '\\r' | '\\n' ) )* | '/*' ( . )* '*/' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:55:7: ( '//' (~ ( '\\r' | '\\n' ) )* | '/*' ( . )* '*/' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -691,13 +691,13 @@ public class SentencesGeneratorLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:55:8: '//' (~ ( '\\r' | '\\n' ) )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:55:8: '//' (~ ( '\\r' | '\\n' ) )*
                     {
                     match("//"); 
 
 
 
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:55:13: (~ ( '\\r' | '\\n' ) )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:55:13: (~ ( '\\r' | '\\n' ) )*
                     loop4:
                     do {
                         int alt4=2;
@@ -710,7 +710,7 @@ public class SentencesGeneratorLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:
+                    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:
                     	    {
                     	    if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t')||(input.LA(1) >= '\u000B' && input.LA(1) <= '\f')||(input.LA(1) >= '\u000E' && input.LA(1) <= '\uFFFF') ) {
                     	        input.consume();
@@ -734,13 +734,13 @@ public class SentencesGeneratorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:56:9: '/*' ( . )* '*/'
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:56:9: '/*' ( . )* '*/'
                     {
                     match("/*"); 
 
 
 
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:56:14: ( . )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:56:14: ( . )*
                     loop5:
                     do {
                         int alt5=2;
@@ -765,7 +765,7 @@ public class SentencesGeneratorLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:56:14: .
+                    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:56:14: .
                     	    {
                     	    matchAny(); 
 
@@ -806,10 +806,10 @@ public class SentencesGeneratorLexer extends Lexer {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:60:8: ( ( '\"' ( . )* '\"' )+ )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:61:7: ( '\"' ( . )* '\"' )+
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:60:8: ( ( '\"' ( . )* '\"' )+ )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:61:7: ( '\"' ( . )* '\"' )+
             {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:61:7: ( '\"' ( . )* '\"' )+
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:61:7: ( '\"' ( . )* '\"' )+
             int cnt8=0;
             loop8:
             do {
@@ -823,11 +823,11 @@ public class SentencesGeneratorLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:61:8: '\"' ( . )* '\"'
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:61:8: '\"' ( . )* '\"'
             	    {
             	    match('\"'); 
 
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:61:12: ( . )*
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:61:12: ( . )*
             	    loop7:
             	    do {
             	        int alt7=2;
@@ -843,7 +843,7 @@ public class SentencesGeneratorLexer extends Lexer {
 
             	        switch (alt7) {
             	    	case 1 :
-            	    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:61:12: .
+            	    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:61:12: .
             	    	    {
             	    	    matchAny(); 
 
@@ -883,7 +883,7 @@ public class SentencesGeneratorLexer extends Lexer {
     // $ANTLR end "STRING"
 
     public void mTokens() throws RecognitionException {
-        // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:8: ( ASSIGNMENT | SELECTION_SEPARATOR | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | PREMODIFIER | POSTMODIFIER | COMMANDS | LINEFEED | EMPTY | WORD | WS | RULEID | COMMENT | STRING )
+        // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:8: ( ASSIGNMENT | SELECTION_SEPARATOR | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | PREMODIFIER | POSTMODIFIER | COMMANDS | LINEFEED | EMPTY | WORD | WS | RULEID | COMMENT | STRING )
         int alt9=22;
         int LA9_0 = input.LA(1);
 
@@ -987,7 +987,7 @@ public class SentencesGeneratorLexer extends Lexer {
         }
         switch (alt9) {
             case 1 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:10: ASSIGNMENT
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:10: ASSIGNMENT
                 {
                 mASSIGNMENT(); 
 
@@ -995,7 +995,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 2 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:21: SELECTION_SEPARATOR
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:21: SELECTION_SEPARATOR
                 {
                 mSELECTION_SEPARATOR(); 
 
@@ -1003,7 +1003,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 3 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:41: T__16
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:41: T__16
                 {
                 mT__16(); 
 
@@ -1011,7 +1011,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 4 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:47: T__17
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:47: T__17
                 {
                 mT__17(); 
 
@@ -1019,7 +1019,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 5 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:53: T__18
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:53: T__18
                 {
                 mT__18(); 
 
@@ -1027,7 +1027,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 6 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:59: T__19
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:59: T__19
                 {
                 mT__19(); 
 
@@ -1035,7 +1035,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 7 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:65: T__20
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:65: T__20
                 {
                 mT__20(); 
 
@@ -1043,7 +1043,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 8 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:71: T__21
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:71: T__21
                 {
                 mT__21(); 
 
@@ -1051,7 +1051,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 9 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:77: T__22
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:77: T__22
                 {
                 mT__22(); 
 
@@ -1059,7 +1059,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 10 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:83: T__23
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:83: T__23
                 {
                 mT__23(); 
 
@@ -1067,7 +1067,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 11 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:89: T__24
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:89: T__24
                 {
                 mT__24(); 
 
@@ -1075,7 +1075,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 12 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:95: T__25
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:95: T__25
                 {
                 mT__25(); 
 
@@ -1083,7 +1083,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 13 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:101: PREMODIFIER
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:101: PREMODIFIER
                 {
                 mPREMODIFIER(); 
 
@@ -1091,7 +1091,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 14 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:113: POSTMODIFIER
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:113: POSTMODIFIER
                 {
                 mPOSTMODIFIER(); 
 
@@ -1099,7 +1099,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 15 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:126: COMMANDS
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:126: COMMANDS
                 {
                 mCOMMANDS(); 
 
@@ -1107,7 +1107,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 16 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:135: LINEFEED
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:135: LINEFEED
                 {
                 mLINEFEED(); 
 
@@ -1115,7 +1115,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 17 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:144: EMPTY
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:144: EMPTY
                 {
                 mEMPTY(); 
 
@@ -1123,7 +1123,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 18 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:150: WORD
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:150: WORD
                 {
                 mWORD(); 
 
@@ -1131,7 +1131,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 19 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:155: WS
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:155: WS
                 {
                 mWS(); 
 
@@ -1139,7 +1139,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 20 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:158: RULEID
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:158: RULEID
                 {
                 mRULEID(); 
 
@@ -1147,7 +1147,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 21 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:165: COMMENT
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:165: COMMENT
                 {
                 mCOMMENT(); 
 
@@ -1155,7 +1155,7 @@ public class SentencesGeneratorLexer extends Lexer {
                 }
                 break;
             case 22 :
-                // /home/cek/workspace/jWebSocket/SentencesGenerator.g:1:173: STRING
+                // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:1:173: STRING
                 {
                 mSTRING(); 
 

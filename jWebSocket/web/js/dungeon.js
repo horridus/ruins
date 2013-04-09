@@ -5,10 +5,11 @@ RUINS.Dungeon = function(id, name, size, data) {
 };
 
 /*---------------------------------------------*/
-RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container) {
+RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container, tileSize) {
 	this.dungeon = dungeon;
 	this.width = width;
 	this.height = height;
+	this.tileSize = tileSize;
 
 	this.levelsTexture = [];
 
@@ -43,14 +44,24 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container)
     	uniforms: {
     		tilesTexture: { type: 't', value: this.tilesTexture },
     		levelTexture: { type: 't', value: this.levelsTexture[0] },
+    		viewOffset: { type: 'v2', value: new THREE.Vector2( 0, 0 ) },
+    		viewportSize: { type: 'v2', value: new THREE.Vector2( this.width, this.height ) },
+    		TileSize: { type: 'f', value: this.tileSize },
+    		inverseTileSize: { type: 'f', value: 1/this.tileSize },
+    		inverseTilesTextureSize: {type: 'v2', value: new THREE.Vector2(this.tilesTexture.image.width, this.tilesTexture.image.height) },
+    		inverseDungeonTextureSize: {type: 'v2', value: new THREE.Vector2(this.levelsTexture[0].image.width, this.levelsTexture[0].image.height) },
     	},
     	vertexShader: RUINS.SHADERS['dungeon'].vertexShader,
     	fragmentShader: RUINS.SHADERS['dungeon'].fragmentShader,
+    	wireframe: false,
     	side: THREE.BackSide,
     });
 	
+	this.mapBaseMaterial = new THREE.MeshBasicMaterial({ map: this.levelsTexture[0], wireframe: true, side: THREE.BackSide});
+	
 	//create dungeon geometry
-	this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.dungeon.size, this.dungeon.size, this.dungeon.size/100, this.dungeon.size/100), this.dungeonMaterial);
+	//this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.dungeon.size * this.tileSize, this.dungeon.size * this.tileSize, this.dungeon.size/this.tileSize, this.dungeon.size/this.tileSize), this.dungeonMaterial);
+	this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.dungeon.size, this.dungeon.size, this.dungeon.size/32, this.dungeon.size/32), this.dungeonMaterial); //TODO set correct plane division
 	this.dungeonPlane.position.x = this.dungeon.size/2;
 	this.dungeonPlane.position.y = this.dungeon.size/2;
 	//this.mapPlane.position.z = 0.2;

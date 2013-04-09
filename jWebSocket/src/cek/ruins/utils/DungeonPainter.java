@@ -24,16 +24,19 @@ public class DungeonPainter {
 				Tiles tile = level.get(x).get(y).material();
 				switch (tile) {
 				case NONE:
+					/*
 					if (x%16 == 0 || y%16 == 0) //TEMP draw cells borders
 						image.setRGB(x, y, Color.darkGray.getRGB());
 					else
 						image.setRGB(x, y, Color.black.getRGB());
+					*/
+					image.setRGB(x, y, new Color(255, 255, 0, 255).getRGB());
 					break;
 				case DOLOMITE_FLOOR:
-					image.setRGB(x, y, Color.green.getRGB());
+					image.setRGB(x, y, new Color(1, 0, 0, 255).getRGB());
 					break;
 				case DOLOMITE:
-					image.setRGB(x, y, Color.red.getRGB());
+					image.setRGB(x, y, new Color(0, 0, 0, 255).getRGB());
 					break;
 				default:
 					break;

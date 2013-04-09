@@ -1,4 +1,4 @@
-// $ANTLR 3.4 /home/cek/workspace/jWebSocket/SentencesGenerator.g 2013-04-08 22:29:57
+// $ANTLR 3.4 /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g 2013-04-09 11:01:55
 
   package cek.ruins.bookofnames.grammar;
 
@@ -58,7 +58,7 @@ public class SentencesGeneratorParser extends Parser {
     }
 
     public String[] getTokenNames() { return SentencesGeneratorParser.tokenNames; }
-    public String getGrammarFileName() { return "/home/cek/workspace/jWebSocket/SentencesGenerator.g"; }
+    public String getGrammarFileName() { return "/home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g"; }
 
 
 
@@ -66,7 +66,7 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "atom"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:64:1: atom[Grammar grammar] returns [Evaluator atom] : ( EMPTY | LINEFEED | (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )* ) ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:64:1: atom[Grammar grammar] returns [Evaluator atom] : ( EMPTY | LINEFEED | (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )* ) ;
     public final Evaluator atom(Grammar grammar) throws RecognitionException {
         Evaluator atom = null;
 
@@ -78,17 +78,17 @@ public class SentencesGeneratorParser extends Parser {
         Token STRING3=null;
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:64:48: ( ( EMPTY | LINEFEED | (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )* ) )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:65:7: ( EMPTY | LINEFEED | (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:64:48: ( ( EMPTY | LINEFEED | (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )* ) )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:65:7: ( EMPTY | LINEFEED | (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )* )
             {
              List<String> preModifiers = new LinkedList<String>(); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:66:7: ( EMPTY | LINEFEED | (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:66:7: ( EMPTY | LINEFEED | (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )* | (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )* )
             int alt7=5;
             alt7 = dfa7.predict(input);
             switch (alt7) {
                 case 1 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:67:9: EMPTY
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:67:9: EMPTY
                     {
                     match(input,EMPTY,FOLLOW_EMPTY_in_atom428); 
 
@@ -97,7 +97,7 @@ public class SentencesGeneratorParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:69:9: LINEFEED
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:69:9: LINEFEED
                     {
                     match(input,LINEFEED,FOLLOW_LINEFEED_in_atom448); 
 
@@ -106,9 +106,9 @@ public class SentencesGeneratorParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:71:9: (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:71:9: (mod= PREMODIFIER )* WORD (pmod= POSTMODIFIER )*
                     {
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:71:9: (mod= PREMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:71:9: (mod= PREMODIFIER )*
                     loop1:
                     do {
                         int alt1=2;
@@ -121,7 +121,7 @@ public class SentencesGeneratorParser extends Parser {
 
                         switch (alt1) {
                     	case 1 :
-                    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:71:10: mod= PREMODIFIER
+                    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:71:10: mod= PREMODIFIER
                     	    {
                     	    mod=(Token)match(input,PREMODIFIER,FOLLOW_PREMODIFIER_in_atom471); 
 
@@ -140,7 +140,7 @@ public class SentencesGeneratorParser extends Parser {
 
                      atom = new WordAtom(WORD1.getText()); atom.setPreModifiers(preModifiers); 
 
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:73:9: (pmod= POSTMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:73:9: (pmod= POSTMODIFIER )*
                     loop2:
                     do {
                         int alt2=2;
@@ -153,7 +153,7 @@ public class SentencesGeneratorParser extends Parser {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:73:10: pmod= POSTMODIFIER
+                    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:73:10: pmod= POSTMODIFIER
                     	    {
                     	    pmod=(Token)match(input,POSTMODIFIER,FOLLOW_POSTMODIFIER_in_atom500); 
 
@@ -171,9 +171,9 @@ public class SentencesGeneratorParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:76:9: (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:76:9: (mod= PREMODIFIER )* RULEID (pmod= POSTMODIFIER )*
                     {
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:76:9: (mod= PREMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:76:9: (mod= PREMODIFIER )*
                     loop3:
                     do {
                         int alt3=2;
@@ -186,7 +186,7 @@ public class SentencesGeneratorParser extends Parser {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:76:10: mod= PREMODIFIER
+                    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:76:10: mod= PREMODIFIER
                     	    {
                     	    mod=(Token)match(input,PREMODIFIER,FOLLOW_PREMODIFIER_in_atom526); 
 
@@ -205,7 +205,7 @@ public class SentencesGeneratorParser extends Parser {
 
                      atom = new RuleIdAtom(grammar, RULEID2.getText()); atom.setPreModifiers(preModifiers); 
 
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:78:9: (pmod= POSTMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:78:9: (pmod= POSTMODIFIER )*
                     loop4:
                     do {
                         int alt4=2;
@@ -218,7 +218,7 @@ public class SentencesGeneratorParser extends Parser {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:78:10: pmod= POSTMODIFIER
+                    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:78:10: pmod= POSTMODIFIER
                     	    {
                     	    pmod=(Token)match(input,POSTMODIFIER,FOLLOW_POSTMODIFIER_in_atom555); 
 
@@ -236,9 +236,9 @@ public class SentencesGeneratorParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:80:9: (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:80:9: (mod= PREMODIFIER )* STRING (pmod= POSTMODIFIER )*
                     {
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:80:9: (mod= PREMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:80:9: (mod= PREMODIFIER )*
                     loop5:
                     do {
                         int alt5=2;
@@ -251,7 +251,7 @@ public class SentencesGeneratorParser extends Parser {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:80:10: mod= PREMODIFIER
+                    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:80:10: mod= PREMODIFIER
                     	    {
                     	    mod=(Token)match(input,PREMODIFIER,FOLLOW_PREMODIFIER_in_atom580); 
 
@@ -270,7 +270,7 @@ public class SentencesGeneratorParser extends Parser {
 
                      atom = new StringAtom(STRING3.getText()); atom.setPreModifiers(preModifiers); 
 
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:82:9: (pmod= POSTMODIFIER )*
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:82:9: (pmod= POSTMODIFIER )*
                     loop6:
                     do {
                         int alt6=2;
@@ -283,7 +283,7 @@ public class SentencesGeneratorParser extends Parser {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:82:10: pmod= POSTMODIFIER
+                    	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:82:10: pmod= POSTMODIFIER
                     	    {
                     	    pmod=(Token)match(input,POSTMODIFIER,FOLLOW_POSTMODIFIER_in_atom609); 
 
@@ -322,7 +322,7 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "selection"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:86:1: selection[Grammar grammar] returns [Evaluator selection] : ( (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')' ) (pmod= POSTMODIFIER )* ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:86:1: selection[Grammar grammar] returns [Evaluator selection] : ( (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')' ) (pmod= POSTMODIFIER )* ;
     public final Evaluator selection(Grammar grammar) throws RecognitionException {
         Evaluator selection = null;
 
@@ -335,15 +335,15 @@ public class SentencesGeneratorParser extends Parser {
 
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:86:58: ( ( (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')' ) (pmod= POSTMODIFIER )* )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:87:7: ( (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')' ) (pmod= POSTMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:86:58: ( ( (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')' ) (pmod= POSTMODIFIER )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:87:7: ( (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')' ) (pmod= POSTMODIFIER )*
             {
              selection = new Selection(grammar);
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:88:7: ( (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:88:9: (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:88:7: ( (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:88:9: (mod= PREMODIFIER )* '(' arg1= phrase[$grammar] ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )* ')'
             {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:88:9: (mod= PREMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:88:9: (mod= PREMODIFIER )*
             loop8:
             do {
                 int alt8=2;
@@ -356,7 +356,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt8) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:88:10: mod= PREMODIFIER
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:88:10: mod= PREMODIFIER
             	    {
             	    mod=(Token)match(input,PREMODIFIER,FOLLOW_PREMODIFIER_in_selection660); 
 
@@ -381,7 +381,7 @@ public class SentencesGeneratorParser extends Parser {
 
              ((Selection)selection).addChoice(arg1); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:91:7: ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:91:7: ( SELECTION_SEPARATOR (arg2= phrase[$grammar] ) )*
             loop9:
             do {
                 int alt9=2;
@@ -394,12 +394,12 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt9) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:91:8: SELECTION_SEPARATOR (arg2= phrase[$grammar] )
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:91:8: SELECTION_SEPARATOR (arg2= phrase[$grammar] )
             	    {
             	    match(input,SELECTION_SEPARATOR,FOLLOW_SELECTION_SEPARATOR_in_selection694); 
 
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:91:28: (arg2= phrase[$grammar] )
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:91:29: arg2= phrase[$grammar]
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:91:28: (arg2= phrase[$grammar] )
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:91:29: arg2= phrase[$grammar]
             	    {
             	    pushFollow(FOLLOW_phrase_in_selection699);
             	    arg2=phrase(grammar);
@@ -426,7 +426,7 @@ public class SentencesGeneratorParser extends Parser {
             }
 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:93:7: (pmod= POSTMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:93:7: (pmod= POSTMODIFIER )*
             loop10:
             do {
                 int alt10=2;
@@ -439,7 +439,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt10) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:93:8: pmod= POSTMODIFIER
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:93:8: pmod= POSTMODIFIER
             	    {
             	    pmod=(Token)match(input,POSTMODIFIER,FOLLOW_POSTMODIFIER_in_selection726); 
 
@@ -472,7 +472,7 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "command"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:96:1: command[Grammar grammar] returns [Evaluator command] : (mod= PREMODIFIER )* COMMANDS '(' (arg1= phrase[$grammar] )? ( ',' arg2= phrase[$grammar] )* ')' (pmod= POSTMODIFIER )* ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:96:1: command[Grammar grammar] returns [Evaluator command] : (mod= PREMODIFIER )* COMMANDS '(' (arg1= phrase[$grammar] )? ( ',' arg2= phrase[$grammar] )* ')' (pmod= POSTMODIFIER )* ;
     public final Evaluator command(Grammar grammar) throws RecognitionException {
         Evaluator command = null;
 
@@ -486,12 +486,12 @@ public class SentencesGeneratorParser extends Parser {
 
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:96:54: ( (mod= PREMODIFIER )* COMMANDS '(' (arg1= phrase[$grammar] )? ( ',' arg2= phrase[$grammar] )* ')' (pmod= POSTMODIFIER )* )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:97:7: (mod= PREMODIFIER )* COMMANDS '(' (arg1= phrase[$grammar] )? ( ',' arg2= phrase[$grammar] )* ')' (pmod= POSTMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:96:54: ( (mod= PREMODIFIER )* COMMANDS '(' (arg1= phrase[$grammar] )? ( ',' arg2= phrase[$grammar] )* ')' (pmod= POSTMODIFIER )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:97:7: (mod= PREMODIFIER )* COMMANDS '(' (arg1= phrase[$grammar] )? ( ',' arg2= phrase[$grammar] )* ')' (pmod= POSTMODIFIER )*
             {
              command = new Command(grammar);
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:98:7: (mod= PREMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:98:7: (mod= PREMODIFIER )*
             loop11:
             do {
                 int alt11=2;
@@ -504,7 +504,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt11) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:98:8: mod= PREMODIFIER
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:98:8: mod= PREMODIFIER
             	    {
             	    mod=(Token)match(input,PREMODIFIER,FOLLOW_PREMODIFIER_in_command767); 
 
@@ -525,7 +525,7 @@ public class SentencesGeneratorParser extends Parser {
 
             match(input,17,FOLLOW_17_in_command789); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:101:9: (arg1= phrase[$grammar] )?
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:101:9: (arg1= phrase[$grammar] )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -534,7 +534,7 @@ public class SentencesGeneratorParser extends Parser {
             }
             switch (alt12) {
                 case 1 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:101:10: arg1= phrase[$grammar]
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:101:10: arg1= phrase[$grammar]
                     {
                     pushFollow(FOLLOW_phrase_in_command802);
                     arg1=phrase(grammar);
@@ -550,7 +550,7 @@ public class SentencesGeneratorParser extends Parser {
             }
 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:102:9: ( ',' arg2= phrase[$grammar] )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:102:9: ( ',' arg2= phrase[$grammar] )*
             loop13:
             do {
                 int alt13=2;
@@ -563,7 +563,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt13) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:102:10: ',' arg2= phrase[$grammar]
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:102:10: ',' arg2= phrase[$grammar]
             	    {
             	    match(input,19,FOLLOW_19_in_command818); 
 
@@ -586,7 +586,7 @@ public class SentencesGeneratorParser extends Parser {
 
             match(input,18,FOLLOW_18_in_command836); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:104:7: (pmod= POSTMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:104:7: (pmod= POSTMODIFIER )*
             loop14:
             do {
                 int alt14=2;
@@ -599,7 +599,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt14) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:104:8: pmod= POSTMODIFIER
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:104:8: pmod= POSTMODIFIER
             	    {
             	    pmod=(Token)match(input,POSTMODIFIER,FOLLOW_POSTMODIFIER_in_command847); 
 
@@ -632,7 +632,7 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "variable"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:107:1: variable[Grammar grammar] returns [Evaluator variable] : (mod= PREMODIFIER )* '$(' (varname= phrase[$grammar] )? ')' (pmod= POSTMODIFIER )* ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:107:1: variable[Grammar grammar] returns [Evaluator variable] : (mod= PREMODIFIER )* '$(' (varname= phrase[$grammar] )? ')' (pmod= POSTMODIFIER )* ;
     public final Evaluator variable(Grammar grammar) throws RecognitionException {
         Evaluator variable = null;
 
@@ -643,12 +643,12 @@ public class SentencesGeneratorParser extends Parser {
 
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:107:56: ( (mod= PREMODIFIER )* '$(' (varname= phrase[$grammar] )? ')' (pmod= POSTMODIFIER )* )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:108:7: (mod= PREMODIFIER )* '$(' (varname= phrase[$grammar] )? ')' (pmod= POSTMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:107:56: ( (mod= PREMODIFIER )* '$(' (varname= phrase[$grammar] )? ')' (pmod= POSTMODIFIER )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:108:7: (mod= PREMODIFIER )* '$(' (varname= phrase[$grammar] )? ')' (pmod= POSTMODIFIER )*
             {
              variable = new Variable(grammar); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:109:7: (mod= PREMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:109:7: (mod= PREMODIFIER )*
             loop15:
             do {
                 int alt15=2;
@@ -661,7 +661,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt15) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:109:8: mod= PREMODIFIER
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:109:8: mod= PREMODIFIER
             	    {
             	    mod=(Token)match(input,PREMODIFIER,FOLLOW_PREMODIFIER_in_variable889); 
 
@@ -678,7 +678,7 @@ public class SentencesGeneratorParser extends Parser {
 
             match(input,16,FOLLOW_16_in_variable901); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:111:9: (varname= phrase[$grammar] )?
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:111:9: (varname= phrase[$grammar] )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -687,7 +687,7 @@ public class SentencesGeneratorParser extends Parser {
             }
             switch (alt16) {
                 case 1 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:111:10: varname= phrase[$grammar]
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:111:10: varname= phrase[$grammar]
                     {
                     pushFollow(FOLLOW_phrase_in_variable914);
                     varname=phrase(grammar);
@@ -705,7 +705,7 @@ public class SentencesGeneratorParser extends Parser {
 
             match(input,18,FOLLOW_18_in_variable927); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:113:7: (pmod= POSTMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:113:7: (pmod= POSTMODIFIER )*
             loop17:
             do {
                 int alt17=2;
@@ -718,7 +718,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt17) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:113:8: pmod= POSTMODIFIER
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:113:8: pmod= POSTMODIFIER
             	    {
             	    pmod=(Token)match(input,POSTMODIFIER,FOLLOW_POSTMODIFIER_in_variable938); 
 
@@ -751,7 +751,7 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "condition"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:116:1: condition[Grammar grammar] returns [Evaluator condition] : (mod= PREMODIFIER )* '?(' arg1= phrase[$grammar] '==' arg2= phrase[$grammar] ')' ':' '(' thenBranch= phrase[$grammar] ')' ( ':' '(' elseBranch= phrase[$grammar] ')' )? (pmod= POSTMODIFIER )* ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:116:1: condition[Grammar grammar] returns [Evaluator condition] : (mod= PREMODIFIER )* '?(' arg1= phrase[$grammar] '==' arg2= phrase[$grammar] ')' ':' '(' thenBranch= phrase[$grammar] ')' ( ':' '(' elseBranch= phrase[$grammar] ')' )? (pmod= POSTMODIFIER )* ;
     public final Evaluator condition(Grammar grammar) throws RecognitionException {
         Evaluator condition = null;
 
@@ -768,12 +768,12 @@ public class SentencesGeneratorParser extends Parser {
 
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:116:58: ( (mod= PREMODIFIER )* '?(' arg1= phrase[$grammar] '==' arg2= phrase[$grammar] ')' ':' '(' thenBranch= phrase[$grammar] ')' ( ':' '(' elseBranch= phrase[$grammar] ')' )? (pmod= POSTMODIFIER )* )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:117:8: (mod= PREMODIFIER )* '?(' arg1= phrase[$grammar] '==' arg2= phrase[$grammar] ')' ':' '(' thenBranch= phrase[$grammar] ')' ( ':' '(' elseBranch= phrase[$grammar] ')' )? (pmod= POSTMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:116:58: ( (mod= PREMODIFIER )* '?(' arg1= phrase[$grammar] '==' arg2= phrase[$grammar] ')' ':' '(' thenBranch= phrase[$grammar] ')' ( ':' '(' elseBranch= phrase[$grammar] ')' )? (pmod= POSTMODIFIER )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:117:8: (mod= PREMODIFIER )* '?(' arg1= phrase[$grammar] '==' arg2= phrase[$grammar] ')' ':' '(' thenBranch= phrase[$grammar] ')' ( ':' '(' elseBranch= phrase[$grammar] ')' )? (pmod= POSTMODIFIER )*
             {
              condition = new Condition(grammar); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:118:8: (mod= PREMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:118:8: (mod= PREMODIFIER )*
             loop18:
             do {
                 int alt18=2;
@@ -786,7 +786,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt18) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:118:9: mod= PREMODIFIER
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:118:9: mod= PREMODIFIER
             	    {
             	    mod=(Token)match(input,PREMODIFIER,FOLLOW_PREMODIFIER_in_condition982); 
 
@@ -835,7 +835,7 @@ public class SentencesGeneratorParser extends Parser {
 
              ((Condition)condition).addThenBranch((Phrase)thenBranch); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:123:8: ( ':' '(' elseBranch= phrase[$grammar] ')' )?
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:123:8: ( ':' '(' elseBranch= phrase[$grammar] ')' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -844,7 +844,7 @@ public class SentencesGeneratorParser extends Parser {
             }
             switch (alt19) {
                 case 1 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:123:10: ':' '(' elseBranch= phrase[$grammar] ')'
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:123:10: ':' '(' elseBranch= phrase[$grammar] ')'
                     {
                     match(input,20,FOLLOW_20_in_condition1056); 
 
@@ -866,7 +866,7 @@ public class SentencesGeneratorParser extends Parser {
 
              ((Condition)condition).addElseBranch((Phrase)elseBranch); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:124:8: (pmod= POSTMODIFIER )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:124:8: (pmod= POSTMODIFIER )*
             loop20:
             do {
                 int alt20=2;
@@ -879,7 +879,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt20) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:124:9: pmod= POSTMODIFIER
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:124:9: pmod= POSTMODIFIER
             	    {
             	    pmod=(Token)match(input,POSTMODIFIER,FOLLOW_POSTMODIFIER_in_condition1081); 
 
@@ -912,7 +912,7 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "phrase"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:127:1: phrase[Grammar grammar] returns [Evaluator phrase] : ( condition[$grammar] | variable[$grammar] | command[$grammar] | atom[$grammar] | selection[$grammar] )+ ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:127:1: phrase[Grammar grammar] returns [Evaluator phrase] : ( condition[$grammar] | variable[$grammar] | command[$grammar] | atom[$grammar] | selection[$grammar] )+ ;
     public final Evaluator phrase(Grammar grammar) throws RecognitionException {
         Evaluator phrase = null;
 
@@ -929,12 +929,12 @@ public class SentencesGeneratorParser extends Parser {
 
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:127:52: ( ( condition[$grammar] | variable[$grammar] | command[$grammar] | atom[$grammar] | selection[$grammar] )+ )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:128:7: ( condition[$grammar] | variable[$grammar] | command[$grammar] | atom[$grammar] | selection[$grammar] )+
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:127:52: ( ( condition[$grammar] | variable[$grammar] | command[$grammar] | atom[$grammar] | selection[$grammar] )+ )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:128:7: ( condition[$grammar] | variable[$grammar] | command[$grammar] | atom[$grammar] | selection[$grammar] )+
             {
              phrase = new Phrase(); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:129:7: ( condition[$grammar] | variable[$grammar] | command[$grammar] | atom[$grammar] | selection[$grammar] )+
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:129:7: ( condition[$grammar] | variable[$grammar] | command[$grammar] | atom[$grammar] | selection[$grammar] )+
             int cnt21=0;
             loop21:
             do {
@@ -942,7 +942,7 @@ public class SentencesGeneratorParser extends Parser {
                 alt21 = dfa21.predict(input);
                 switch (alt21) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:130:9: condition[$grammar]
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:130:9: condition[$grammar]
             	    {
             	    pushFollow(FOLLOW_condition_in_phrase1130);
             	    condition5=condition(grammar);
@@ -955,7 +955,7 @@ public class SentencesGeneratorParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:131:9: variable[$grammar]
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:131:9: variable[$grammar]
             	    {
             	    pushFollow(FOLLOW_variable_in_phrase1143);
             	    variable6=variable(grammar);
@@ -968,7 +968,7 @@ public class SentencesGeneratorParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:132:9: command[$grammar]
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:132:9: command[$grammar]
             	    {
             	    pushFollow(FOLLOW_command_in_phrase1156);
             	    command7=command(grammar);
@@ -981,7 +981,7 @@ public class SentencesGeneratorParser extends Parser {
             	    }
             	    break;
             	case 4 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:133:9: atom[$grammar]
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:133:9: atom[$grammar]
             	    {
             	    pushFollow(FOLLOW_atom_in_phrase1169);
             	    atom8=atom(grammar);
@@ -994,7 +994,7 @@ public class SentencesGeneratorParser extends Parser {
             	    }
             	    break;
             	case 5 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:134:9: selection[$grammar]
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:134:9: selection[$grammar]
             	    {
             	    pushFollow(FOLLOW_selection_in_phrase1182);
             	    selection9=selection(grammar);
@@ -1035,7 +1035,7 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "rule"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:137:1: rule[Grammar grammar] returns [Evaluator rule] : ( RULEID ASSIGNMENT phrase[$grammar] ';' ) ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:137:1: rule[Grammar grammar] returns [Evaluator rule] : ( RULEID ASSIGNMENT phrase[$grammar] ';' ) ;
     public final Evaluator rule(Grammar grammar) throws RecognitionException {
         Evaluator rule = null;
 
@@ -1045,11 +1045,11 @@ public class SentencesGeneratorParser extends Parser {
 
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:137:48: ( ( RULEID ASSIGNMENT phrase[$grammar] ';' ) )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:138:7: ( RULEID ASSIGNMENT phrase[$grammar] ';' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:137:48: ( ( RULEID ASSIGNMENT phrase[$grammar] ';' ) )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:138:7: ( RULEID ASSIGNMENT phrase[$grammar] ';' )
             {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:138:7: ( RULEID ASSIGNMENT phrase[$grammar] ';' )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:138:8: RULEID ASSIGNMENT phrase[$grammar] ';'
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:138:7: ( RULEID ASSIGNMENT phrase[$grammar] ';' )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:138:8: RULEID ASSIGNMENT phrase[$grammar] ';'
             {
             RULEID10=(Token)match(input,RULEID,FOLLOW_RULEID_in_rule1215); 
 
@@ -1086,16 +1086,16 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "rules"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:142:1: rules[Grammar grammar] : ( rule[grammar] )* ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:142:1: rules[Grammar grammar] : ( rule[grammar] )* ;
     public final void rules(Grammar grammar) throws RecognitionException {
         Evaluator rule12 =null;
 
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:142:24: ( ( rule[grammar] )* )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:143:7: ( rule[grammar] )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:142:24: ( ( rule[grammar] )* )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:143:7: ( rule[grammar] )*
             {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:143:7: ( rule[grammar] )*
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:143:7: ( rule[grammar] )*
             loop22:
             do {
                 int alt22=2;
@@ -1108,7 +1108,7 @@ public class SentencesGeneratorParser extends Parser {
 
                 switch (alt22) {
             	case 1 :
-            	    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:143:8: rule[grammar]
+            	    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:143:8: rule[grammar]
             	    {
             	    pushFollow(FOLLOW_rule_in_rules1254);
             	    rule12=rule(grammar);
@@ -1148,7 +1148,7 @@ public class SentencesGeneratorParser extends Parser {
 
 
     // $ANTLR start "grammardef"
-    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:149:1: grammardef[BookOfNames book, Random rng] returns [Grammar grammar] : 'I' ASSIGNMENT ( WORD | RULEID ) ';' 'S' ASSIGNMENT phrase[$grammar] ';' rules[$grammar] ;
+    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:149:1: grammardef[BookOfNames book, Random rng] returns [Grammar grammar] : 'I' ASSIGNMENT ( WORD | RULEID ) ';' 'S' ASSIGNMENT phrase[$grammar] ';' rules[$grammar] ;
     public final Grammar grammardef(BookOfNames book, Random rng) throws RecognitionException {
         Grammar grammar = null;
 
@@ -1159,8 +1159,8 @@ public class SentencesGeneratorParser extends Parser {
 
 
         try {
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:149:68: ( 'I' ASSIGNMENT ( WORD | RULEID ) ';' 'S' ASSIGNMENT phrase[$grammar] ';' rules[$grammar] )
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:150:7: 'I' ASSIGNMENT ( WORD | RULEID ) ';' 'S' ASSIGNMENT phrase[$grammar] ';' rules[$grammar]
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:149:68: ( 'I' ASSIGNMENT ( WORD | RULEID ) ';' 'S' ASSIGNMENT phrase[$grammar] ';' rules[$grammar] )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:150:7: 'I' ASSIGNMENT ( WORD | RULEID ) ';' 'S' ASSIGNMENT phrase[$grammar] ';' rules[$grammar]
             {
              grammar = new Grammar(book, rng); 
 
@@ -1168,7 +1168,7 @@ public class SentencesGeneratorParser extends Parser {
 
             match(input,ASSIGNMENT,FOLLOW_ASSIGNMENT_in_grammardef1295); 
 
-            // /home/cek/workspace/jWebSocket/SentencesGenerator.g:151:22: ( WORD | RULEID )
+            // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:151:22: ( WORD | RULEID )
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -1187,7 +1187,7 @@ public class SentencesGeneratorParser extends Parser {
             }
             switch (alt23) {
                 case 1 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:151:23: WORD
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:151:23: WORD
                     {
                     WORD13=(Token)match(input,WORD,FOLLOW_WORD_in_grammardef1298); 
 
@@ -1196,7 +1196,7 @@ public class SentencesGeneratorParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/cek/workspace/jWebSocket/SentencesGenerator.g:151:67: RULEID
+                    // /home/cek/gitrepositories/ruins/jWebSocket/SentencesGenerator.g:151:67: RULEID
                     {
                     RULEID14=(Token)match(input,RULEID,FOLLOW_RULEID_in_grammardef1304); 
 
