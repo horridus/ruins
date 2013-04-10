@@ -10,6 +10,8 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.width = width;
 	this.height = height;
 	this.tileSize = tileSize;
+	
+	this.viewOffset = new THREE.Vector2( 0, 0 );
 
 	this.levelsTexture = [];
 
@@ -44,12 +46,12 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
     	uniforms: {
     		tilesTexture: { type: 't', value: this.tilesTexture },
     		levelTexture: { type: 't', value: this.levelsTexture[0] },
-    		viewOffset: { type: 'v2', value: new THREE.Vector2( 0, 0 ) },
+    		viewOffset: { type: 'v2', value:  this.viewOffset },
     		viewportSize: { type: 'v2', value: new THREE.Vector2( this.width, this.height ) },
-    		TileSize: { type: 'f', value: this.tileSize },
-    		inverseTileSize: { type: 'f', value: 1/this.tileSize },
-    		inverseTilesTextureSize: {type: 'v2', value: new THREE.Vector2(this.tilesTexture.image.width, this.tilesTexture.image.height) },
-    		inverseDungeonTextureSize: {type: 'v2', value: new THREE.Vector2(this.levelsTexture[0].image.width, this.levelsTexture[0].image.height) },
+    		tileSize: { type: 'f', value: this.tileSize },
+    		inverseTileSize: { type: 'f', value: 1.0/this.tileSize },
+    		inverseTilesTextureSize: {type: 'v2', value: new THREE.Vector2(1.0/this.tilesTexture.image.width, 1.0/this.tilesTexture.image.height) },
+    		inverseDungeonTextureSize: {type: 'v2', value: new THREE.Vector2(1.0/this.dungeon.size, 1.0/this.dungeon.size) },
     	},
     	vertexShader: RUINS.SHADERS['dungeon'].vertexShader,
     	fragmentShader: RUINS.SHADERS['dungeon'].fragmentShader,
@@ -61,7 +63,7 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	
 	//create dungeon geometry
 	//this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.dungeon.size * this.tileSize, this.dungeon.size * this.tileSize, this.dungeon.size/this.tileSize, this.dungeon.size/this.tileSize), this.dungeonMaterial);
-	this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.dungeon.size, this.dungeon.size, this.dungeon.size/32, this.dungeon.size/32), this.dungeonMaterial); //TODO set correct plane division
+	this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.dungeon.size, this.dungeon.size, this.dungeon.size/this.tileSize, this.dungeon.size/this.tileSize), this.dungeonMaterial); //TODO set correct plane division
 	this.dungeonPlane.position.x = this.dungeon.size/2;
 	this.dungeonPlane.position.y = this.dungeon.size/2;
 	//this.mapPlane.position.z = 0.2;
@@ -70,8 +72,25 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.scene.add(this.dungeonPlane);
 
 	this.scene.add(new THREE.AxisHelper); //TEMP
+	
+	//add map controls to scene
+	this.controls = new THREE.DungeonControls(this.camera, container, this.dungeon, this);
+	this.controls.movementSpeed = 200.0;
+	this.controls.setBoundingBox({min: new THREE.Vector3(0, 0, 0), max: new THREE.Vector3(this.dungeon.size * this.tileSize, this.dungeon.size * this.tileSize, this.dungeon.size * this.tileSize)});
 };
 
 RUINS.DungeonRenderer.prototype.render = function(clockDelta) {
 	this.renderer.render(this.scene, this.camera);
+};
+
+RUINS.DungeonRenderer.prototype.update = function(clockDelta) {
+	this.controls.update(clockDelta);
+};
+
+RUINS.DungeonRenderer.prototype.setViewOffset = function(offsetx, offsety) {
+	this.viewOffset.x = offsetx;
+	this.viewOffset.y = offsety;
+	
+	this.dungeonMaterial.uniforms.viewOffset.value = this.viewOffset;
+	this.dungeonMaterial.needsUpdate = true;
 };

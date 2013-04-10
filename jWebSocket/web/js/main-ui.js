@@ -13,8 +13,8 @@ mainui.animateWorld = function() {
 };
 
 mainui.animateDungeon = function() {
-	//requestAnimationFrame(mainui.animateDungeon);
-	//mainui.mapRenderer.update(mainui.clock.getDelta());
+	requestAnimationFrame(mainui.animateDungeon);
+	mainui.dungeonRenderer.update(mainui.clock.getDelta());
 	mainui.dungeonRenderer.render(mainui.clock.getDelta());
 };
 

@@ -48,13 +48,14 @@ RUINS.SHADERS = {
  			
  			"void main(void) {",
  			"	vec4 levelTexel = texture2D(levelTexture, dungeonCoord);",
- 			"	if (levelTexel.x == 1.0 && levelTexel.y == 1.0) { ",
- 			" 		discard; ",
+ 			"	if (levelTexel.x < 1.0 && levelTexel.y < 1.0) { ",
+ 			"		vec2 tileOffset = floor(levelTexel.xy * 256.0) * tileSize;",
+ 	        "		vec2 tileCoord = mod(tilesCoord, tileSize);",
+ 	        "   	gl_FragColor = texture2D(tilesTexture, (tileOffset + tileCoord) * inverseTilesTextureSize);",
  			"	}",
- 			
- 			"   vec2 tileOffset = floor(levelTexel.xy * 256.0) * tileSize;",
- 	        "   vec2 tileCoord = mod(tilesCoord, tileSize);",
- 	        "   gl_FragColor = texture2D(tilesTexture, (tileOffset + tileCoord) * inverseTilesTextureSize);",
+ 			"   else {",
+ 			" 		discard;",
+ 	        "	}",
  			"}"
 
  		].join("\n"),
@@ -69,7 +70,7 @@ RUINS.SHADERS = {
  		    "varying vec2 tilesCoord;",
  		    
  		    "void main(void) {",
- 		    "	tilesCoord = (uv * 512.0) + viewOffset;",
+ 		    "	tilesCoord = (uv * viewportSize) + viewOffset;",
  		    "   dungeonCoord = tilesCoord * inverseDungeonTextureSize * inverseTileSize;",
  		    "	gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);",
  			"}"
