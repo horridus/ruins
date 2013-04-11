@@ -10,11 +10,11 @@ THREE.MapControls = function ( object, domElement, map,dungeonpRenderer, boundin
 	this.canvasHeight = this.canvas.height();
 
 	this.target = new THREE.Vector3( 0, 0, 0 );
-
+	
 	this.boundingBox = (boundingBox !== undefined) ? boundingBox : { min: new THREE.Vector3(), max: new THREE.Vector3() };
 
 	this.movementSpeed = 1.0;
-	this.zoomSpeed = 0.1;
+	this.zoomSpeed = 0.01;
 	this.zoomMin = 1.0;
 	this.zoomMax = 0.01;
 	this.zoom = 0.5;
@@ -304,6 +304,7 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 	this.canvasHeight = this.canvas.height();
 
 	this.target = new THREE.Vector3( 0, 0, 0 );
+	this.viewOffset = new THREE.Vector2( 0, 0 );
 
 	this.boundingBox = (boundingBox !== undefined) ? boundingBox : { min: new THREE.Vector3(), max: new THREE.Vector3() };
 
@@ -341,6 +342,11 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 	this.selectedIconType = 0;
 	this.mouseWheelDelta = 0;
 	this.mouseWheelAcceleration = 10;
+	
+	this.setViewOffset = function(vec2ViewOffset) {
+		this.viewOffset.x = vec2ViewOffset.x;
+		this.viewOffset.y = vec2ViewOffset.y;
+	};
 
 	this.onKeyDownHandler = function ( event ) {
 
@@ -408,40 +414,28 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 			var maxx = this.boundingBox.max.x;
 			var maxy = this.boundingBox.max.y;
 
-			var hwz = this.halfWidth * this.zoom;
-			var hhz = this.halfHeight * this.zoom;
-
-			if ( this.debug ) {
-				this.debugFunc();
-			}
-
-
 			if ( this.moveForward ) {
-				this.object.translateY( -actualMoveSpeed );
-				this.object.position.y = ((this.object.position.y - hhz) < miny)? miny + hhz : this.object.position.y;
+				this.viewOffset.y -= actualMoveSpeed;
+				this.viewOffset.y = (this.viewOffset.y < miny)? miny : this.viewOffset.y;
 			}
 			if ( this.moveBackward ) {
-				this.object.translateY( actualMoveSpeed );
-				this.object.position.y = ((this.object.position.y + hhz) > maxy)? maxy - hhz : this.object.position.y;
+				this.viewOffset.y += actualMoveSpeed;
+				this.viewOffset.y = (this.viewOffset.y + this.height > maxy)? maxy : this.viewOffset.y;
 			}
 
 			if ( this.moveLeft ) {
-				this.object.translateX( -actualMoveSpeed );
-				this.object.position.x = ((this.object.position.x - hwz) < minx)? minx  + hwz : this.object.position.x;
+				this.viewOffset.x -= actualMoveSpeed;
+				this.viewOffset.x = (this.viewOffset.x < minx)? minx : this.viewOffset.x;
 			}
 			if ( this.moveRight ) {
-				this.object.translateX( actualMoveSpeed );
-				this.object.position.x = ((this.object.position.x + hwz) > maxx)? maxx - hwz : this.object.position.x;
+				this.viewOffset.x += actualMoveSpeed;
+				this.viewOffset.x = (this.viewOffset.x + this.width > maxx)? maxx : this.viewOffset.x;
 			}
 
 			if ( this.moveUpward ) {
+				
 				this.zoom += actualZoomSpeed;
 				this.zoom = (this.zoom > this.zoomMin)? this.zoomMin : this.zoom;
-
-				this.object.position.y = ((this.object.position.y - hhz) < miny)? miny + hhz : this.object.position.y;
-				this.object.position.y = ((this.object.position.y + hhz) > maxy)? maxy - hhz : this.object.position.y;
-				this.object.position.x = ((this.object.position.x - hwz) < minx)? minx + hwz : this.object.position.x;
-				this.object.position.x = ((this.object.position.x + hwz) > maxx)? maxx - hwz : this.object.position.x;
 			}
 			if ( this.moveDownward ) {
 				this.zoom -= actualZoomSpeed;
@@ -452,11 +446,6 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 				this.zoom += actualZoomSpeed * this.mouseWheelAcceleration;
 				this.zoom = (this.zoom > this.zoomMin)? this.zoomMin : this.zoom;
 
-				this.object.position.y = ((this.object.position.y - hhz) < miny)? miny + hhz : this.object.position.y;
-				this.object.position.y = ((this.object.position.y + hhz) > maxy)? maxy - hhz : this.object.position.y;
-				this.object.position.x = ((this.object.position.x - hwz) < minx)? minx + hwz : this.object.position.x;
-				this.object.position.x = ((this.object.position.x + hwz) > maxx)? maxx - hwz : this.object.position.x;
-
 				this.mouseWheelDelta = 0;
 			}
 			else if ( this.mouseWheelDelta > 0 ) {
@@ -465,10 +454,10 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 
 				this.mouseWheelDelta = 0;
 			}
-
-			this.object.projectionMatrix.makeOrthographic( this.centerx - hwz, this.centerx + hwz, this.centery - hhz, this.centery + hhz, this.object.near, this.object.far );
 			
-			this.dungeonRenderer.setViewOffset(this.object.left, this.object.top);
+			this.dungeonRenderer.setViewOffset(this.viewOffset.x, this.viewOffset.y);
+			this.dungeonRenderer.setViewScale(this.zoom);
+			
 		}
 	};
 

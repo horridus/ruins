@@ -12,6 +12,7 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.tileSize = tileSize;
 	
 	this.viewOffset = new THREE.Vector2( 0, 0 );
+	this.scale = 4.0;
 
 	this.levelsTexture = [];
 
@@ -47,7 +48,7 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
     		tilesTexture: { type: 't', value: this.tilesTexture },
     		levelTexture: { type: 't', value: this.levelsTexture[0] },
     		viewOffset: { type: 'v2', value:  this.viewOffset },
-    		viewportSize: { type: 'v2', value: new THREE.Vector2( this.width, this.height ) },
+    		viewportSize: { type: 'v2', value: new THREE.Vector2( this.width/this.scale, this.height/this.scale ) },
     		tileSize: { type: 'f', value: this.tileSize },
     		inverseTileSize: { type: 'f', value: 1.0/this.tileSize },
     		inverseTilesTextureSize: {type: 'v2', value: new THREE.Vector2(1.0/this.tilesTexture.image.width, 1.0/this.tilesTexture.image.height) },
@@ -62,8 +63,7 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.mapBaseMaterial = new THREE.MeshBasicMaterial({ map: this.levelsTexture[0], wireframe: true, side: THREE.BackSide});
 	
 	//create dungeon geometry
-	//this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.dungeon.size * this.tileSize, this.dungeon.size * this.tileSize, this.dungeon.size/this.tileSize, this.dungeon.size/this.tileSize), this.dungeonMaterial);
-	this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.dungeon.size, this.dungeon.size, this.dungeon.size/this.tileSize, this.dungeon.size/this.tileSize), this.dungeonMaterial); //TODO set correct plane division
+	this.dungeonPlane = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 100, 100), this.dungeonMaterial);
 	this.dungeonPlane.position.x = this.dungeon.size/2;
 	this.dungeonPlane.position.y = this.dungeon.size/2;
 	//this.mapPlane.position.z = 0.2;
@@ -92,5 +92,12 @@ RUINS.DungeonRenderer.prototype.setViewOffset = function(offsetx, offsety) {
 	this.viewOffset.y = offsety;
 	
 	this.dungeonMaterial.uniforms.viewOffset.value = this.viewOffset;
+	this.dungeonMaterial.needsUpdate = true;
+};
+
+RUINS.DungeonRenderer.prototype.setViewScale = function(scale) {
+	this.scale = scale;
+	
+	this.dungeonMaterial.uniforms.viewportSize.value = new THREE.Vector2( this.width/this.scale, this.height/this.scale );
 	this.dungeonMaterial.needsUpdate = true;
 };
