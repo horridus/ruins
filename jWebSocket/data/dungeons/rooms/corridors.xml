@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rooms>
+    <room id="corridors">
+        <generator>
+        <![CDATA[
+            var entrancesList = _digger_.getNorthCellEntrances();
+            var oppositeEntrancesList = _digger_.getNotNorthCellEntrances();
+            
+            if (entrancesList.size() == 0) {
+                entrancesList = _digger_.getWestCellEntrances();
+                var oppositeEntrancesList = _digger_.getNotWestCellEntrances();
+            }
+            
+            var eSize = entrancesList.size();
+            
+            if (eSize > 0) {
+               var oeSize = oppositeEntrancesList.size();
+               if (oeSize > 0) {
+                       var entrance = entrancesList.get(_digger_.randomI(0, eSize));
+                       var oppositeEntrance = oppositeEntrancesList.get(_digger_.randomI(0, oeSize));
+                       _digger_.digCorridor(entrance.x, entrance.y, oppositeEntrance.x, oppositeEntrance.y, _tile_DOLOMITE_FLOOR, _tile_DOLOMITE);
+               }
+            }
+        ]]>
+        </generator>
+    </room>
+</rooms>

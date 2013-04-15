@@ -1,6 +1,7 @@
 package cek.ruins.world.locations.dungeons;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,33 +28,48 @@ public class DungeonsArchitect {
 		this.roomsTemplates = new HashMap<String, RoomTemplate>();
 		this.dungeonsTemplates = new HashMap<String, DungeonTemplate>();
 		
-		File templateFile = new File(path + File.separator + "rooms.xml");
-
-		if (templateFile.exists() && templateFile.isFile()) {
-			XmlDocument roomsTemplate = new XmlDocument(FileUtils.readFileToString(templateFile, "UTF-8"));
-			
-			Iterator<Element> roomsIt = (Iterator<Element>) roomsTemplate.selectNodes("/rooms/room").iterator();
-			while (roomsIt.hasNext()) {
-				Element room = roomsIt.next();
-				String id = room.attributeValue("id");
-				Element roomGenerator = (Element) room.selectSingleNode("./generator");
+		//load rooms templates
+		File roomsTemplatesDirectory = new File(path + File.separator + "rooms");
+		File[] templateFiles = roomsTemplatesDirectory.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".xml");
+			}
+		});
+		
+		for (File templateFile : templateFiles) {
+			if (templateFile.exists() && templateFile.isFile()) {
+				XmlDocument roomsTemplate = new XmlDocument(FileUtils.readFileToString(templateFile, "UTF-8"));
 				
-				if (id == null || roomGenerator == null) {
-					throw new Exception(path + "/rooms.xml malformed: generator and id is mandatory.");
+				Iterator<Element> roomsIt = (Iterator<Element>) roomsTemplate.selectNodes("/rooms/room").iterator();
+				
+				if (!roomsIt.hasNext()) {
+					throw new Exception(path + File.separator + templateFile.getName() + " malformed: no element <room> found.");
 				}
-				else {
-					RoomTemplate roomTemplate = new RoomTemplate();
-					Script roomGeneratorScript = ScriptExecutor.executor().compileScript(roomGenerator.getText(), "DungeonsArchitect");
+				
+				while (roomsIt.hasNext()) {
+					Element room = roomsIt.next();
+					String id = room.attributeValue("id");
+					Element roomGenerator = (Element) room.selectSingleNode("./generator");
 					
-					roomTemplate.id = id;
-					roomTemplate.roomGenerator = roomGeneratorScript;
-					
-					this.roomsTemplates.put(id, roomTemplate);
+					if (id == null || roomGenerator == null) {
+						throw new Exception(path + File.separator + templateFile.getName() + " malformed: generator and id is mandatory.");
+					}
+					else {
+						RoomTemplate roomTemplate = new RoomTemplate();
+						Script roomGeneratorScript = ScriptExecutor.executor().compileScript(roomGenerator.getText(), "DungeonsArchitect");
+						
+						roomTemplate.id = id;
+						roomTemplate.roomGenerator = roomGeneratorScript;
+						
+						this.roomsTemplates.put(id, roomTemplate);
+					}
 				}
 			}
 		}
 		
-		templateFile = new File(path + File.separator + "dungeons.xml");
+		//load dungeons templates
+		File templateFile = new File(path + File.separator + "dungeons.xml");
 
 		if (templateFile.exists() && templateFile.isFile()) {
 			XmlDocument dungeonsTemplate = new XmlDocument(FileUtils.readFileToString(templateFile, "UTF-8"));

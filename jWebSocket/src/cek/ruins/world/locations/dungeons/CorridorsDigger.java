@@ -36,7 +36,7 @@ public class CorridorsDigger extends AStar<DungeonTile> {
 		if (from.x() == to.x() && from.y() == to.y())
 			return 0.0;
 		else {
-			if ((to.material() != Tiles.NONE) || to.isCorridor())
+			if ((to.material() == Tiles.NONE) || to.isCorridor())
 				return 1.0;
 			else
 				return Double.MAX_VALUE;
@@ -45,9 +45,9 @@ public class CorridorsDigger extends AStar<DungeonTile> {
 
 	@Override
 	protected Double h(DungeonTile from, DungeonTile to) {
-		//double distance = Math.sqrt(Math.pow(from.x() - goal.x(), 2.0) + Math.pow(from.y() - goal.y(), 2.0));
+		double distance = Math.sqrt(Math.pow(from.x() - goal.x(), 2.0) + Math.pow(from.y() - goal.y(), 2.0));
 		
-		double distance = Math.abs(from.x() - goal.x()) + Math.abs(from.y() - goal.y());
+		//double distance = Math.abs(from.x() - goal.x()) + Math.abs(from.y() - goal.y());
 		return distance;
 	}
 

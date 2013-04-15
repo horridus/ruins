@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import org.mozilla.javascript.NativeObject;
+
 import cek.ruins.Point;
 import cek.ruins.ScriptExecutor;
 
@@ -139,13 +141,19 @@ public class Digger {
 		return this.currentCell.roomId();
 	}
 	
-	public void createRoom(String roomId) {
+	public void createRoom(String roomId, NativeObject args) {
 		ScriptExecutor executor = ScriptExecutor.executor();
 		RoomTemplate roomTemplate = this.dungeonsArchitect.roomsTemplates().get(roomId);
 		if (roomTemplate != null) {
+			//set function args
+			this.scriptsGlobalObjects.put("_args_", args);
+			
 			//generate room and fill cell
 			this.currentCell.setRoomId(roomId);
 			executor.executeScript(roomTemplate.roomGenerator, this.scriptsGlobalObjects);
+			
+			//rest function args
+			this.scriptsGlobalObjects.put("_args_", null);
 		}
 	}
 	
@@ -170,7 +178,7 @@ public class Digger {
 				tile.setMaterial(material);
 				tile.setCorridor(true);
 				
-				//FIXME vale pere tutti i materiali?
+				//FIXME vale per tutti i materiali?
 				if (tile.x%this.cellSize() == 0)
 					addCellWestEntrance(tile.y%this.cellSize());
 				if (tile.x%this.cellSize() == this.currentCell.size() - 1)
@@ -228,6 +236,38 @@ public class Digger {
 					
 					if (tile.y() < this.dungeon.size() - 1 && skipDir != 4) {
 						DungeonTile neighbor = this.tile(tile.x(), tile.y() + 1, tile.depth());
+						if (neighbor.material() == Tiles.NONE) {
+							neighbor.setMaterial(wallMaterial);
+							neighbor.setCorridor(true);
+						}
+					}
+					
+					if (tile.x() > 0 && tile.y() > 0) {
+						DungeonTile neighbor = this.tile(tile.x() - 1, tile.y() - 1, tile.depth());
+						if (neighbor.material() == Tiles.NONE) {
+							neighbor.setMaterial(wallMaterial);
+							neighbor.setCorridor(true);
+						}
+					}
+					
+					if (tile.x() > 0 && tile.y() < this.dungeon.size() - 1) {
+						DungeonTile neighbor = this.tile(tile.x() - 1, tile.y() + 1, tile.depth());
+						if (neighbor.material() == Tiles.NONE) {
+							neighbor.setMaterial(wallMaterial);
+							neighbor.setCorridor(true);
+						}
+					}
+					
+					if (tile.x() < this.dungeon.size() - 1 && tile.y() > 0) {
+						DungeonTile neighbor = this.tile(tile.x() + 1, tile.y() - 1, tile.depth());
+						if (neighbor.material() == Tiles.NONE) {
+							neighbor.setMaterial(wallMaterial);
+							neighbor.setCorridor(true);
+						}
+					}
+					
+					if (tile.x() < this.dungeon.size() - 1 && tile.y() < this.dungeon.size() - 1) {
+						DungeonTile neighbor = this.tile(tile.x() + 1, tile.y() + 1, tile.depth());
 						if (neighbor.material() == Tiles.NONE) {
 							neighbor.setMaterial(wallMaterial);
 							neighbor.setCorridor(true);

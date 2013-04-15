@@ -293,8 +293,6 @@ THREE.MapControls = function ( object, domElement, map,dungeonpRenderer, boundin
 };
 
 THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, boundingBox) {
-	var that = this;
-
 	this.object = object;
 	this.dungeon = dungeon;
 	this.dungeonRenderer = dungeonRenderer;
@@ -323,11 +321,10 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 
 	this.width = (this.object.right - this.object.left);
 	this.height = (this.object.bottom - this.object.top);
-	this.halfWidth = this.width/2.0;
-	this.halfHeight = this.height/2.0;
-
-	this.centerx = this.object.left + this.halfWidth;
-	this.centery = this.object.top + this.halfHeight;
+	//this.halfWidth = this.width/2.0;
+	//this.halfHeight = this.height/2.0;
+	//this.centerx = this.object.left + this.halfWidth;
+	//this.centery = this.object.top + this.halfHeight;
 
 	this.projector = new THREE.Projector();
 	this.plane = dungeon.dungeonPlane;
@@ -405,7 +402,7 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 			return;
 
 		} else {
-			actualMoveSpeed = delta * this.movementSpeed * this.zoom;
+			actualMoveSpeed = delta * this.movementSpeed * 1.0/this.zoom;
 			actualZoomSpeed = delta * this.zoomSpeed;
 
 			var minx = this.boundingBox.min.x;
@@ -455,9 +452,24 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 				this.mouseWheelDelta = 0;
 			}
 			
+			
+			var centerx = Math.round((this.viewOffset.x + this.width)/2.0);
+			var centery = Math.round((this.viewOffset.y + this.height)/2.0);
+			/*
+			var scaledViewWidth = Math.round((this.dungeonRenderer.width/this.zoom)/2.0);
+			var scaledViewHeight = Math.round((this.dungeonRenderer.height/this.zoom)/2.0);
+			this.viewOffset.x = scaledViewWidth - centerx;
+			this.viewOffset.y = scaledViewHeight - centery;
+			*/
+			
+			this.viewOffset.x = Math.floor(this.viewOffset.x);
+			this.viewOffset.y = Math.floor(this.viewOffset.y);
+			
+			var debug = $('#footer');
+			debug.text(centerx + ' - ' + centery + ' | ' + this.viewOffset.x + ' - ' + this.viewOffset.y);
+			
 			this.dungeonRenderer.setViewOffset(this.viewOffset.x, this.viewOffset.y);
 			this.dungeonRenderer.setViewScale(this.zoom);
-			
 		}
 	};
 
