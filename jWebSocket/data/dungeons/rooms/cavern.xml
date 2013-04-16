@@ -73,7 +73,7 @@
 	         
 	            //init cell map
 	            if (isFloor(40))
-	                _digger_.digCellTile(x, y, _tile_DOLOMITE_FLOOR);
+	                _digger_.digCellTile(x, y, _mat_DOLOMITE_FLOOR_0);
 	        }
 	    }
 	    
@@ -99,7 +99,7 @@
 	        var goaly = _digger_.randomI(0, _digger_.cellSize());
 	        var entrance = entrances.get(_digger_.randomI(0, eSize));
 	        
-	        _digger_.digCorridor(entrance.x, entrance.y, goalx, goaly, _tile_DOLOMITE_FLOOR, _tile_NONE);
+	        _digger_.digCorridor(entrance.x, entrance.y, goalx, goaly, _mat_DOLOMITE_FLOOR_0, _mat_NOMATERIAL);
 	    }
 	    
 	    ]]>

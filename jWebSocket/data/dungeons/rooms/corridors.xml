@@ -18,7 +18,7 @@
                if (oeSize > 0) {
                        var entrance = entrancesList.get(_digger_.randomI(0, eSize));
                        var oppositeEntrance = oppositeEntrancesList.get(_digger_.randomI(0, oeSize));
-                       _digger_.digCorridor(entrance.x, entrance.y, oppositeEntrance.x, oppositeEntrance.y, _tile_DOLOMITE_FLOOR, _tile_DOLOMITE);
+                       _digger_.digCorridor(entrance.x, entrance.y, oppositeEntrance.x, oppositeEntrance.y, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
                }
             }
         ]]>

@@ -95,12 +95,15 @@ public class DungeonsArchitect {
 					Element build = (Element) dungeon.selectSingleNode("./build");
 					Script dungeonBuildScript = ScriptExecutor.executor().compileScript(build.getText(), "DungeonsArchitect");
 					
+					Element terrain = (Element) dungeon.selectSingleNode("./terrain");
+					Script dungeonTerrainScript = ScriptExecutor.executor().compileScript(terrain.getText(), "DungeonsArchitect");
 					
 					dungeonTemplate.id = id;
 					dungeonTemplate.size = Integer.parseInt(size);
 					dungeonTemplate.cells = Integer.parseInt(cells);
 					dungeonTemplate.initScript = dungeonInitScript;
 					dungeonTemplate.buildScript = dungeonBuildScript;
+					dungeonTemplate.terrainScript = dungeonTerrainScript;
 					
 					this.dungeonsTemplates.put(id, dungeonTemplate);
 				}

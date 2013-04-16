@@ -6,13 +6,13 @@
             var size = _digger_.cellSize();
             for (var y = 1; y < size; y++) {
                 for (var x = 1; x < size; x++) {
-                    _digger_.digCellTile(x, y, _tile_DOLOMITE_FLOOR);
+                    _digger_.digCellTile(x, y, _mat_DIRT_FLOOR_0);
                 }
             }
             
             for (var n = 1; n < size; n++) {
-                _digger_.digCellTile(1, n, _tile_DOLOMITE);
-                _digger_.digCellTile(n, 1, _tile_DOLOMITE);
+                _digger_.digCellTile(1, n, _mat_DOLOMITE_WALL_0);
+                _digger_.digCellTile(n, 1, _mat_DOLOMITE_WALL_0);
             }
         ]]>
         </generator>
@@ -23,13 +23,13 @@
             var size = _digger_.cellSize();
             for (var y = 1; y < size; y++) {
                 for (var x = 0; x < size - 1; x++) {
-                    _digger_.digCellTile(x, y, _tile_DOLOMITE_FLOOR);
+                    _digger_.digCellTile(x, y, _mat_DOLOMITE_FLOOR_0);
                 }
             }
             
             for (var n = 0; n < size - 1; n++) {
-                _digger_.digCellTile(size - 2, n + 1, _tile_DOLOMITE);
-                _digger_.digCellTile(n, 1, _tile_DOLOMITE);
+                _digger_.digCellTile(size - 2, n + 1, _mat_DOLOMITE_WALL_0);
+                _digger_.digCellTile(n, 1, _mat_DOLOMITE_WALL_0);
             }
         ]]>
         </generator>
@@ -40,16 +40,16 @@
             var size = _digger_.cellSize();
             for (var y = 0; y < size - 1; y++) {
                 for (var x = 1; x < size; x++) {
-                    _digger_.digCellTile(x, y, _tile_DOLOMITE_FLOOR);
+                    _digger_.digCellTile(x, y, _mat_DOLOMITE_FLOOR_0);
                 }
             }
             
             for (var n = 0; n < size - 1; n++) {
-                _digger_.digCellTile(1, n, _tile_DOLOMITE);
-                _digger_.digCellTile(n + 1, size - 2, _tile_DOLOMITE);
+                _digger_.digCellTile(1, n, _mat_DOLOMITE_WALL_0);
+                _digger_.digCellTile(n + 1, size - 2, _mat_DOLOMITE_WALL_0);
             }
             
-            _digger_.digCorridor(size - 2, size - 2, size - 2, size - 1, _tile_DOLOMITE_FLOOR, _tile_DOLOMITE);
+            _digger_.digCorridor(size - 2, size - 2, size - 2, size - 1, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
         ]]>
         </generator>
     </room>
@@ -59,16 +59,16 @@
             var size = _digger_.cellSize();
             for (var y = 0; y < size - 1; y++) {
                 for (var x = 0; x < size - 1; x++) {
-                    _digger_.digCellTile(x, y, _tile_DOLOMITE_FLOOR);
+                    _digger_.digCellTile(x, y, _mat_DOLOMITE_FLOOR_0);
                 }
             }
             
             for (var n = 0; n < size - 1; n++) {
-                _digger_.digCellTile(size - 2, n, _tile_DOLOMITE);
-                _digger_.digCellTile(n, size - 2, _tile_DOLOMITE);
+                _digger_.digCellTile(size - 2, n, _mat_DOLOMITE_WALL_0);
+                _digger_.digCellTile(n, size - 2, _mat_DOLOMITE_WALL_0);
             }
             
-            _digger_.digCorridor(1, size - 2, 1, size - 1, _tile_DOLOMITE_FLOOR, _tile_DOLOMITE);
+            _digger_.digCorridor(1, size - 2, 1, size - 1, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
         ]]>
         </generator>
     </room>

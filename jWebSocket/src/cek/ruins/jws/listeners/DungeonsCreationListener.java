@@ -22,6 +22,7 @@ import cek.ruins.utils.DungeonPainter;
 import cek.ruins.world.locations.dungeons.Digger;
 import cek.ruins.world.locations.dungeons.Dungeon;
 import cek.ruins.world.locations.dungeons.DungeonsArchitect;
+import cek.ruins.world.locations.dungeons.Materials;
 
 public class DungeonsCreationListener extends GenericListener {
 	private static String NS = DungeonsCreationListener.class.toString().substring(6);
@@ -75,7 +76,8 @@ public class DungeonsCreationListener extends GenericListener {
 					DungeonsArchitect dungeonsArchitect = (DungeonsArchitect) ApplicationMap.get("dungeonsArchitect");
 					Digger digger = dungeonsArchitect.newDiggerInstance(generator);
 				
-					Dungeon dungeon = createNewDungeon(digger);
+					Materials materials = (Materials) ApplicationMap.get("materials"); 
+					Dungeon dungeon = createNewDungeon(digger, materials);
 					
 					response.setString("id", dungeon.id().toString());
 					response.setInteger("depth", dungeon.depth());
@@ -92,10 +94,10 @@ public class DungeonsCreationListener extends GenericListener {
 		}
 	}
 
-	protected Dungeon createNewDungeon(Digger digger) throws Exception {
+	protected Dungeon createNewDungeon(Digger digger, Materials materials) throws Exception {
 		UUID id = UUID.randomUUID();
 		
-		Dungeon dungeon = digger.generate(id, "generic"); //TEMP
+		Dungeon dungeon = digger.generate(id, "generic", materials); //TEMP
 		
 		//create a new entry in dungeons folder
 		File dungeonsDirectory = new File(Configuration.DUNGEONS_FOLDER_LOCATION + File.separator + id);

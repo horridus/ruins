@@ -1,13 +1,13 @@
 package cek.ruins.world.locations.dungeons;
 
 public class DungeonTile {
-	protected Tiles material;
+	protected Material material;
 	protected int x, y, depth;
 	protected boolean isEntrance;
 	private boolean isCorridor;
 	
 	public DungeonTile(int x, int y, int depth) {
-		this.material = Tiles.NONE;
+		this.material = Materials.NOMATERIAL();
 		this.x = x;
 		this.y = y;
 		this.depth = depth;
@@ -15,11 +15,11 @@ public class DungeonTile {
 		this.setCorridor(false);
 	}
 
-	public Tiles material() {
+	public Material material() {
 		return material;
 	}
 
-	public void setMaterial(Tiles material) {
+	public void setMaterial(Material material) {
 		this.material = material;
 	}
 

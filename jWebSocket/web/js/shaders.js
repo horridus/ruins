@@ -52,7 +52,7 @@ RUINS.SHADERS = {
  			"	if (levelTexel.x < 1.0 && levelTexel.y < 1.0) { ",
  			"		vec2 tileOffset = floor(levelTexel.xy * 256.0) * tileSize;",
  	        "		vec2 tileCoord = mod(tilesCoord, tileSize);",
- 	        "		if (tileCoord.x >= tileSize - 1.0 || tileCoord.y >= tileSize - 1.0) {",
+ 	        "		if ((tileCoord.x >= tileSize - 1.0 || tileCoord.y >= tileSize - 1.0 || tileCoord.x <= 0.2 || tileCoord.y <= 0.2) && mod(levelTexel.y * 255.0, 2.0) != 1.0) {",
  	        "			gl_FragColor = gridColor;",
  	        "		}",
  	        "		else {",

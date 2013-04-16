@@ -7,7 +7,7 @@ import java.util.List;
 
 import cek.ruins.world.locations.dungeons.Dungeon;
 import cek.ruins.world.locations.dungeons.DungeonTile;
-import cek.ruins.world.locations.dungeons.Tiles;
+import cek.ruins.world.locations.dungeons.Material;
 
 public class DungeonPainter {
 	public BufferedImage createDungeonImage(Dungeon dungeon, int lvlNumber) {
@@ -21,26 +21,8 @@ public class DungeonPainter {
 		for (int x = 0; x < dungeon.size(); x++) {
 			for (int y = 0; y < dungeon.size(); y++) {
 				//TEMP////////////////////////////
-				Tiles tile = level.get(x).get(y).material();
-				switch (tile) {
-				case NONE:
-					/*
-					if (x%16 == 0 || y%16 == 0) //TEMP draw cells borders
-						image.setRGB(x, y, Color.darkGray.getRGB());
-					else
-						image.setRGB(x, y, Color.black.getRGB());
-					*/
-					image.setRGB(x, y, new Color(255, 255, 0, 255).getRGB());
-					break;
-				case DOLOMITE_FLOOR:
-					image.setRGB(x, y, new Color(1, 0, 0, 255).getRGB());
-					break;
-				case DOLOMITE:
-					image.setRGB(x, y, new Color(0, 0, 0, 255).getRGB());
-					break;
-				default:
-					break;
-				}
+				Material tileMaterial = level.get(x).get(y).material();
+				image.setRGB(x, y, new Color(tileMaterial.x(), tileMaterial.y(), 0, 255).getRGB());
 				//////////////////////////////////
 			}
 		}

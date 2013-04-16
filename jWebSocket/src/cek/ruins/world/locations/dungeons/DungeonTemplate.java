@@ -8,4 +8,5 @@ public class DungeonTemplate {
 	protected int cells;
 	protected Script initScript;
 	protected Script buildScript;
+	protected Script terrainScript;
 }
