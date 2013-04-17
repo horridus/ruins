@@ -12,7 +12,7 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.tileSize = tileSize;
 	
 	this.viewOffset = new THREE.Vector2( 0, 0 );
-	this.scale = 4.0;
+	this.scale = 1.0;
 
 	this.levelsTexture = [];
 
@@ -54,6 +54,7 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
     		inverseTilesTextureSize: { type: 'v2', value: new THREE.Vector2(1.0/this.tilesTexture.image.width, 1.0/this.tilesTexture.image.height) },
     		inverseDungeonTextureSize: { type: 'v2', value: new THREE.Vector2(1.0/this.dungeon.size, 1.0/this.dungeon.size) },
     		gridColor: { type: 'v4', value: new THREE.Vector4(0.2, 0.2, 0.2, 1.0) },
+    		scale: { type: 'f', value: this.scale },
     	},
     	vertexShader: RUINS.SHADERS['dungeon'].vertexShader,
     	fragmentShader: RUINS.SHADERS['dungeon'].fragmentShader,
@@ -78,6 +79,24 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.controls = new THREE.DungeonControls(this.camera, container, this.dungeon, this);
 	this.controls.movementSpeed = 200.0;
 	this.controls.setBoundingBox({min: new THREE.Vector3(0, 0, 0), max: new THREE.Vector3(this.dungeon.size * this.tileSize, this.dungeon.size * this.tileSize, this.dungeon.size * this.tileSize)});
+	
+	
+	//TEMP/////////////////////
+	var texture = THREE.ImageUtils.loadTexture(main.configuration.imgs_location + '/dngn_closed_door.png');
+	this.icon = new THREE.Sprite({
+		map: texture,
+		useScreenCoordinates: true,
+		affectedByDistance: true,
+		scaleByViewport: true,
+		mergeWith3D: false,
+		color: 0xffffff,
+		alignment: THREE.SpriteAlignment.topLeft,
+	});
+
+	this.icon.position = new THREE.Vector3((3 * this.tileSize) - this.viewOffset.x/this.scale, 2 * this.tileSize - this.viewOffset.y/this.scale, 0.5);
+	this.icon.scale = new THREE.Vector3(1.0/this.scale, 1.0/this.scale, 1.0/this.scale);
+	this.scene.add(this.icon);
+	///////////////////////////
 };
 
 RUINS.DungeonRenderer.prototype.render = function(clockDelta) {
@@ -94,11 +113,20 @@ RUINS.DungeonRenderer.prototype.setViewOffset = function(offsetx, offsety) {
 	
 	this.dungeonMaterial.uniforms.viewOffset.value = this.viewOffset;
 	this.dungeonMaterial.needsUpdate = true;
+	
+	//TEMP/////////////////////
+	var centerx = Math.round((this.viewOffset.x + this.width)/2.0);
+	var centery = Math.round((this.viewOffset.y + this.height)/2.0);
+	
+	this.icon.position = new THREE.Vector3((3 * (this.tileSize)) - (this.viewOffset.x), (2 * (this.tileSize)) - (this.viewOffset.y), 0.5);
+	this.icon.scale = new THREE.Vector3(this.scale, this.scale, this.scale);
+	///////////////////////////
 };
 
 RUINS.DungeonRenderer.prototype.setViewScale = function(scale) {
 	this.scale = scale;
 	
 	this.dungeonMaterial.uniforms.viewportSize.value = new THREE.Vector2( this.width/this.scale, this.height/this.scale );
+	this.dungeonMaterial.uniforms.scale.value = this.scale;
 	this.dungeonMaterial.needsUpdate = true;
 };

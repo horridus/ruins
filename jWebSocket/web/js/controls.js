@@ -308,9 +308,9 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 
 	this.movementSpeed = 1.0;
 	this.zoomSpeed = 0.1;
-	this.zoomMin = 1.0;
+	this.zoomMin = 3.0;
 	this.zoomMax = 0.01;
-	this.zoom = 0.5;
+	this.zoom = 1.0;
 
 	this.moveForward = false;
 	this.moveBackward = false;
@@ -417,7 +417,7 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 			}
 			if ( this.moveBackward ) {
 				this.viewOffset.y += actualMoveSpeed;
-				this.viewOffset.y = (this.viewOffset.y + this.height > maxy)? maxy : this.viewOffset.y;
+				this.viewOffset.y = (this.viewOffset.y + this.height > maxy)? maxy - this.height : this.viewOffset.y;
 			}
 
 			if ( this.moveLeft ) {
@@ -426,7 +426,7 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 			}
 			if ( this.moveRight ) {
 				this.viewOffset.x += actualMoveSpeed;
-				this.viewOffset.x = (this.viewOffset.x + this.width > maxx)? maxx : this.viewOffset.x;
+				this.viewOffset.x = (this.viewOffset.x + this.width > maxx)? maxx - this.width : this.viewOffset.x;
 			}
 
 			if ( this.moveUpward ) {
@@ -455,20 +455,28 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 			
 			var centerx = Math.round((this.viewOffset.x + this.width)/2.0);
 			var centery = Math.round((this.viewOffset.y + this.height)/2.0);
-			/*
-			var scaledViewWidth = Math.round((this.dungeonRenderer.width/this.zoom)/2.0);
-			var scaledViewHeight = Math.round((this.dungeonRenderer.height/this.zoom)/2.0);
-			this.viewOffset.x = scaledViewWidth - centerx;
-			this.viewOffset.y = scaledViewHeight - centery;
-			*/
 			
-			this.viewOffset.x = Math.floor(this.viewOffset.x);
-			this.viewOffset.y = Math.floor(this.viewOffset.y);
+			//TODO controllare meglio la matematica
+			var realOffset = {
+				x : this.viewOffset.x - centerx/2.0 * 1.0/this.zoom,
+				y : this.viewOffset.y - centery/2.0 * 1.0/this.zoom
+			};
 			
-			var debug = $('#footer');
-			debug.text(centerx + ' - ' + centery + ' | ' + this.viewOffset.x + ' - ' + this.viewOffset.y);
+			if (realOffset.x < minx) {
+				realOffset.x = minx;
+			}
+			else if (realOffset.x + this.width > maxx) {
+				realOffset.x = maxx - this.width;
+			}
 			
-			this.dungeonRenderer.setViewOffset(this.viewOffset.x, this.viewOffset.y);
+			if (realOffset.y < miny) {
+				realOffset.y = miny;
+			}
+			else if (realOffset.y + this.height > maxy) {
+				realOffset.y = maxy - this.height;
+			}
+			
+			this.dungeonRenderer.setViewOffset(realOffset.x, realOffset.y ); 
 			this.dungeonRenderer.setViewScale(this.zoom);
 		}
 	};
