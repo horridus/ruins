@@ -86,15 +86,15 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.icon = new THREE.Sprite({
 		map: texture,
 		useScreenCoordinates: true,
-		affectedByDistance: true,
+		affectedByDistance: false,
 		scaleByViewport: true,
 		mergeWith3D: false,
 		color: 0xffffff,
 		alignment: THREE.SpriteAlignment.topLeft,
 	});
 
-	this.icon.position = new THREE.Vector3((3 * this.tileSize) - this.viewOffset.x/this.scale, 2 * this.tileSize - this.viewOffset.y/this.scale, 0.5);
-	this.icon.scale = new THREE.Vector3(1.0/this.scale, 1.0/this.scale, 1.0/this.scale);
+	this.icon.position = new THREE.Vector3((5 * (this.tileSize * this.scale)) - (this.viewOffset.x), (10 * (this.tileSize * this.scale)) - (this.viewOffset.y), 0.5);
+	this.icon.scale = new THREE.Vector3(this.scale, this.scale, this.scale);
 	this.scene.add(this.icon);
 	///////////////////////////
 };
@@ -115,10 +115,7 @@ RUINS.DungeonRenderer.prototype.setViewOffset = function(offsetx, offsety) {
 	this.dungeonMaterial.needsUpdate = true;
 	
 	//TEMP/////////////////////
-	var centerx = Math.round((this.viewOffset.x + this.width)/2.0);
-	var centery = Math.round((this.viewOffset.y + this.height)/2.0);
-	
-	this.icon.position = new THREE.Vector3((3 * (this.tileSize)) - (this.viewOffset.x), (2 * (this.tileSize)) - (this.viewOffset.y), 0.5);
+	this.icon.position = new THREE.Vector3((5 * (this.tileSize * this.scale)) - (this.viewOffset.x), (10 * (this.tileSize * this.scale)) - (this.viewOffset.y), 0.5);
 	this.icon.scale = new THREE.Vector3(this.scale, this.scale, this.scale);
 	///////////////////////////
 };

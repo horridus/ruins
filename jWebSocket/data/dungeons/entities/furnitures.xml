@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+    <entity id="SINK_0">
+        <drawable>
+            <img>sink_0.png</img>
+        </drawable>
+    </entity>
+</entities>

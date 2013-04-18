@@ -429,6 +429,7 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 				this.viewOffset.x = (this.viewOffset.x + this.width > maxx)? maxx - this.width : this.viewOffset.x;
 			}
 
+			/*
 			if ( this.moveUpward ) {
 				
 				this.zoom += actualZoomSpeed;
@@ -451,8 +452,8 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 
 				this.mouseWheelDelta = 0;
 			}
-			
-			
+			*/
+			/*
 			var centerx = Math.round((this.viewOffset.x + this.width)/2.0);
 			var centery = Math.round((this.viewOffset.y + this.height)/2.0);
 			
@@ -476,7 +477,10 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 				realOffset.y = maxy - this.height;
 			}
 			
-			this.dungeonRenderer.setViewOffset(realOffset.x, realOffset.y ); 
+			this.dungeonRenderer.setViewOffset(realOffset.x, realOffset.y);
+			*/			
+			
+			this.dungeonRenderer.setViewOffset(this.viewOffset.x, this.viewOffset.y);
 			this.dungeonRenderer.setViewScale(this.zoom);
 		}
 	};

@@ -16,6 +16,7 @@ import cek.ruins.world.environment.Biomes;
 import cek.ruins.world.environment.Resources;
 import cek.ruins.world.locations.dungeons.DungeonsArchitect;
 import cek.ruins.world.locations.dungeons.Materials;
+import cek.ruins.world.locations.dungeons.entities.EntitiesBreeder;
 import cek.ruins.world.locations.settlements.SettlementsArchitect;
 import cek.ruins.bookofnames.BookOfNames;
 import cek.ruins.configuration.Configuration;
@@ -77,6 +78,12 @@ public class Main {
 		Materials materials = new Materials();
 		materials.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/materials");
 		ApplicationMap.set("materials", materials);
+		
+		//load dungeon's entities
+		logger.info("Reading " + Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
+		EntitiesBreeder breeder = new EntitiesBreeder();
+		breeder.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
+		ApplicationMap.set("entitiesBreeder", breeder);
 		
 		Server fileServer = null;
 		try {
