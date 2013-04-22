@@ -4,10 +4,20 @@ import java.util.Observer;
 
 import org.dom4j.Document;
 
+import com.mongodb.BasicDBObjectBuilder;
+
 public abstract class EntityComponent implements Observer {
-	public EntityComponent() {
+	private Entity ownerEntity;
 	
+	public void setOwnerEntity(Entity ownerEntity) {
+		this.ownerEntity = ownerEntity;
 	}
 	
-	public abstract void configure(Document configuration);
+	public abstract void configure(Document configuration) throws Exception;
+	
+	public abstract void statusToJSON(BasicDBObjectBuilder builder);
+
+	public Entity getOwnerEntity() {
+		return ownerEntity;
+	}
 }

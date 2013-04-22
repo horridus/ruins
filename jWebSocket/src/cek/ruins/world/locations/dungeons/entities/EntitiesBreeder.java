@@ -19,6 +19,8 @@ public class EntitiesBreeder {
 	private static String DEFAULT_COMPONENTS_NAMESPACE = "cek.ruins.world.locations.dungeons.entities.components";
 	private Map<String, EntityTemplate> entitiesTemplates;
 	
+	public EntitiesBreeder() {}
+	
 	@SuppressWarnings("unchecked")
 	public void loadData(String path) throws Exception {
 		this.entitiesTemplates = new HashMap<String, EntityTemplate>();
@@ -84,6 +86,7 @@ public class EntitiesBreeder {
 			for (Entry<String, Document> componentEntry : template.components().entrySet()) {
 				Class<?> componentClass = Class.forName(componentEntry.getKey());
 				EntityComponent component = (EntityComponent) componentClass.newInstance();
+				component.setOwnerEntity(entity);
 				component.configure(componentEntry.getValue());
 				
 				entity.addComponent(component);

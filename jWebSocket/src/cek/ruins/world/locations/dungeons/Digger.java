@@ -13,8 +13,9 @@ import org.mozilla.javascript.NativeObject;
 
 import cek.ruins.Point;
 import cek.ruins.ScriptExecutor;
+import cek.ruins.world.locations.dungeons.entities.EntitiesBreeder;
 
-import com.infomatiq.jsi.rtree.RTree;
+//import com.infomatiq.jsi.rtree.RTree;
 
 public class Digger {
 	private DungeonsArchitect dungeonsArchitect;
@@ -25,28 +26,28 @@ public class Digger {
 	private DungeonCell currentCell;
 	private List<List<DungeonTile>> currentTerrain;
 	private Random generator;
-	private RTree roomsTree;
+	//private RTree roomsTree;
 	
 	public Digger(DungeonsArchitect dungeonsArchitect, Random generator) {
 		this.dungeonsArchitect = dungeonsArchitect;
 		this.generator = generator;
 		this.currentTerrain = null;		
-		this.roomsTree = new RTree();
-		this.roomsTree.init(null);
+		//this.roomsTree = new RTree();
+		//this.roomsTree.init(null);
 	}
 
-	public Dungeon generate(UUID dungeonId, String dungeonTemplateId, Materials materials) {
+	public Dungeon generate(UUID dungeonId, String dungeonTemplateId, Materials materials, EntitiesBreeder breeder) {
 		DungeonTemplate dungeonTemplate = this.dungeonsArchitect.dungeonsTemplates().get(dungeonTemplateId);
 		
 		if (dungeonTemplate != null) {
-			init(dungeonId, dungeonTemplate, materials);
+			init(dungeonId, dungeonTemplate, materials, breeder);
 			build(dungeonTemplate);
 		}
 			
 		return dungeon;
 	}
 		
-	public void init(UUID dungeonId, DungeonTemplate template, Materials materials) {
+	public void init(UUID dungeonId, DungeonTemplate template, Materials materials, EntitiesBreeder breeder) {
 		//init global objects map for scripts
 		this.scriptsGlobalObjects = new HashMap<String, Object>();
 		this.scriptsGlobalObjects.put("_digger_", this);
@@ -64,6 +65,16 @@ public class Digger {
 		for (Map.Entry<String, Material> materialEntry : materials.templates().entrySet()) {
 			this.scriptsGlobalObjects.put("_mat_" + materialEntry.getKey(), materialEntry.getValue());
 		}
+		
+		this.scriptsGlobalObjects.put("_breeder_", breeder);
+		
+		//TEMP//////////////////////////////
+		try {
+			breeder.breed("SINK_0");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		////////////////////////////////////
 		
 		ScriptExecutor executor = ScriptExecutor.executor();
 		executor.executeScript(template.initScript, this.scriptsGlobalObjects);

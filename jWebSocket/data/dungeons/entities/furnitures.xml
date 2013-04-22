@@ -4,5 +4,6 @@
         <drawable>
             <img>sink_0.png</img>
         </drawable>
+        <position/>
     </entity>
 </entities>

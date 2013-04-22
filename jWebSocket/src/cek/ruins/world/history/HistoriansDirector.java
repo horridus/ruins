@@ -79,7 +79,7 @@ public class HistoriansDirector {
 		this.logger = null;
 	}
 
-	void dispatch(Event event) {
+	public void dispatch(Event event) {
 		Iterator<EventsDispatcher> dispatchersIt = this.dispatchers.iterator();
 		while (dispatchersIt.hasNext()) {
 			dispatchersIt.next().publish(event);

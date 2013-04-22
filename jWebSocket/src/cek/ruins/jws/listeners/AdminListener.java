@@ -25,7 +25,7 @@ import cek.ruins.bookofnames.BookOfNames;
 import cek.ruins.configuration.Configuration;
 import cek.ruins.events.Event;
 import cek.ruins.events.EventName;
-import cek.ruins.events.EventsDispatcher;
+import cek.ruins.events.WorldEventsDispatcher;
 import cek.ruins.map.Map;
 import cek.ruins.map.PoliticalRegion;
 import cek.ruins.map.Region;
@@ -94,7 +94,7 @@ public class AdminListener extends GenericListener {
 			//init session if needed 
 			if (sstorage.get(AdminListener.NS + "__session_initialized__") == null) {
 				//create EventDispatcher for this user and subscribe to it
-				EventsDispatcher dispatcher = new EventsDispatcher();
+				WorldEventsDispatcher dispatcher = new WorldEventsDispatcher();
 				dispatcher.registerSubscriber(aEvent.getConnector());
 				sstorage.put("dispatcher", dispatcher);
 				
@@ -303,7 +303,7 @@ public class AdminListener extends GenericListener {
 						else {
 							BookOfNames bookOfNames = (BookOfNames) ApplicationMap.get("bookOfNames");
 							
-							EventsDispatcher dispatcher = (EventsDispatcher) sstorage.get("dispatcher");
+							WorldEventsDispatcher dispatcher = (WorldEventsDispatcher) sstorage.get("dispatcher");
 
 							Civilization civilization = civilizations.createCivilization(civIndex, map, rIndex, bookOfNames, generator);
 
@@ -508,7 +508,7 @@ public class AdminListener extends GenericListener {
 
 		historiansDirector.clearDispatchers();
 		
-		EventsDispatcher dispatcher = (EventsDispatcher) aEvent.getSession().getStorage().get("dispatcher");
+		WorldEventsDispatcher dispatcher = (WorldEventsDispatcher) aEvent.getSession().getStorage().get("dispatcher");
 		historiansDirector.registerDispatcher(dispatcher);
 
 		historiansDirector.setHistoryLoggingFile(Configuration.WORLDS_FOLDER_LOCATION + File.separator + map.id() + File.separator + "history.log");
