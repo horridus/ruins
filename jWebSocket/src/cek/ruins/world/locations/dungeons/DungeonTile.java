@@ -5,6 +5,7 @@ public class DungeonTile {
 	protected int x, y, depth;
 	protected boolean isEntrance;
 	private boolean isCorridor;
+	private boolean isRoom;
 	
 	public DungeonTile(int x, int y, int depth) {
 		this.material = Materials.NOMATERIAL();
@@ -12,7 +13,8 @@ public class DungeonTile {
 		this.y = y;
 		this.depth = depth;
 		this.isEntrance = false;
-		this.setCorridor(false);
+		this.isCorridor = false;
+		this.isRoom = false;
 	}
 
 	public Material material() {
@@ -61,6 +63,14 @@ public class DungeonTile {
 
 	public void setCorridor(boolean isCorridor) {
 		this.isCorridor = isCorridor;
+	}
+	
+	public boolean isRoom() {
+		return isRoom;
+	}
+
+	public void setRoom(boolean isRoom) {
+		this.isRoom = isRoom;
 	}
 
 	@Override

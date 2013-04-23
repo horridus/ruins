@@ -15,6 +15,7 @@ import cek.ruins.ScriptExecutor;
 import cek.ruins.XmlDocument;
 
 public class DungeonsArchitect {
+	private static String DEFAULT_DEPTH_NUM = "5";
 	private static String DEFAULT_DUNGEON_SIZE = "512";
 	private static String DEFAULT_CELLS_NUM = "32";
 	
@@ -87,6 +88,7 @@ public class DungeonsArchitect {
 					
 					String size = dungeon.attributeValue("size", DungeonsArchitect.DEFAULT_DUNGEON_SIZE);
 					String cells = dungeon.attributeValue("cells", DungeonsArchitect.DEFAULT_CELLS_NUM);
+					String depth = dungeon.attributeValue("depth", DungeonsArchitect.DEFAULT_DEPTH_NUM);
 					
 					//read and compile template's scripts
 					Element init = (Element) dungeon.selectSingleNode("./init");
@@ -95,15 +97,12 @@ public class DungeonsArchitect {
 					Element build = (Element) dungeon.selectSingleNode("./build");
 					Script dungeonBuildScript = ScriptExecutor.executor().compileScript(build.getText(), "DungeonsArchitect");
 					
-					Element terrain = (Element) dungeon.selectSingleNode("./terrain");
-					Script dungeonTerrainScript = ScriptExecutor.executor().compileScript(terrain.getText(), "DungeonsArchitect");
-					
 					dungeonTemplate.id = id;
 					dungeonTemplate.size = Integer.parseInt(size);
 					dungeonTemplate.cells = Integer.parseInt(cells);
+					dungeonTemplate.depth = Integer.parseInt(depth);
 					dungeonTemplate.initScript = dungeonInitScript;
 					dungeonTemplate.buildScript = dungeonBuildScript;
-					dungeonTemplate.terrainScript = dungeonTerrainScript;
 					
 					this.dungeonsTemplates.put(id, dungeonTemplate);
 				}

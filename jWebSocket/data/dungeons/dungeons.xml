@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons>
-    <dungeon id="generic" size="512" cells="32">
+    <dungeon id="generic" size="512" cells="32" depth="5">
         <init>
-            <![CDATA[    
-	        ]]>
+            <![CDATA[
+                var size = _dungeon_.size();
+                for (var y=0; y<size; y++) {
+                    for (var x=0; x<size; x++) {
+                        _digger_.digTile(x, y, _depth_, _mat_DIRT_BLOCK_0);
+                    }
+                }
+            ]]>
         </init>
         <build>
             <![CDATA[
@@ -102,15 +108,5 @@
 	            */
             ]]>
         </build>
-        <terrain>
-            <![CDATA[
-                var size = _dungeon_.size();
-                for (var y=0; y<size; y++) {
-                    for (var x=0; x<size; x++) {
-                        _digger_.digTerrainTile(x, y, _mat_DIRT_BLOCK_0);
-                    }
-                }
-            ]]>
-        </terrain>
     </dungeon>
 </dungeons>

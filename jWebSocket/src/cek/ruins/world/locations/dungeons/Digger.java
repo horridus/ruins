@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import java.util.Vector;
 
 import org.mozilla.javascript.NativeObject;
 
@@ -24,18 +23,22 @@ public class Digger {
 	private Map<String, Object> scriptsGlobalObjects;
 	private Point iterator;
 	private DungeonCell currentCell;
-	private List<List<DungeonTile>> currentTerrain;
 	private Random generator;
+	private boolean corridorFlag;
+	private boolean roomFlag;
+	
 	//private RTree roomsTree;
 	
 	public Digger(DungeonsArchitect dungeonsArchitect, Random generator) {
 		this.dungeonsArchitect = dungeonsArchitect;
 		this.generator = generator;
-		this.currentTerrain = null;		
+		this.corridorFlag = false;
+		this.roomFlag = false;
+		
 		//this.roomsTree = new RTree();
 		//this.roomsTree.init(null);
 	}
-
+	
 	public Dungeon generate(UUID dungeonId, String dungeonTemplateId, Materials materials, EntitiesBreeder breeder) {
 		DungeonTemplate dungeonTemplate = this.dungeonsArchitect.dungeonsTemplates().get(dungeonTemplateId);
 		
@@ -53,11 +56,8 @@ public class Digger {
 		this.scriptsGlobalObjects.put("_digger_", this);
 		
 		//create new dungeon and level 0
-		this.dungeon = new Dungeon(dungeonId, template.size, template.cells);
+		this.dungeon = new Dungeon(dungeonId, template.size, template.cells, template.depth);
 		this.scriptsGlobalObjects.put("_dungeon_", this.dungeon);
-		
-		this.depth = dungeon.addLevel();
-		this.scriptsGlobalObjects.put("_depth_", this.depth);
 		
 		this.iterator = new Point(0, 0);
 		
@@ -69,15 +69,29 @@ public class Digger {
 		this.scriptsGlobalObjects.put("_breeder_", breeder);
 		
 		//TEMP//////////////////////////////
-		try {
-			breeder.breed("SINK_0");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			breeder.breed("SINK_0");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		////////////////////////////////////
 		
+		for (int d = 0; d < this.dungeon.depth(); d++) {
+			this.depth = d;
+			this.scriptsGlobalObjects.put("_depth_", this.depth);
+			
+			ScriptExecutor executor = ScriptExecutor.executor();
+			executor.executeScript(template.initScript, this.scriptsGlobalObjects);
+		}
+		
+		this.depth = 0;
+		this.scriptsGlobalObjects.put("_depth_", this.depth);
+	}
+	
+	protected void build(DungeonTemplate dungeonTemplate) {
+		//dig dungeon
 		ScriptExecutor executor = ScriptExecutor.executor();
-		executor.executeScript(template.initScript, this.scriptsGlobalObjects);
+		executor.executeScript(dungeonTemplate.buildScript, this.scriptsGlobalObjects);
 	}
 	
 	public void setGenerator(Random generator) {
@@ -91,6 +105,8 @@ public class Digger {
 		
 		DungeonTile tile = tile(dungeonx, dungeony, this.currentCell.depth()); 
 		tile.setMaterial(material);
+		tile.setCorridor(this.corridorFlag);
+		tile.setRoom(this.roomFlag);
 		
 		//FIXME vale pere tutti i materiali?
 		if (cellx == 0)
@@ -104,11 +120,11 @@ public class Digger {
 	}
 	
 	public void digTile(int x, int y, int depth, Material material) {
-		tile(x, y, depth).setMaterial(material);
-	}
-	
-	public void digTerrainTile(int x, int y, Material material) {
-		terrainTile(x, y).setMaterial(material);
+		DungeonTile tile = tile(x, y, depth);
+		tile.setMaterial(material);
+		
+		tile.setCorridor(this.corridorFlag);
+		tile.setRoom(this.roomFlag);
 	}
 	
 	public Material cellTileMaterial(int cellx, int celly) {
@@ -120,10 +136,6 @@ public class Digger {
 	
 	public DungeonTile tile(int x, int y, int depth) {
 		return this.dungeon.tile(x, y, depth);
-	}
-	
-	public DungeonTile terrainTile(int x, int y) {
-		return this.currentTerrain.get(x).get(y);
 	}
 	
 	public int randomI(int min, int max) {
@@ -166,6 +178,8 @@ public class Digger {
 		ScriptExecutor executor = ScriptExecutor.executor();
 		RoomTemplate roomTemplate = this.dungeonsArchitect.roomsTemplates().get(roomId);
 		if (roomTemplate != null) {
+			startRoom();
+			
 			//set function args
 			this.scriptsGlobalObjects.put("_args_", args);
 			
@@ -175,6 +189,8 @@ public class Digger {
 			
 			//rest function args
 			this.scriptsGlobalObjects.put("_args_", null);
+			
+			stopRoom();
 		}
 	}
 	
@@ -195,9 +211,10 @@ public class Digger {
 		List<DungeonTile> corridor = corridorsDigger.dig(start, goal);
 		
 		if (corridor != null) {
+			startCorridor();
+			
 			for (DungeonTile tile : corridor) {
-				tile.setMaterial(material);
-				tile.setCorridor(true);
+				digTile(tile.x(), tile.y(), tile.depth(), material);
 				
 				//FIXME vale per tutti i materiali?
 				if (tile.x%this.cellSize() == 0)
@@ -233,69 +250,63 @@ public class Digger {
 					
 					if (tile.x() > 0 && skipDir != 1) {
 						DungeonTile neighbor = this.tile(tile.x() - 1, tile.y(), tile.depth());
-						if (neighbor.material().equals(Materials.NOMATERIAL())) {
-							neighbor.setMaterial(wallMaterial);
-							neighbor.setCorridor(true);
+						if (!neighbor.isRoom()) {
+							digTile(tile.x() - 1, tile.y(), tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() < this.dungeon.size() - 1 && skipDir != 2) {
 						DungeonTile neighbor = this.tile(tile.x() + 1, tile.y(), tile.depth());
-						if (neighbor.material().equals(Materials.NOMATERIAL())) {
-							neighbor.setMaterial(wallMaterial);
-							neighbor.setCorridor(true);
+						if (!neighbor.isRoom()) {
+							digTile(tile.x() + 1, tile.y(), tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.y() > 0 && skipDir != 3) {
 						DungeonTile neighbor = this.tile(tile.x(), tile.y() - 1, tile.depth());
-						if (neighbor.material().equals(Materials.NOMATERIAL())) {
-							neighbor.setMaterial(wallMaterial);
-							neighbor.setCorridor(true);
+						if (!neighbor.isRoom()) {
+							digTile(tile.x(), tile.y() - 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.y() < this.dungeon.size() - 1 && skipDir != 4) {
 						DungeonTile neighbor = this.tile(tile.x(), tile.y() + 1, tile.depth());
-						if (neighbor.material().equals(Materials.NOMATERIAL())) {
-							neighbor.setMaterial(wallMaterial);
-							neighbor.setCorridor(true);
+						if (!neighbor.isRoom()) {
+							digTile(tile.x(), tile.y() + 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() > 0 && tile.y() > 0) {
 						DungeonTile neighbor = this.tile(tile.x() - 1, tile.y() - 1, tile.depth());
-						if (neighbor.material().equals(Materials.NOMATERIAL())) {
-							neighbor.setMaterial(wallMaterial);
-							neighbor.setCorridor(true);
+						if (!neighbor.isRoom()) {
+							digTile(tile.x() - 1, tile.y() - 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() > 0 && tile.y() < this.dungeon.size() - 1) {
 						DungeonTile neighbor = this.tile(tile.x() - 1, tile.y() + 1, tile.depth());
-						if (neighbor.material().equals(Materials.NOMATERIAL())) {
-							neighbor.setMaterial(wallMaterial);
-							neighbor.setCorridor(true);
+						if (!neighbor.isRoom()) {
+							digTile(tile.x() - 1, tile.y() + 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() < this.dungeon.size() - 1 && tile.y() > 0) {
 						DungeonTile neighbor = this.tile(tile.x() + 1, tile.y() - 1, tile.depth());
-						if (neighbor.material().equals(Materials.NOMATERIAL())) {
-							neighbor.setMaterial(wallMaterial);
-							neighbor.setCorridor(true);
+						if (!neighbor.isRoom()) {
+							digTile(tile.x() + 1, tile.y() - 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() < this.dungeon.size() - 1 && tile.y() < this.dungeon.size() - 1) {
 						DungeonTile neighbor = this.tile(tile.x() + 1, tile.y() + 1, tile.depth());
-						if (neighbor.material().equals(Materials.NOMATERIAL())) {
-							neighbor.setMaterial(wallMaterial);
-							neighbor.setCorridor(true);
+						if (!neighbor.isRoom()) {
+							digTile(tile.x() + 1, tile.y() + 1, tile.depth(), wallMaterial);
 						}
 					}
 				}
 			}
+			
+			stopCorridor();
 		}
 	}
 	
@@ -391,39 +402,19 @@ public class Digger {
 	
 	/* *** */
 	
-	protected void build(DungeonTemplate dungeonTemplate) {
-		//dig dungeon
-		ScriptExecutor executor = ScriptExecutor.executor();
-		executor.executeScript(dungeonTemplate.buildScript, this.scriptsGlobalObjects);
-		
-		//for every existing level, create terrain in wich dungeon is "submerged"...
-		for (int d = 0; d < this.dungeon.depth(); d++) {
-			List<List<DungeonTile>> terrain = new Vector<List<DungeonTile>>(this.dungeon.size());
-			for (int n = 0; n < this.dungeon.size(); n++) {
-				List<DungeonTile> row = new Vector<DungeonTile>(this.dungeon.size());
-				for (int r = 0; r < this.dungeon.size(); r++) {
-					DungeonTile tile = new DungeonTile(n, r, d);
-					row.add(tile);
-				}
-				terrain.add(row);
-			}
-			
-			this.currentTerrain = terrain;
-			this.scriptsGlobalObjects.put("_terrain_depth_", d);
-			
-			executor.executeScript(dungeonTemplate.terrainScript, this.scriptsGlobalObjects);
-			
-			//and then mix the two maps
-			for (int y = 0; y < this.dungeon.size(); y++) {
-				for (int x = 0; x < this.dungeon.size(); x++) {
-					DungeonTile dungeonTile = tile(x, y, d);
-					if (dungeonTile.material().equals(Materials.NOMATERIAL()))
-						dungeonTile.setMaterial(terrainTile(x, y).material());
-				}
-			}
-			
-			this.scriptsGlobalObjects.put("_terrain_depth_", null);
-			this.currentTerrain = null;
-		}
+	private void startCorridor() {
+		this.corridorFlag = true;
+	}
+	
+	private void stopCorridor() {
+		this.corridorFlag = false;
+	}
+	
+	private void startRoom() {
+		this.roomFlag = true;
+	}
+	
+	private void stopRoom() {
+		this.roomFlag = false;
 	}
 }

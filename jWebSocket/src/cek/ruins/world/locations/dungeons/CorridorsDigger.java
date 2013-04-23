@@ -36,7 +36,7 @@ public class CorridorsDigger extends AStar<DungeonTile> {
 		if (from.x() == to.x() && from.y() == to.y())
 			return 0.0;
 		else {
-			if ((to.material().equals(Materials.NOMATERIAL())) || to.isCorridor())
+			if (!to.isRoom() || to.isCorridor())
 				return 1.0;
 			else
 				return Double.MAX_VALUE;
@@ -63,28 +63,28 @@ public class CorridorsDigger extends AStar<DungeonTile> {
 		if (tile.x() > cellBoundX0) {
 			DungeonTile successor = dungeon.tile(tile.x() - 1, tile.y(), tile.depth());
 			
-			if (successor.material.equals(Materials.NOMATERIAL()) || successor.isEntrance() || successor.isCorridor())
+			if (!successor.isRoom() || successor.isEntrance() || successor.isCorridor())
 				successors.add(successor);
 		}
 		
 		if (tile.x() < cellBoundX1) {
 			DungeonTile successor = dungeon.tile(tile.x() + 1, tile.y(), tile.depth());
 			
-			if (successor.material.equals(Materials.NOMATERIAL()) || successor.isEntrance() || successor.isCorridor())
+			if (!successor.isRoom() || successor.isEntrance() || successor.isCorridor())
 				successors.add(successor);
 		}
 		
 		if (tile.y() > cellBoundY0) {
 			DungeonTile successor = dungeon.tile(tile.x(), tile.y() - 1, tile.depth());
 			
-			if (successor.material.equals(Materials.NOMATERIAL()) || successor.isEntrance() || successor.isCorridor())
+			if (!successor.isRoom() || successor.isEntrance() || successor.isCorridor())
 				successors.add(successor);
 		}
 		
 		if (tile.y() < cellBoundY1) {
 			DungeonTile successor = dungeon.tile(tile.x(), tile.y() + 1, tile.depth());
 			
-			if (successor.material.equals(Materials.NOMATERIAL()) || successor.isEntrance() || successor.isCorridor())
+			if (!successor.isRoom() || successor.isEntrance() || successor.isCorridor())
 				successors.add(successor);
 		}
 		

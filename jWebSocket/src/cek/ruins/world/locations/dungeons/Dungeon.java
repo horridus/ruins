@@ -16,12 +16,15 @@ public class Dungeon implements Marshallable {
 	private List<List<List<DungeonTile>>> levels;
 	private List<List<List<DungeonCell>>> cells;
 
-	public Dungeon(UUID id, int size, int numCellsPerSide) {
+	public Dungeon(UUID id, int size, int numCellsPerSide, int depth) {
 		this.id = id;
 		this.size = size;
 		this.numCellsPerSide = numCellsPerSide;
 		this.levels = new Vector<List<List<DungeonTile>>>();
 		this.cells = new Vector<List<List<DungeonCell>>>();
+		
+		for (int d = 0; d < depth; d++)
+			addLevel();
 	}
 	
 	public List<List<DungeonTile>> level(int depth) {
