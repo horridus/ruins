@@ -1,4 +1,4 @@
-package cek.ruins.world.locations.dungeons;
+package cek.ruins.world.locations.dungeons.materials;
 
 import java.io.File;
 import java.io.FilenameFilter;

@@ -13,6 +13,9 @@ import org.mozilla.javascript.Script;
 
 import cek.ruins.ScriptExecutor;
 import cek.ruins.XmlDocument;
+import cek.ruins.world.locations.dungeons.templates.BuildEventTemplate;
+import cek.ruins.world.locations.dungeons.templates.DungeonTemplate;
+import cek.ruins.world.locations.dungeons.templates.RoomTemplate;
 
 public class DungeonsArchitect {
 	private static String DEFAULT_DEPTH_NUM = "5";
@@ -20,6 +23,7 @@ public class DungeonsArchitect {
 	private static String DEFAULT_CELLS_NUM = "32";
 	
 	private Map<String, RoomTemplate> roomsTemplates;
+	private Map<String, BuildEventTemplate> eventsTemplates;
 	private Map<String, DungeonTemplate> dungeonsTemplates;
 	
 	public DungeonsArchitect() {}
@@ -27,6 +31,7 @@ public class DungeonsArchitect {
 	@SuppressWarnings("unchecked")
 	public void loadData(String path) throws Exception {
 		this.roomsTemplates = new HashMap<String, RoomTemplate>();
+		this.eventsTemplates = new HashMap<String, BuildEventTemplate>();
 		this.dungeonsTemplates = new HashMap<String, DungeonTemplate>();
 		
 		//load rooms templates
@@ -60,10 +65,50 @@ public class DungeonsArchitect {
 						RoomTemplate roomTemplate = new RoomTemplate();
 						Script roomGeneratorScript = ScriptExecutor.executor().compileScript(roomGenerator.getText(), "DungeonsArchitect");
 						
-						roomTemplate.id = id;
-						roomTemplate.roomGenerator = roomGeneratorScript;
+						roomTemplate.setId(id);
+						roomTemplate.setRoomGenerator(roomGeneratorScript);
 						
 						this.roomsTemplates.put(id, roomTemplate);
+					}
+				}
+			}
+		}
+		
+		File buildEventsTemplatesDirectory = new File(path + File.separator + "buildEvents");
+		templateFiles = buildEventsTemplatesDirectory.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".xml");
+			}
+		});
+		
+		for (File templateFile : templateFiles) {
+			if (templateFile.exists() && templateFile.isFile()) {
+				XmlDocument buildEventsTemplate = new XmlDocument(FileUtils.readFileToString(templateFile, "UTF-8"));
+				
+				Iterator<Element> buildEventsIt = (Iterator<Element>) buildEventsTemplate.selectNodes("/events/event").iterator();
+				
+				if (!buildEventsIt.hasNext()) {
+					throw new Exception(path + File.separator + templateFile.getName() + " malformed: no element <event> found.");
+				}
+				
+				while (buildEventsIt.hasNext()) {
+					Element event = buildEventsIt.next();
+					
+					String id = event.attributeValue("id");
+					Element script = (Element) event.selectSingleNode("./script");
+					
+					if (id == null) {
+						throw new Exception(path + File.separator + templateFile.getName() + " malformed: id is mandatory.");
+					}
+					else {
+						BuildEventTemplate eventTemplate = new BuildEventTemplate();
+						Script buildScript = ScriptExecutor.executor().compileScript(script.getText(), "DungeonsArchitect");
+						
+						eventTemplate.setId(id);
+						eventTemplate.setBuildScript(buildScript);
+						
+						this.eventsTemplates.put(id, eventTemplate);
 					}
 				}
 			}
@@ -97,12 +142,12 @@ public class DungeonsArchitect {
 					Element build = (Element) dungeon.selectSingleNode("./build");
 					Script dungeonBuildScript = ScriptExecutor.executor().compileScript(build.getText(), "DungeonsArchitect");
 					
-					dungeonTemplate.id = id;
-					dungeonTemplate.size = Integer.parseInt(size);
-					dungeonTemplate.cells = Integer.parseInt(cells);
-					dungeonTemplate.depth = Integer.parseInt(depth);
-					dungeonTemplate.initScript = dungeonInitScript;
-					dungeonTemplate.buildScript = dungeonBuildScript;
+					dungeonTemplate.setId(id);
+					dungeonTemplate.setSize(Integer.parseInt(size));
+					dungeonTemplate.setCells(Integer.parseInt(cells));
+					dungeonTemplate.setDepth(Integer.parseInt(depth));
+					dungeonTemplate.setInitScript(dungeonInitScript);
+					dungeonTemplate.setBuildScript(dungeonBuildScript);
 					
 					this.dungeonsTemplates.put(id, dungeonTemplate);
 				}
@@ -116,6 +161,10 @@ public class DungeonsArchitect {
 
 	public Map<String, RoomTemplate> roomsTemplates() {
 		return this.roomsTemplates;
+	}
+	
+	public Map<String, BuildEventTemplate> buildEventsTemplates() {
+		return this.eventsTemplates;
 	}
 	
 	public Map<String, DungeonTemplate> dungeonsTemplates() {

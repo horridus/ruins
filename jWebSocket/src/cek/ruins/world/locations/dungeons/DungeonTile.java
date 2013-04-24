@@ -1,5 +1,8 @@
 package cek.ruins.world.locations.dungeons;
 
+import cek.ruins.world.locations.dungeons.materials.Material;
+import cek.ruins.world.locations.dungeons.materials.Materials;
+
 public class DungeonTile {
 	protected Material material;
 	protected int x, y, depth;

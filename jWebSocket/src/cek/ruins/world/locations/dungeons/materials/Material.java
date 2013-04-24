@@ -1,4 +1,4 @@
-package cek.ruins.world.locations.dungeons;
+package cek.ruins.world.locations.dungeons.materials;
 
 public class Material {
 	private String id;

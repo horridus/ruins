@@ -14,9 +14,9 @@ import cek.ruins.world.civilizations.CivilizationsTemplates;
 import cek.ruins.world.civilizations.CivilizationsHerald;
 import cek.ruins.world.environment.Biomes;
 import cek.ruins.world.environment.Resources;
+import cek.ruins.world.locations.dungeons.DungeonMaster;
 import cek.ruins.world.locations.dungeons.DungeonsArchitect;
-import cek.ruins.world.locations.dungeons.Materials;
-import cek.ruins.world.locations.dungeons.entities.EntitiesBreeder;
+import cek.ruins.world.locations.dungeons.materials.Materials;
 import cek.ruins.world.locations.settlements.SettlementsArchitect;
 import cek.ruins.bookofnames.BookOfNames;
 import cek.ruins.configuration.Configuration;
@@ -81,9 +81,9 @@ public class Main {
 		
 		//load dungeon's entities
 		logger.info("Reading " + Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
-		EntitiesBreeder breeder = new EntitiesBreeder();
-		breeder.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
-		ApplicationMap.set("entitiesBreeder", breeder);
+		DungeonMaster dungeonMaster = new DungeonMaster();
+		dungeonMaster.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
+		ApplicationMap.set("dungeonMaster", dungeonMaster);
 		
 		Server fileServer = null;
 		try {

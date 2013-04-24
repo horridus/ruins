@@ -7,7 +7,7 @@ import java.util.List;
 
 import cek.ruins.world.locations.dungeons.Dungeon;
 import cek.ruins.world.locations.dungeons.DungeonTile;
-import cek.ruins.world.locations.dungeons.Material;
+import cek.ruins.world.locations.dungeons.materials.Material;
 
 public class DungeonPainter {
 	public BufferedImage createDungeonImage(Dungeon dungeon, int lvlNumber) {

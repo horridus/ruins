@@ -12,7 +12,11 @@ import org.mozilla.javascript.NativeObject;
 
 import cek.ruins.Point;
 import cek.ruins.ScriptExecutor;
-import cek.ruins.world.locations.dungeons.entities.EntitiesBreeder;
+import cek.ruins.world.locations.dungeons.materials.Material;
+import cek.ruins.world.locations.dungeons.materials.Materials;
+import cek.ruins.world.locations.dungeons.templates.BuildEventTemplate;
+import cek.ruins.world.locations.dungeons.templates.DungeonTemplate;
+import cek.ruins.world.locations.dungeons.templates.RoomTemplate;
 
 //import com.infomatiq.jsi.rtree.RTree;
 
@@ -39,24 +43,24 @@ public class Digger {
 		//this.roomsTree.init(null);
 	}
 	
-	public Dungeon generate(UUID dungeonId, String dungeonTemplateId, Materials materials, EntitiesBreeder breeder) {
+	public Dungeon generate(UUID dungeonId, String dungeonTemplateId, Materials materials) {
 		DungeonTemplate dungeonTemplate = this.dungeonsArchitect.dungeonsTemplates().get(dungeonTemplateId);
 		
 		if (dungeonTemplate != null) {
-			init(dungeonId, dungeonTemplate, materials, breeder);
+			init(dungeonId, dungeonTemplate, materials);
 			build(dungeonTemplate);
 		}
 			
 		return dungeon;
 	}
 		
-	public void init(UUID dungeonId, DungeonTemplate template, Materials materials, EntitiesBreeder breeder) {
+	public void init(UUID dungeonId, DungeonTemplate template, Materials materials) {
 		//init global objects map for scripts
 		this.scriptsGlobalObjects = new HashMap<String, Object>();
 		this.scriptsGlobalObjects.put("_digger_", this);
 		
 		//create new dungeon and level 0
-		this.dungeon = new Dungeon(dungeonId, template.size, template.cells, template.depth);
+		this.dungeon = new Dungeon(dungeonId, template.size(), template.cells(), template.depth());
 		this.scriptsGlobalObjects.put("_dungeon_", this.dungeon);
 		
 		this.iterator = new Point(0, 0);
@@ -66,7 +70,7 @@ public class Digger {
 			this.scriptsGlobalObjects.put("_mat_" + materialEntry.getKey(), materialEntry.getValue());
 		}
 		
-		this.scriptsGlobalObjects.put("_breeder_", breeder);
+		//this.scriptsGlobalObjects.put("_breeder_", breeder);
 		
 		//TEMP//////////////////////////////
 //		try {
@@ -81,7 +85,7 @@ public class Digger {
 			this.scriptsGlobalObjects.put("_depth_", this.depth);
 			
 			ScriptExecutor executor = ScriptExecutor.executor();
-			executor.executeScript(template.initScript, this.scriptsGlobalObjects);
+			executor.executeScript(template.initScript(), this.scriptsGlobalObjects);
 		}
 		
 		this.depth = 0;
@@ -91,7 +95,7 @@ public class Digger {
 	protected void build(DungeonTemplate dungeonTemplate) {
 		//dig dungeon
 		ScriptExecutor executor = ScriptExecutor.executor();
-		executor.executeScript(dungeonTemplate.buildScript, this.scriptsGlobalObjects);
+		executor.executeScript(dungeonTemplate.buildScript(), this.scriptsGlobalObjects);
 	}
 	
 	public void setGenerator(Random generator) {
@@ -182,11 +186,9 @@ public class Digger {
 			
 			//set function args
 			this.scriptsGlobalObjects.put("_args_", args);
-			
 			//generate room and fill cell
 			this.currentCell.setRoomId(roomId);
-			executor.executeScript(roomTemplate.roomGenerator, this.scriptsGlobalObjects);
-			
+			executor.executeScript(roomTemplate.roomGenerator(), this.scriptsGlobalObjects);
 			//rest function args
 			this.scriptsGlobalObjects.put("_args_", null);
 			
@@ -398,6 +400,18 @@ public class Digger {
 		entrances.addAll(getWestCellEntrances());
 		
 		return entrances;
+	}
+	
+	public void executeEvent(String eventId, NativeObject args) {
+		ScriptExecutor executor = ScriptExecutor.executor();
+		BuildEventTemplate eventTemplate = this.dungeonsArchitect.buildEventsTemplates().get(eventId);
+		if (eventTemplate != null) {
+			//set function args
+			this.scriptsGlobalObjects.put("_args_", args);
+			executor.executeScript(eventTemplate.buildScript(), this.scriptsGlobalObjects);
+			//rest function args
+			this.scriptsGlobalObjects.put("_args_", null);
+		}
 	}
 	
 	/* *** */
