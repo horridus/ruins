@@ -155,8 +155,8 @@ public class DungeonsArchitect {
 		}
 	}
 	
-	public Digger newDiggerInstance(Random generator) {
-		return new Digger(this, generator);
+	public Digger newDigger(Random generator, Map<String, Object> executorScope) {
+		return new Digger(this, generator, executorScope);
 	}
 
 	public Map<String, RoomTemplate> roomsTemplates() {

@@ -6,31 +6,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import java.util.Map.Entry;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.text.WordUtils;
-import org.dom4j.Document;
 import org.dom4j.Element;
 
 import cek.ruins.XmlDocument;
 import cek.ruins.events.Event;
 import cek.ruins.events.EventsDispatcher;
-import cek.ruins.world.locations.dungeons.entities.Entity;
-import cek.ruins.world.locations.dungeons.entities.EntityComponent;
 import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
 
 public class DungeonMaster {
 	private static String DEFAULT_COMPONENTS_NAMESPACE = "cek.ruins.world.locations.dungeons.entities.components";
 	
 	private List<EventsDispatcher> dispatchers;
-	private Map<String, Entity> bredEntities;
 	private Map<String, EntityTemplate> entitiesTemplates;
 	
-	public DungeonMaster() {
-		this.bredEntities = new HashMap<String, Entity>();
-	}
+	public DungeonMaster() {}
 	
 	@SuppressWarnings("unchecked")
 	public void loadData(String path) throws Exception {
@@ -79,45 +72,19 @@ public class DungeonMaster {
 							entityTemplate.addComponent(clazz, componentConfig);
 						}
 						
-						this.entitiesTemplates.put(id, entityTemplate);
+						this.entitiesTemplates().put(id, entityTemplate);
 					}
 				}
 			}
 		}
 	}
 	
-	public Entity breed(String id) throws Exception {
-		EntityTemplate template = this.entitiesTemplates.get(id);
-		
-		if (template != null) {
-			Entity entity = new Entity();
-			entity.setTemplateId(id);
-			entity.setId(generateUniqueId());
-			
-			for (Entry<String, Document> componentEntry : template.components().entrySet()) {
-				Class<?> componentClass = Class.forName(componentEntry.getKey());
-				EntityComponent component = (EntityComponent) componentClass.newInstance();
-				component.setOwnerEntity(entity);
-				component.configure(componentEntry.getValue());
-				
-				entity.addComponent(component);
-			}
-			
-			//insert new entity in existing entities map
-			this.bredEntities.put(entity.id(), entity);
-			return entity;
-		}
-		else
-			throw new Exception("Entity template " + id + " not found.");
+	public Master newMaster(Random generator, Map<String, Object> executorScope) {
+		return new Master(this, generator, executorScope);
 	}
 	
-	protected String generateUniqueId() {
-		UUID uuid = UUID.randomUUID();
-		return uuid.toString().replace("-", "");
-	}
-	
-	public void deleteEntity(String id) {
-		this.bredEntities.remove(id);
+	public Map<String, EntityTemplate> entitiesTemplates() {
+		return entitiesTemplates;
 	}
 	
 	public void dispatch(Event event) {

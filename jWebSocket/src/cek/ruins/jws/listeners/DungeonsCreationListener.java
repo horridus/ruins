@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -17,12 +19,17 @@ import org.jwebsocket.listener.WebSocketServerTokenEvent;
 import org.jwebsocket.token.Token;
 
 import cek.ruins.ApplicationMap;
+import cek.ruins.ScriptExecutor;
 import cek.ruins.configuration.Configuration;
 import cek.ruins.utils.DungeonPainter;
 import cek.ruins.world.locations.dungeons.Digger;
 import cek.ruins.world.locations.dungeons.Dungeon;
+import cek.ruins.world.locations.dungeons.DungeonMaster;
 import cek.ruins.world.locations.dungeons.DungeonsArchitect;
+import cek.ruins.world.locations.dungeons.Master;
+import cek.ruins.world.locations.dungeons.materials.Material;
 import cek.ruins.world.locations.dungeons.materials.Materials;
+import cek.ruins.world.locations.dungeons.templates.DungeonTemplate;
 
 public class DungeonsCreationListener extends GenericListener {
 	private static String NS = DungeonsCreationListener.class.toString().substring(6);
@@ -74,10 +81,9 @@ public class DungeonsCreationListener extends GenericListener {
 						generator = new Random(new Date().getTime());
 					
 					DungeonsArchitect dungeonsArchitect = (DungeonsArchitect) ApplicationMap.get("dungeonsArchitect");
-					Digger digger = dungeonsArchitect.newDiggerInstance(generator);
-				
+					DungeonMaster dungeonMaster = (DungeonMaster) ApplicationMap.get("dungeonMaster");
 					Materials materials = (Materials) ApplicationMap.get("materials");
-					Dungeon dungeon = createNewDungeon(digger, materials);
+					Dungeon dungeon = createNewDungeon(dungeonsArchitect, dungeonMaster, materials, generator);
 					
 					response.setString("id", dungeon.id().toString());
 					response.setInteger("depth", dungeon.depth());
@@ -94,10 +100,16 @@ public class DungeonsCreationListener extends GenericListener {
 		}
 	}
 
-	protected Dungeon createNewDungeon(Digger digger, Materials materials) throws Exception {
+	protected Dungeon createNewDungeon(DungeonsArchitect dungeonsArchitect, DungeonMaster dungeonMaster, Materials materials, Random generator) throws Exception {
 		UUID id = UUID.randomUUID();
 		
-		Dungeon dungeon = digger.generate(id, "generic", materials); //TEMP
+		Map<String, Object> scriptsGlobalObjects = new HashMap<String, Object>();
+		
+		Digger digger = dungeonsArchitect.newDigger(generator, scriptsGlobalObjects);
+		Master master = dungeonMaster.newMaster(generator, scriptsGlobalObjects);
+		DungeonTemplate dungeonTemplate = dungeonsArchitect.dungeonsTemplates().get("generic"); //TEMP 
+		
+		Dungeon dungeon = generate(id, dungeonTemplate, digger, master, materials, scriptsGlobalObjects);
 		
 		//create a new entry in dungeons folder
 		File dungeonsDirectory = new File(Configuration.DUNGEONS_FOLDER_LOCATION + File.separator + id);
@@ -117,5 +129,62 @@ public class DungeonsCreationListener extends GenericListener {
 		}
 		
 		return dungeon;
+	}
+	
+	public Dungeon generate(UUID dungeonId, DungeonTemplate dungeonTemplate, Digger digger, Master master, Materials materials, Map<String, Object> scriptsGlobalObjects) {
+		if (dungeonTemplate != null) {
+			Dungeon dungeon = init(dungeonId, dungeonTemplate, digger, master, materials, scriptsGlobalObjects);
+			build(dungeonTemplate, dungeon, digger, master, materials, scriptsGlobalObjects);
+			return dungeon;
+		}
+			
+		return null;
+	}
+	
+	public Dungeon init(UUID dungeonId, DungeonTemplate template, Digger digger, Master master, Materials materials, Map<String, Object> scriptsGlobalObjects) {
+		//init global objects map for scripts
+		scriptsGlobalObjects.clear();
+		scriptsGlobalObjects.put("_digger_", digger);
+		scriptsGlobalObjects.put("_master_", master);
+		
+		//create new dungeon and level 0
+		Dungeon dungeon = new Dungeon(dungeonId, template.size(), template.cells(), template.depth());
+		scriptsGlobalObjects.put("_dungeon_", dungeon);
+		digger.setDungeon(dungeon);
+		
+		//add materials
+		for (Map.Entry<String, Material> materialEntry : materials.templates().entrySet()) {
+			scriptsGlobalObjects.put("_mat_" + materialEntry.getKey(), materialEntry.getValue());
+		}
+		
+		for (int d = 0; d < dungeon.depth(); d++) {
+			scriptsGlobalObjects.put("_depth_", d);
+			
+			ScriptExecutor executor = ScriptExecutor.executor();
+			executor.executeScript(template.initScript(), scriptsGlobalObjects);
+		}
+		
+		return dungeon;
+	}
+	
+	protected void build(DungeonTemplate dungeonTemplate, Dungeon dungeon, Digger digger, Master master, Materials materials, Map<String, Object> scriptsGlobalObjects) {
+		//init global objects map for scripts
+		scriptsGlobalObjects.clear();
+		scriptsGlobalObjects.put("_digger_", digger);
+		scriptsGlobalObjects.put("_master_", master);
+		
+		//create new dungeon and level 0
+		scriptsGlobalObjects.put("_dungeon_", dungeon);
+		
+		//add materials
+		for (Map.Entry<String, Material> materialEntry : materials.templates().entrySet()) {
+			scriptsGlobalObjects.put("_mat_" + materialEntry.getKey(), materialEntry.getValue());
+		}
+		
+		scriptsGlobalObjects.put("_depth_", 0); //FIXME serve?
+		
+		//dig dungeon
+		ScriptExecutor executor = ScriptExecutor.executor();
+		executor.executeScript(dungeonTemplate.buildScript(), scriptsGlobalObjects);
 	}
 }
