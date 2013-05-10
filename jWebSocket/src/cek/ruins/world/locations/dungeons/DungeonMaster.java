@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,14 +12,12 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.dom4j.Element;
 
 import cek.ruins.XmlDocument;
-import cek.ruins.events.Event;
-import cek.ruins.events.EventsDispatcher;
 import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
 
 public class DungeonMaster {
 	private static String DEFAULT_COMPONENTS_NAMESPACE = "cek.ruins.world.locations.dungeons.entities.components";
 	
-	private List<EventsDispatcher> dispatchers;
+	//private List<EventsDispatcher> dispatchers;
 	private Map<String, EntityTemplate> entitiesTemplates;
 	
 	public DungeonMaster() {}
@@ -79,14 +76,15 @@ public class DungeonMaster {
 		}
 	}
 	
-	public Master newMaster(Random generator, Map<String, Object> executorScope) {
-		return new Master(this, generator, executorScope);
+	public Master newMaster(Random generator) {
+		return new Master(this, generator);
 	}
 	
 	public Map<String, EntityTemplate> entitiesTemplates() {
 		return entitiesTemplates;
 	}
 	
+	/*
 	public void dispatch(Event event) {
 		Iterator<EventsDispatcher> dispatchersIt = this.dispatchers.iterator();
 		while (dispatchersIt.hasNext()) {
@@ -101,4 +99,5 @@ public class DungeonMaster {
 	public void clearDispatchers() {
 		this.dispatchers.clear();
 	}
+	*/
 }

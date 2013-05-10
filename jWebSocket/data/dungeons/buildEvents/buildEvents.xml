@@ -3,6 +3,9 @@
     <event id="test">
         <script>
             <![CDATA[
+                _digger_.createRoom('square', {x:4, y:4, size:6, exits:0x0000});
+                _digger_.createRoom('square', {x:11, y:4, size:5});
+                _digger_.digCorridor(9, 5, 11, 5, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
                 
             ]]>
         </script>
