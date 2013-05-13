@@ -18,7 +18,6 @@ public class DungeonCell {
 	protected List<Point> southEntrances;
 	protected List<Point> eastEntrances;
 	protected List<Point> westEntrances;
-	private String roomId;
 	
 	public DungeonCell(int row, int column, int depth, int size) {
 		this.row = row;
@@ -30,8 +29,6 @@ public class DungeonCell {
 		this.southEntrances = new ArrayList<Point>();
 		this.eastEntrances = new ArrayList<Point>();
 		this.westEntrances = new ArrayList<Point>();
-		
-		this.roomId = "";
 	}
 	
 	public int size() {
@@ -102,13 +99,5 @@ public class DungeonCell {
 		entrances.addAll(westEntrances);
 		
 		return entrances;
-	}
-
-	public String roomId() {
-		return roomId;
-	}
-
-	public void setRoomId(String roomId) {
-		this.roomId = roomId;
 	}
 }

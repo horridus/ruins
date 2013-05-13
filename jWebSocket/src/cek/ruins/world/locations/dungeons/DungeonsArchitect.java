@@ -8,16 +8,20 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.dom4j.Element;
 import org.mozilla.javascript.Script;
 
 import cek.ruins.ScriptExecutor;
 import cek.ruins.XmlDocument;
+import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
 import cek.ruins.world.locations.dungeons.templates.BuildEventTemplate;
 import cek.ruins.world.locations.dungeons.templates.DungeonTemplate;
 import cek.ruins.world.locations.dungeons.templates.RoomTemplate;
 
 public class DungeonsArchitect {
+	private static String DEFAULT_COMPONENTS_NAMESPACE = "cek.ruins.world.locations.dungeons.entities.components";
+	
 	private static String DEFAULT_DEPTH_NUM = "5";
 	private static String DEFAULT_DUNGEON_SIZE = "512";
 	private static String DEFAULT_CELLS_NUM = "32";
@@ -25,6 +29,7 @@ public class DungeonsArchitect {
 	private Map<String, RoomTemplate> roomsTemplates;
 	private Map<String, BuildEventTemplate> eventsTemplates;
 	private Map<String, DungeonTemplate> dungeonsTemplates;
+	private Map<String, EntityTemplate> entitiesTemplates;
 	
 	public DungeonsArchitect() {}
 	
@@ -33,10 +38,60 @@ public class DungeonsArchitect {
 		this.roomsTemplates = new HashMap<String, RoomTemplate>();
 		this.eventsTemplates = new HashMap<String, BuildEventTemplate>();
 		this.dungeonsTemplates = new HashMap<String, DungeonTemplate>();
+		this.entitiesTemplates = new HashMap<String, EntityTemplate>();
+		
+		//load entities templates
+		File enititesTemplatesDirectory = new File(path + File.separator + "entities");
+		File[] templateFiles = enititesTemplatesDirectory.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".xml");
+			}
+		});
+		
+		for (File templateFile : templateFiles) {
+			if (templateFile.exists() && templateFile.isFile()) {
+				XmlDocument entitiesTemplate = new XmlDocument(FileUtils.readFileToString(templateFile, "UTF-8"));
+				
+				Iterator<Element> entitiesIt = (Iterator<Element>) entitiesTemplate.selectNodes("/entities/entity").iterator();
+				
+				if (!entitiesIt.hasNext()) {
+					throw new Exception(path + File.separator + templateFile.getName() + " malformed: no element <entity> found.");
+				}
+				
+				while (entitiesIt.hasNext()) {
+					Element entity = entitiesIt.next();
+					String id = entity.attributeValue("id");
+					
+					if (id == null) {
+						throw new Exception(path + File.separator + templateFile.getName() + " malformed: id is mandatory.");
+					}
+					else {
+						EntityTemplate entityTemplate = new EntityTemplate();
+						entityTemplate.setId(id);
+						
+						Iterator<Element> componentsIt = entity.elementIterator();
+						while (componentsIt.hasNext()) {
+							Element componentConfig = componentsIt.next();
+							
+							//generate class name from element name if component doesn't have a class attribute
+							String clazz = componentConfig.attributeValue("class", "");
+							if (clazz.equals("")) {
+								clazz = DungeonsArchitect.DEFAULT_COMPONENTS_NAMESPACE + "." + WordUtils.capitalize(componentConfig.getName()) + "Component";
+							}
+							
+							entityTemplate.addComponent(clazz, componentConfig);
+						}
+						
+						this.entitiesTemplates.put(id, entityTemplate);
+					}
+				}
+			}
+		}
 		
 		//load rooms templates
 		File roomsTemplatesDirectory = new File(path + File.separator + "rooms");
-		File[] templateFiles = roomsTemplatesDirectory.listFiles(new FilenameFilter() {
+		templateFiles = roomsTemplatesDirectory.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
 				return name.endsWith(".xml");
@@ -157,6 +212,14 @@ public class DungeonsArchitect {
 	
 	public Digger newDigger(Random generator) {
 		return new Digger(this, generator);
+	}
+	
+	public Master newMaster(Random generator) {
+		return new Master(this, generator);
+	}
+	
+	public Map<String, EntityTemplate> entitiesTemplates() {
+		return entitiesTemplates;
 	}
 
 	public Map<String, RoomTemplate> roomsTemplates() {

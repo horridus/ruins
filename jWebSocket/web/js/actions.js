@@ -287,3 +287,11 @@ actions.startHistory = function(event) {
 actions.switchMapType = function(event) {
 	mainui.mapRenderer.switchMapType(event.data);
 };
+
+actions.showDeeperLevel = function(event) {
+	mainui.dungeonRenderer.showDeeperLevel();
+};
+
+actions.showShallowerLevel = function(event) {
+	mainui.dungeonRenderer.showShallowerLevel();
+};

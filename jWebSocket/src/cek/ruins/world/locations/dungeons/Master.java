@@ -16,14 +16,14 @@ import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
 import cek.ruins.world.locations.dungeons.entities.components.ComponentMessageId;
 
 public class Master {
-	private DungeonMaster dungeonMaster;
+	private DungeonsArchitect dungeonArchitect;
 	private Random generator;
 	private Dungeon dungeon;
 	private Map<String, Entity> bredEntities;
 	private Map<String, Object> executorScope;
 	
-	public Master(DungeonMaster dungeonMaster, Random generator) {
-		this.dungeonMaster = dungeonMaster;
+	public Master(DungeonsArchitect dungeonArchitect, Random generator) {
+		this.dungeonArchitect = dungeonArchitect;
 		this.generator = generator;
 		this.bredEntities = new HashMap<String, Entity>();
 		this.executorScope = new HashMap<String, Object>();
@@ -42,7 +42,7 @@ public class Master {
 	}
 	
 	public Entity breed(String id, int x, int y, int depth) throws Exception {
-		EntityTemplate template = this.dungeonMaster.entitiesTemplates().get(id);
+		EntityTemplate template = this.dungeonArchitect.entitiesTemplates().get(id);
 		
 		if (template != null) {
 			Entity entity = new Entity();

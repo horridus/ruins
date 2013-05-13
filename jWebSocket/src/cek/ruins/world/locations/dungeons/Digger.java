@@ -6,11 +6,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
+import java.util.Map.Entry;
 
+import org.dom4j.Document;
 import org.mozilla.javascript.NativeObject;
 
 import cek.ruins.Point;
 import cek.ruins.ScriptExecutor;
+import cek.ruins.world.locations.dungeons.entities.Entity;
+import cek.ruins.world.locations.dungeons.entities.EntityComponent;
+import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
+import cek.ruins.world.locations.dungeons.entities.components.ComponentMessageId;
 import cek.ruins.world.locations.dungeons.materials.Material;
 import cek.ruins.world.locations.dungeons.materials.Materials;
 import cek.ruins.world.locations.dungeons.templates.BuildEventTemplate;
@@ -126,10 +133,6 @@ public class Digger {
 		this.depth = depth;
 	}
 	
-	public String currentRoomId() {
-		return this.currentCell.roomId();
-	}
-	
 	public void createRoom(String roomId, NativeObject args) {
 		ScriptExecutor executor = ScriptExecutor.executor();
 		RoomTemplate roomTemplate = this.dungeonsArchitect.roomsTemplates().get(roomId);
@@ -139,7 +142,6 @@ public class Digger {
 			//set function args
 			this.executorScope.put("_args_", args);
 			//generate room and fill cell
-			this.currentCell.setRoomId(roomId);
 			executor.executeScript(roomTemplate.roomGenerator(), this.executorScope);
 			//rest function args
 			this.executorScope.put("_args_", null);
@@ -383,7 +385,55 @@ public class Digger {
 		}
 	}
 	
+	public Entity breed(String templateId, int cellx, int celly) throws Exception {
+		EntityTemplate template = this.dungeonsArchitect.entitiesTemplates().get(templateId);
+		
+		if (template != null) {
+			Entity entity = new Entity();
+			entity.setTemplateId(templateId);
+			entity.setId(generateUniqueId());
+			
+			for (Entry<String, Document> componentEntry : template.components().entrySet()) {
+				Class<?> componentClass = Class.forName(componentEntry.getKey());
+				EntityComponent component = (EntityComponent) componentClass.newInstance();
+				component.setOwnerEntity(entity);
+				component.configure(componentEntry.getValue());
+				
+				entity.addComponent(component);
+			}
+			
+			int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+			int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+			
+			//notify to entity's components its own creation
+			Map<String, Object> args = new HashMap<String, Object>();
+			args.put("position:x", dungeonx);
+			args.put("position:y", dungeony);
+			args.put("position:z", this.currentCell.depth());
+			
+			entity.processMessage(ComponentMessageId.CREATION, args);
+			
+			//insert new entity in existing entities map
+			this.dungeon.addEntity(entity);
+			return entity;
+		}
+		else
+			throw new Exception("Entity template " + templateId + " not found.");
+	}
+	
+	public List<Entity> entities(int depth) {
+		return this.dungeon.entities(depth);
+	}
+	
+	public void deleteEntity(String id) {
+		this.dungeon.deleteEntity(id);
+	}
+	
 	/* *** */
+	private String generateUniqueId() {
+		UUID uuid = UUID.randomUUID();
+		return uuid.toString().replace("-", "");
+	}
 	
 	private void startCorridor() {
 		this.corridorFlag = true;

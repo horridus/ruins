@@ -222,6 +222,18 @@ mainui.showDungeon = function(dungeonData) {
 	mainui.dungeonRenderer = new RUINS.DungeonRenderer(main.dungeon, $('#column1').width(), $('#column1').height(), '/dungeons/' + dungeonData.id, container, 32);
 	
 	mainui.animateDungeon();
+	
+	//TEMP////////////////////////////
+	var header = mainui.clearHeader();
+	
+	var button = WIDGETS.createButton('down one level', 'dol', 180);
+	button.on('click', null, null, actions.showDeeperLevel);
+	header.append(button);
+	
+	button = WIDGETS.createButton('up one level', 'uol', 180);
+	button.on('click', null, null, actions.showShallowerLevel);
+	header.append(button);
+	//////////////////////////////////
 };
 
 mainui.updateDate = function() {

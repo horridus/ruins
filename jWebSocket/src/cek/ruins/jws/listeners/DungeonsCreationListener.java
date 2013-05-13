@@ -27,7 +27,6 @@ import cek.ruins.configuration.Configuration;
 import cek.ruins.utils.DungeonPainter;
 import cek.ruins.world.locations.dungeons.Digger;
 import cek.ruins.world.locations.dungeons.Dungeon;
-import cek.ruins.world.locations.dungeons.DungeonMaster;
 import cek.ruins.world.locations.dungeons.DungeonsArchitect;
 import cek.ruins.world.locations.dungeons.Master;
 import cek.ruins.world.locations.dungeons.entities.Entity;
@@ -85,12 +84,11 @@ public class DungeonsCreationListener extends GenericListener {
 						generator = new Random(new Date().getTime());
 					
 					DungeonsArchitect dungeonsArchitect = (DungeonsArchitect) ApplicationMap.get("dungeonsArchitect");
-					DungeonMaster dungeonMaster = (DungeonMaster) ApplicationMap.get("dungeonMaster");
 					Materials materials = (Materials) ApplicationMap.get("materials");
 					
 					Digger digger = dungeonsArchitect.newDigger(generator);
 					sstorage.put("digger", digger);
-					Master master = dungeonMaster.newMaster(generator);
+					Master master = dungeonsArchitect.newMaster(generator);
 					sstorage.put("master", master);
 					
 					DungeonTemplate dungeonTemplate = dungeonsArchitect.dungeonsTemplates().get("generic"); //TEMP

@@ -10,11 +10,13 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.width = width;
 	this.height = height;
 	this.tileSize = tileSize;
+	this.texturePath = texturePath;
 	
 	this.viewOffset = new THREE.Vector2( 0, 0 );
 	this.scale = 1.0;
 
 	this.levelsTexture = [];
+	this.currentLevel = 0;
 
 	this.renderer = new THREE.WebGLRenderer();
 	this.renderer.setSize(width, height);
@@ -37,16 +39,16 @@ RUINS.DungeonRenderer = function(dungeon, width, height, texturePath, container,
 	this.tilesTexture.flipY = false;
 	
 	//dungeon's level 0 texture
-	this.levelsTexture[0] = THREE.ImageUtils.loadTexture(texturePath + '/000.png');
-	this.levelsTexture[0].magFilter = THREE.NearestFilter;
-	this.levelsTexture[0].minFilter = THREE.NearestFilter;
-	this.levelsTexture[0].flipY = false;
+	this.levelsTexture[this.currentLevel] = THREE.ImageUtils.loadTexture(this.texturePath + '/000.png');
+	this.levelsTexture[this.currentLevel].magFilter = THREE.NearestFilter;
+	this.levelsTexture[this.currentLevel].minFilter = THREE.NearestFilter;
+	this.levelsTexture[this.currentLevel].flipY = false;
 	
 	//dungeon shader material
 	this.dungeonMaterial = new THREE.ShaderMaterial({
     	uniforms: {
     		tilesTexture: { type: 't', value: this.tilesTexture },
-    		levelTexture: { type: 't', value: this.levelsTexture[0] },
+    		levelTexture: { type: 't', value: this.levelsTexture[this.currentLevel] },
     		viewOffset: { type: 'v2', value:  this.viewOffset },
     		viewportSize: { type: 'v2', value: new THREE.Vector2( this.width/this.scale, this.height/this.scale ) },
     		tileSize: { type: 'f', value: this.tileSize },
@@ -126,4 +128,28 @@ RUINS.DungeonRenderer.prototype.setViewScale = function(scale) {
 	this.dungeonMaterial.uniforms.viewportSize.value = new THREE.Vector2( this.width/this.scale, this.height/this.scale );
 	this.dungeonMaterial.uniforms.scale.value = this.scale;
 	this.dungeonMaterial.needsUpdate = true;
+};
+
+RUINS.DungeonRenderer.prototype.showShallowerLevel = function() {
+	(this.currentLevel > 0)? this.currentLevel-- : this.currentLevel; 
+	this.showLevel(this.currentLevel);
+};
+
+RUINS.DungeonRenderer.prototype.showDeeperLevel = function() {
+	//(this.currentLevel < )? this.currentLevel-- : this.currentLevel;
+	//FIXME
+	this.currentLevel++;
+	this.showLevel(this.currentLevel);
+};
+
+RUINS.DungeonRenderer.prototype.showLevel = function(depth) {
+	//dungeon's level texture
+	if (this.levelsTexture[depth] == undefined) {
+		this.levelsTexture[depth] = THREE.ImageUtils.loadTexture(this.texturePath + '/' + RUINS.UTILS.padWZeroes('' + depth, 3) + '.png');
+		this.levelsTexture[depth].magFilter = THREE.NearestFilter;
+		this.levelsTexture[depth].minFilter = THREE.NearestFilter;
+		this.levelsTexture[depth].flipY = false;
+	}
+	
+	this.dungeonMaterial.uniforms['levelTexture'].value = this.levelsTexture[depth]; 
 };

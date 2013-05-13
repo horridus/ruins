@@ -14,7 +14,6 @@ import cek.ruins.world.civilizations.CivilizationsTemplates;
 import cek.ruins.world.civilizations.CivilizationsHerald;
 import cek.ruins.world.environment.Biomes;
 import cek.ruins.world.environment.Resources;
-import cek.ruins.world.locations.dungeons.DungeonMaster;
 import cek.ruins.world.locations.dungeons.DungeonsArchitect;
 import cek.ruins.world.locations.dungeons.materials.Materials;
 import cek.ruins.world.locations.settlements.SettlementsArchitect;
@@ -78,12 +77,6 @@ public class Main {
 		Materials materials = new Materials();
 		materials.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/materials");
 		ApplicationMap.set("materials", materials);
-		
-		//load dungeon's entities
-		logger.info("Reading " + Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
-		DungeonMaster dungeonMaster = new DungeonMaster();
-		dungeonMaster.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
-		ApplicationMap.set("dungeonMaster", dungeonMaster);
 		
 		Server fileServer = null;
 		try {
