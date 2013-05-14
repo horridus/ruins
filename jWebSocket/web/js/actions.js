@@ -77,14 +77,49 @@ actions.createNewDungeon = function(seed) {
 				switch (aEvent.reqType) {
 				case tokensFactory.CREATE_NEW_DUNGEON_TKN:
 					mainui.showDungeon(aEvent);
-					/*
-					mainui.showWorld(aEvent.data);
-					mainui.showWorldCreationMenu();
+					for (var i=0; i < main.dungeon.depth; i++) {
+						actions.getDungeonEntities(i);
+					}
+					
+					mainui.dungeonRenderer.showLevel(0);
+					mainui.animateDungeon();
+					
+					break;
+				default:
+					break;
+				}
+			}
+		},
 
-					actions.getCivilizationsTemplates();
+		OnFailure: function() {
+			console.error("[actions.createNewDungeon] failure.");
+		}
+	});
+};
 
-					actions.regionsInfos();
-					*/
+actions.getDungeonEntities = function(depth) {
+	var token = tokensFactory.dungeonEntitiesPkt(depth);
+	main.jwsClient.sendToken(token, {
+		timeout: actions.TIMEOUT,
+
+		OnTimeout: function() {
+			console.error("[actions.getDungeonEntities] timed out.");
+			alert("[actions.getDungeonEntities] timed out.");
+		},
+
+		OnResponse: function(aEvent) {
+		},
+
+		OnSuccess: function(aEvent) {
+			console.debug("[actions.getDungeonEntities] success.");
+
+			if (aEvent.ns == tokensFactory.NS_DUNGEONS_CREATION_LISTENER) {
+				switch (aEvent.reqType) {
+				case tokensFactory.GET_ENTITIES_TKN:
+					$.each(aEvent.entities, function(id, entity) {
+						main.dungeon.addEntity(entity);
+						mainui.dungeonRenderer.addEntity(entity);
+					});
 					break;
 				default:
 					break;

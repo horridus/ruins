@@ -3,22 +3,103 @@
     <dungeon id="generic" size="512" cells="32" depth="5">
         <init>
             <![CDATA[
-                var size = _dungeon_.size();
-                for (var y=0; y<size; y++) {
-                    for (var x=0; x<size; x++) {
-                        _digger_.digTile(x, y, _depth_, _mat_DIRT_BLOCK_0);
-                    }
+            var size = _dungeon_.size();
+            for (var y=0; y<size; y++) {
+                for (var x=0; x<size; x++) {
+                    _digger_.digTile(x, y, _depth_, _mat_DIRT_BLOCK_0);
                 }
+            }
             ]]>
         </init>
         <build>
             <![CDATA[
-	            _digger_.initCellsIterator(0);
-	            while (_digger_.nextCell()) {
-	                 var choose = _digger_.randomI(0, 2);
-	                 if (choose == 0)
-	                     _digger_.event('test', {});
-	            }
+            function shuffle(array) {
+                var m = array.length, t, i;
+
+                // While there remain elements to shuffle…
+                while (m) {
+                    //Pick a remaining element…
+			        i = Math.floor(Math.random() * m--);
+			
+			        //And swap it with the current element.
+			        t = array[m];
+			        array[m] = array[i];
+			        array[i] = t;
+			    }
+			
+                return array;
+            };
+            
+            function shuffledCellsArray() {
+                var cellsList = [];
+                for (var i = 0; i < _digger_.numCellsPerSide()*_digger_.numCellsPerSide(); i++)
+                    cellsList.push(i);
+                shuffle(cellsList);
+                
+                return cellsList;
+            }
+            
+            //primordial age
+            //for every dungeon level roll N events
+            for (var depth = 0; depth < _digger_.dungeonDepth(); depth++) {
+                
+                var cellsList = shuffledCellsArray();
+             
+                for (var n = 0; n < 100; n++) {
+                    //select a random cell
+                    var cellNumber = cellsList.pop();
+                    _digger_.setCurrentCell(cellNumber%_digger_.numCellsPerSide(), Math.floor(cellNumber/_digger_.numCellsPerSide()), depth);
+                    
+                    //select an event
+                    var roll = _digger_.randomI(0, 10); 
+                    switch (roll) {
+                    case 0:
+                        _digger_.event('test', {});
+                        break;
+                    case 1:
+                        _digger_.event('test', {});
+                        break;
+                    case 2:
+                        _digger_.event('test', {});
+                        break;
+                    case 3:
+                        _digger_.event('test', {});
+                        break;
+                    case 4:
+                        _digger_.event('test', {});
+                        break;
+                    case 5:
+                        _digger_.event('test', {});
+                        break;
+                    case 6:
+                        _digger_.event('test', {});
+                        break;
+                    case 7:
+                        _digger_.event('test', {});
+                        break;
+                    case 8:
+                        _digger_.event('test', {});
+                        break;
+                    case 9:
+                        _digger_.event('test', {});
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+            
+             _digger_.setCurrentCell(0, 0, 0);
+             _digger_.event('cavern', {});
+             
+            /*
+            _digger_.initCellsIterator(0);
+            while (_digger_.nextCell()) {
+                 var choose = _digger_.randomI(0, 2);
+                 if (choose == 0)
+                     _digger_.event('test', {});
+            }
+            */
             ]]>
         </build>
     </dungeon>

@@ -1,5 +1,6 @@
 package cek.ruins.world.locations.dungeons.entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class Entity extends Observable {
 	public Entity() {
 		this.setId("");
 		this.attributes = new HashMap<String, Object>();
+		this.components = new ArrayList<EntityComponent>();
 	}
 	
 	public String id() {
@@ -44,6 +46,8 @@ public class Entity extends Observable {
 	
 	public DBObject statusToJSON() {
 		BasicDBObjectBuilder builder = BasicDBObjectBuilder.start();
+		
+		builder.add("id", this.id);
 		
 		for (EntityComponent component : this.components) {
 			component.statusToJSON(builder);

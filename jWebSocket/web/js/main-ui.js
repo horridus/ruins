@@ -218,10 +218,8 @@ mainui.showWorld = function(id) {
 
 mainui.showDungeon = function(dungeonData) {
 	var container = mainui.clearContent();
-	main.dungeon = new RUINS.Dungeon(dungeonData.id, dungeonData.name, dungeonData.size, dungeonData.data);
+	main.dungeon = new RUINS.Dungeon(dungeonData.id, dungeonData.name, dungeonData.size, dungeonData.depth);
 	mainui.dungeonRenderer = new RUINS.DungeonRenderer(main.dungeon, $('#column1').width(), $('#column1').height(), '/dungeons/' + dungeonData.id, container, 32);
-	
-	mainui.animateDungeon();
 	
 	//TEMP////////////////////////////
 	var header = mainui.clearHeader();

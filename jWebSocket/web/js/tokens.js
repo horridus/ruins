@@ -12,6 +12,7 @@ tokensFactory.CIVILIZATIONS_TEMPLATES_TKN = 'civilizationstemplates';
 tokensFactory.ADD_CIVILIZATION_TKN = 'addcivilization';
 tokensFactory.START_HISTORY_TKN = 'starthistory';
 tokensFactory.CREATE_NEW_DUNGEON_TKN = 'createnewdungeon';
+tokensFactory.GET_ENTITIES_TKN = 'getentities';
 
 //events types
 tokensFactory.NEW_LOCATION_EVENT = 1;
@@ -39,6 +40,16 @@ tokensFactory.createNewDungeonPkt = function(seed) {
 		ns: tokensFactory.NS_DUNGEONS_CREATION_LISTENER,
 		type: tokensFactory.CREATE_NEW_DUNGEON_TKN,
 		seed: seed,
+	};
+
+	return token;
+};
+
+tokensFactory.dungeonEntitiesPkt = function(depth) {
+	var token = {
+		ns: tokensFactory.NS_DUNGEONS_CREATION_LISTENER,
+		type: tokensFactory.GET_ENTITIES_TKN,
+		depth: depth,
 	};
 
 	return token;

@@ -111,11 +111,11 @@ public class DungeonsCreationListener extends GenericListener {
 				Token response = aEvent.createResponse(aToken);
 				
 				try {
-					int depth = Integer.parseInt(aToken.getString("depth", "0"));
-					Master master = (Master) sstorage.get("master");
+					int depth = aToken.getInteger("depth");
+					Digger digger = (Digger) sstorage.get("digger");
 					
 					BasicDBList jsonList = new BasicDBList();
-					List<Entity> entities = master.entities(depth);
+					List<Entity> entities = digger.entities(depth);
 					for (Entity entity : entities) {
 						jsonList.add(entity.statusToJSON());
 					}
@@ -161,7 +161,9 @@ public class DungeonsCreationListener extends GenericListener {
 		return dungeon;
 	}
 	
-	public Dungeon init(UUID dungeonId, DungeonTemplate template, Digger digger, Master master, Materials materials) {
+	public Dungeon init(UUID dungeonId, DungeonTemplate template, Digger digger, Master master, Materials materials) throws IOException {
+		ScriptExecutor executor = ScriptExecutor.executor();
+		
 		//init global objects map for scripts
 		Map<String, Object> scriptsGlobalObjects = new HashMap<String, Object>();
 		scriptsGlobalObjects.put("_digger_", digger);
@@ -185,7 +187,6 @@ public class DungeonsCreationListener extends GenericListener {
 		for (int d = 0; d < dungeon.depth(); d++) {
 			scriptsGlobalObjects.put("_depth_", d);
 			
-			ScriptExecutor executor = ScriptExecutor.executor();
 			executor.executeScript(template.initScript(), scriptsGlobalObjects);
 		}
 		

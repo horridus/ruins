@@ -154,6 +154,14 @@ public class Digger {
 		return this.dungeon.size()/this.dungeon.numCellsPerSide();
 	}
 	
+	public int dungeonDepth() {
+		return this.dungeon.depth();
+	}
+	
+	public int numCellsPerSide() {
+		return this.dungeon.numCellsPerSide();
+	}
+	
 	public void digCorridor(int cellx0, int celly0, int cellx1, int celly1, Material material, Material wallMaterial) {
 		int dungeonx = cellx0 + this.currentCell.column() * this.currentCell.size();
 		int dungeony = celly0 + this.currentCell.row() * this.currentCell.size();

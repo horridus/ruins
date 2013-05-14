@@ -7,6 +7,15 @@
                 _digger_.createRoom('square', {x:11, y:4, size:5});
                 _digger_.digCorridor(9, 5, 11, 5, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
                 
+                _digger_.breed('SINK_0', _digger_.randomI(5, 9), _digger_.randomI(5, 9));
+            ]]>
+        </script>
+    </event>
+    <event id="cavern">
+        <script>
+            <![CDATA[
+                _digger_.createRoom('cavern', {x:4, y:4, size:10});
+                _digger_.createRoom('cavern', {x:0, y:0, size:15});
             ]]>
         </script>
     </event>
