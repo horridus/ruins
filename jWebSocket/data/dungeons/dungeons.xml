@@ -13,28 +13,11 @@
         </init>
         <build>
             <![CDATA[
-            function shuffle(array) {
-                var m = array.length, t, i;
-
-                // While there remain elements to shuffle…
-                while (m) {
-                    //Pick a remaining element…
-			        i = Math.floor(Math.random() * m--);
-			
-			        //And swap it with the current element.
-			        t = array[m];
-			        array[m] = array[i];
-			        array[i] = t;
-			    }
-			
-                return array;
-            };
-            
             function shuffledCellsArray() {
                 var cellsList = [];
                 for (var i = 0; i < _digger_.numCellsPerSide()*_digger_.numCellsPerSide(); i++)
                     cellsList.push(i);
-                shuffle(cellsList);
+                utils.shuffle(cellsList);
                 
                 return cellsList;
             }
@@ -45,7 +28,7 @@
                 
                 var cellsList = shuffledCellsArray();
              
-                for (var n = 0; n < 100; n++) {
+                for (var n = 0; n < 300; n++) {
                     //select a random cell
                     var cellNumber = cellsList.pop();
                     _digger_.setCurrentCell(cellNumber%_digger_.numCellsPerSide(), Math.floor(cellNumber/_digger_.numCellsPerSide()), depth);
@@ -54,34 +37,34 @@
                     var roll = _digger_.randomI(0, 10); 
                     switch (roll) {
                     case 0:
-                        _digger_.event('test', {});
+                         _digger_.event('cavern', {});
                         break;
                     case 1:
-                        _digger_.event('test', {});
+                         _digger_.event('cavern', {});
                         break;
                     case 2:
-                        _digger_.event('test', {});
+                         _digger_.event('cavern', {});
                         break;
                     case 3:
-                        _digger_.event('test', {});
+                        _digger_.event('cavern', {});
                         break;
                     case 4:
-                        _digger_.event('test', {});
+                        _digger_.event('cavern', {});
                         break;
                     case 5:
-                        _digger_.event('test', {});
+                        _digger_.event('cavern', {});
                         break;
                     case 6:
-                        _digger_.event('test', {});
+                        _digger_.event('cavern', {});
                         break;
                     case 7:
-                        _digger_.event('test', {});
+                        _digger_.event('cavern', {});
                         break;
                     case 8:
-                        _digger_.event('test', {});
+                        _digger_.event('cavern', {});
                         break;
                     case 9:
-                        _digger_.event('test', {});
+                        _digger_.event('cavern', {});
                         break;
                     default:
                         break;
@@ -89,9 +72,6 @@
                 }
             }
             
-             _digger_.setCurrentCell(0, 0, 0);
-             _digger_.event('cavern', {});
-             
             /*
             _digger_.initCellsIterator(0);
             while (_digger_.nextCell()) {

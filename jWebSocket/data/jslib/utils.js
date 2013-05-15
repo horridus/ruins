@@ -21,12 +21,10 @@ UTILS.padWZeroes = function(str, max) {
 	return str.length < max ? RUINS.UTILS.padWZeroes("0" + str, max) : str;
 };
 
-UTILS.hexToRgb = function(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-        a: 255,
-    } : null;
+UTILS.test = function() {
+	java.lang.System.out.println('utils library loaded!');
 };
+
+(function() {
+	return UTILS;
+}());

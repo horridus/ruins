@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.Map.Entry;
 
 import org.dom4j.Document;
+import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 
 import cek.ruins.Point;
@@ -85,6 +86,7 @@ public class Digger {
 	public void digTile(int x, int y, int depth, Material material) {
 		DungeonTile tile = tile(x, y, depth);
 		tile.setMaterial(material);
+		//tile.setPassable(material.isPassable());
 		
 		tile.setCorridor(this.corridorFlag);
 		tile.setRoom(this.roomFlag);
@@ -102,7 +104,10 @@ public class Digger {
 	}
 	
 	public int randomI(int min, int max) {
-		return this.generator.nextInt(max - min) + min;
+		if ((max - min) <= 0)
+			return 0;
+		else
+			return this.generator.nextInt(max - min) + min;
 	}
 	
 	public boolean nextCell() {
@@ -380,6 +385,41 @@ public class Digger {
 		return entrances;
 	}
 	
+	public NativeArray room() {
+		List<Point> roomTiles = new ArrayList<Point>();
+		
+		for (int celly = 0; celly < this.cellSize(); celly++) {
+			for (int cellx = 0; cellx < this.cellSize(); cellx++) {
+				int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+				int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+				
+				if (tile(dungeonx, dungeony, this.currentCell.depth()).isRoom())
+					roomTiles.add(new Point(cellx, celly));
+			}
+		}
+		
+		NativeArray na = ScriptExecutor.executor().convertToJSArray(roomTiles.toArray(new Object[roomTiles.size()]));
+		
+		return na;
+	}
+	
+	public NativeArray passable() {
+		List<Point> passableTiles = new ArrayList<Point>();
+		
+		for (int celly = 0; celly < this.cellSize(); celly++) {
+			for (int cellx = 0; cellx < this.cellSize(); cellx++) {
+				int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+				int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+				
+				if (tile(dungeonx, dungeony, this.currentCell.depth()).material().isPassable())
+					passableTiles.add(new Point(cellx, celly));
+			}
+		}
+		
+		NativeArray na = ScriptExecutor.executor().convertToJSArray(passableTiles.toArray(new Object[passableTiles.size()]));
+		
+		return na;
+	}
 	
 	public void event(String eventId, NativeObject args) {
 		ScriptExecutor executor = ScriptExecutor.executor();

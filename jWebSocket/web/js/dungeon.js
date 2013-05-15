@@ -157,6 +157,7 @@ RUINS.DungeonRenderer.prototype.setViewOffset = function(offsetx, offsety) {
 	var that = this;
 	var tiledScale = that.tileSize * that.scale;
 	var selectedEntities = this.entities[this.currentDepth];
+	
 	$.each(selectedEntities, function(id, sprite) {
 		var entity = that.dungeon.entities[that.currentDepth][id];
 		sprite.position = new THREE.Vector3((entity.position.x * tiledScale) - (that.viewOffset.x), (entity.position.y * tiledScale) - (that.viewOffset.y), 0.5);
@@ -170,11 +171,11 @@ RUINS.DungeonRenderer.prototype.setViewOffset = function(offsetx, offsety) {
 };
 
 RUINS.DungeonRenderer.prototype.setViewScale = function(scale) {
-	this.scale = scale;
-	
-	this.dungeonMaterial.uniforms.viewportSize.value = new THREE.Vector2( this.width/this.scale, this.height/this.scale );
-	this.dungeonMaterial.uniforms.scale.value = this.scale;
-	this.dungeonMaterial.needsUpdate = true;
+//	this.scale = scale;
+//	
+//	this.dungeonMaterial.uniforms.viewportSize.value = new THREE.Vector2( this.width/this.scale, this.height/this.scale );
+//	this.dungeonMaterial.uniforms.scale.value = this.scale;
+//	this.dungeonMaterial.needsUpdate = true;
 };
 
 RUINS.DungeonRenderer.prototype.showShallowerLevel = function() {

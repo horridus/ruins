@@ -1,10 +1,14 @@
 package cek.ruins;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.Script;
-import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
 import cek.ruins.world.locations.Settlement;
@@ -27,11 +31,9 @@ public class ScriptExecutor {
 	private ScriptExecutor() {
 		Context ctx = Context.enter();
 		this.sharedScope = ctx.initStandardObjects(null, true);
-		
+
 		//TODO add common objects
-		
-		
-		this.sharedScope.sealObject();
+		//this.sharedScope.sealObject();
 		Context.exit();
 	}
 	
@@ -56,6 +58,29 @@ public class ScriptExecutor {
 		return script;
 	}
 	
+	public void loadLibraries(File directory) throws IOException {
+		File[] librariesFiles = directory.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".js");
+			}
+		});
+		
+		for (File library : librariesFiles) {
+			String libraryName = library.getName().substring(0, library.getName().lastIndexOf(".js"));
+			loadLibrary(library, libraryName, "UTF-8");
+		}
+	}
+	
+	public void loadLibrary(File library, String sourceName, String encoding) throws IOException {
+		String source = FileUtils.readFileToString(library, encoding);
+		
+		Context ctx = Context.enter();
+		Object libraryObject = ctx.evaluateString(sharedScope, source, sourceName, 0, null);
+		addObj(sharedScope, libraryObject, sourceName);
+		Context.exit();
+	}
+	
 	public Object executeScript(Script script, Map<String, Object> objs) {
 		Context ctx = Context.enter();
 		ScriptableObject instanceScope = this.prepareInstanceScope(ctx);
@@ -75,9 +100,9 @@ public class ScriptExecutor {
 		return result;
 	}
 	
-	public Scriptable convertToJSArray(Object[] array) {
+	public NativeArray convertToJSArray(Object[] array) {
 		Context ctx = Context.getCurrentContext();
-		return ctx.newArray(ctx.initStandardObjects(), array);
+		return (NativeArray) ctx.newArray(this.sharedScope, array);
 	}
 	
 	//TODO remove??

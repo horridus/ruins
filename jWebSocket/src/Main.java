@@ -1,3 +1,5 @@
+import java.io.File;
+
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
@@ -8,6 +10,7 @@ import org.jwebsocket.factory.JWebSocketFactory;
 import org.jwebsocket.server.TokenServer;
 
 import cek.ruins.ApplicationMap;
+import cek.ruins.ScriptExecutor;
 import cek.ruins.jws.listeners.AdminListener;
 import cek.ruins.jws.listeners.DungeonsCreationListener;
 import cek.ruins.world.civilizations.CivilizationsTemplates;
@@ -77,6 +80,11 @@ public class Main {
 		Materials materials = new Materials();
 		materials.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/materials");
 		ApplicationMap.set("materials", materials);
+		
+		//load javascript libraries
+		logger.info("Reading " + Configuration.DATA_FOLDER_LOCATION + "/jslib");
+		ScriptExecutor executor = ScriptExecutor.executor();
+		executor.loadLibraries(new File(Configuration.DATA_FOLDER_LOCATION + "/jslib"));
 		
 		Server fileServer = null;
 		try {

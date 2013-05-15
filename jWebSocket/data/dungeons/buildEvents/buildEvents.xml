@@ -3,19 +3,56 @@
     <event id="test">
         <script>
             <![CDATA[
-                _digger_.createRoom('square', {x:4, y:4, size:6, exits:0x0000});
-                _digger_.createRoom('square', {x:11, y:4, size:5});
-                _digger_.digCorridor(9, 5, 11, 5, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-                
-                _digger_.breed('SINK_0', _digger_.randomI(5, 9), _digger_.randomI(5, 9));
+            _digger_.createRoom('square', {x:4, y:4, size:6, exits:0x0000});
+            _digger_.createRoom('square', {x:11, y:4, size:5});
+            _digger_.digCorridor(9, 5, 11, 5, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
+            
+            _digger_.breed('SINK_0', _digger_.randomI(5, 9), _digger_.randomI(5, 9));
             ]]>
         </script>
     </event>
     <event id="cavern">
         <script>
             <![CDATA[
-                _digger_.createRoom('cavern', {x:4, y:4, size:10});
-                _digger_.createRoom('cavern', {x:0, y:0, size:15});
+            var cavesNumber = _digger_.randomI(1, 4);
+            for (var i = 0; i < cavesNumber; i++) {
+                _digger_.createRoom('cavern', {});
+            }
+               
+            var passableTiles = _digger_.passable()
+            utils.shuffle(passableTiles);
+            
+            //add webs
+            var websNumber = _digger_.randomI(0, passableTiles.length/3);
+            for (var i = 0; i < websNumber; i++) {
+                var position = passableTiles.pop();
+                _digger_.breed('WEB_0', position.x, position.y);
+            }
+            
+            var otherNumber = _digger_.randomI(0, passableTiles.length/3);
+            for (var i = 0; i < otherNumber; i++) {
+                var position = passableTiles.pop();
+                
+                var roll = _digger_.randomI(0, 4);
+                
+                switch (roll) {
+                case 0:
+                    _digger_.breed('BONES_0', position.x, position.y);
+                    break;
+                case 1:
+                    _digger_.breed('BONES_1', position.x, position.y);
+                    break;
+                case 2:
+                    _digger_.breed('BOULDER_0', position.x, position.y);
+                    break;
+                case 3:
+                    _digger_.breed('ROCKS_0', position.x, position.y);
+                    break;
+                default:
+                    break;
+                }
+            }
+            
             ]]>
         </script>
     </event>

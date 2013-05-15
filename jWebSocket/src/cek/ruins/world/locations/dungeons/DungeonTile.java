@@ -9,6 +9,7 @@ public class DungeonTile {
 	protected boolean isEntrance;
 	private boolean isCorridor;
 	private boolean isRoom;
+	//private boolean isPassable;
 	
 	public DungeonTile(int x, int y, int depth) {
 		this.material = Materials.NOMATERIAL();
@@ -18,6 +19,7 @@ public class DungeonTile {
 		this.isEntrance = false;
 		this.isCorridor = false;
 		this.isRoom = false;
+		//this.isPassable = false;
 	}
 
 	public Material material() {
@@ -75,6 +77,14 @@ public class DungeonTile {
 	public void setRoom(boolean isRoom) {
 		this.isRoom = isRoom;
 	}
+	
+//	public boolean isPassable() {
+//		return isPassable;
+//	}
+//
+//	public void setPassable(boolean isPassable) {
+//		this.isPassable = isPassable;
+//	}
 
 	@Override
 	public boolean equals(Object obj) {

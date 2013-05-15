@@ -306,7 +306,7 @@ THREE.DungeonControls = function(object, domElement, dungeon, dungeonRenderer, b
 
 	this.boundingBox = (boundingBox !== undefined) ? boundingBox : { min: new THREE.Vector3(), max: new THREE.Vector3() };
 
-	this.movementSpeed = 1.0;
+	this.movementSpeed = 100.0;
 	this.zoomSpeed = 0.1;
 	this.zoomMin = 3.0;
 	this.zoomMax = 0.01;

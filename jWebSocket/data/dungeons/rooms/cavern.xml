@@ -5,8 +5,9 @@
 	    <![CDATA[
 	    var xOffset = _digger_.randomI(0, _digger_.cellSize()/2);
         var yOffset = _digger_.randomI(0, _digger_.cellSize()/2);
-        var size = _digger_.randomI(3, _digger_.cellSize());
-        var floorMaterial = _mat_DOLOMITE_FLOOR_0;
+        var remainingRoom = Math.min(_digger_.cellSize() - xOffset, _digger_.cellSize() - yOffset); 
+        var size = _digger_.randomI(4, remainingRoom);
+        var floorMaterial = _mat_DIRT_FLOOR_0;
         var wallMaterial = _mat_DIRT_BLOCK_0;
         
         if (_args_.x != undefined) {
@@ -28,10 +29,6 @@
         if (_args_.wall != undefined) {
            wallMaterial = _args_.wall; 
         }
-        
-        java.lang.System.out.println("xOffset: " + xOffset);
-        java.lang.System.out.println("yOffset: " + yOffset);
-        java.lang.System.out.println("size: " + size);
         
 	    function isFloor(probability) {
 	        var randomProb = _digger_.randomI(0, 100);
