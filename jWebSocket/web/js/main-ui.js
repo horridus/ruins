@@ -231,6 +231,10 @@ mainui.showDungeon = function(dungeonData) {
 	button = WIDGETS.createButton('up one level', 'uol', 180);
 	button.on('click', null, null, actions.showShallowerLevel);
 	header.append(button);
+	
+	button = WIDGETS.createButton('debug', 'debug', 180);
+	button.on('click', null, null, mainui.dungeonRenderer.debug);
+	header.append(button);
 	//////////////////////////////////
 };
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons>
-    <dungeon id="generic" size="512" cells="32" depth="5">
+    <dungeon id="generic" size="256" cells="16" depth="5">
         <init>
             <![CDATA[
             var size = _dungeon_.size();
@@ -27,44 +27,45 @@
             for (var depth = 0; depth < _digger_.dungeonDepth(); depth++) {
                 
                 var cellsList = shuffledCellsArray();
-             
-                for (var n = 0; n < 300; n++) {
+                var numPrimordialEvents = _digger_.numCellsPerSide()*_digger_.numCellsPerSide()/4;
+                
+                for (var n = 0; n < numPrimordialEvents; n++) {
                     //select a random cell
                     var cellNumber = cellsList.pop();
                     _digger_.setCurrentCell(cellNumber%_digger_.numCellsPerSide(), Math.floor(cellNumber/_digger_.numCellsPerSide()), depth);
-                    
+
                     //select an event
                     var roll = _digger_.randomI(0, 10); 
                     switch (roll) {
                     case 0:
-                         _digger_.event('cavern', {});
+                         _digger_.event('mineralvein', {});
                         break;
                     case 1:
-                         _digger_.event('cavern', {});
+                         _digger_.event('mineralvein', {});
                         break;
                     case 2:
-                         _digger_.event('cavern', {});
+                         _digger_.event('mineralvein', {});
                         break;
                     case 3:
-                        _digger_.event('cavern', {});
+                        _digger_.event('mineralvein', {});
                         break;
                     case 4:
-                        _digger_.event('cavern', {});
+                        _digger_.event('mineralvein', {});
                         break;
                     case 5:
-                        _digger_.event('cavern', {});
+                        _digger_.event('mineralvein', {});
                         break;
                     case 6:
-                        _digger_.event('cavern', {});
+                        _digger_.event('mineralvein', {});
                         break;
                     case 7:
-                        _digger_.event('cavern', {});
+                        _digger_.event('mineralvein', {});
                         break;
                     case 8:
-                        _digger_.event('cavern', {});
+                        _digger_.event('mineralvein', {});
                         break;
                     case 9:
-                        _digger_.event('cavern', {});
+                        _digger_.event('mineralvein', {});
                         break;
                     default:
                         break;

@@ -11,48 +11,60 @@
             ]]>
         </script>
     </event>
-    <event id="cavern">
+    <event id="mineralvein">
         <script>
             <![CDATA[
-            var cavesNumber = _digger_.randomI(1, 4);
-            for (var i = 0; i < cavesNumber; i++) {
-                _digger_.createRoom('cavern', {});
-            }
-               
-            var passableTiles = _digger_.passable()
-            utils.shuffle(passableTiles);
+            var c0 = _digger_.randomI(0, _digger_.cellSize());
+            var c1 = _digger_.randomI(0, _digger_.cellSize());
             
-            //add webs
-            var websNumber = _digger_.randomI(0, passableTiles.length/3);
-            for (var i = 0; i < websNumber; i++) {
-                var position = passableTiles.pop();
-                _digger_.breed('WEB_0', position.x, position.y);
+            var direction = _digger_.randomI(0, 6);
+            
+            var path = [];
+            switch (direction) {
+            case 0:
+                path = utils.line(0, c0, _digger_.cellSize() - 1, c1);
+                break;
+            case 1:
+                path = utils.line(c0, 0, c1, _digger_.cellSize() - 1);
+                break;
+            case 2:
+                path = utils.line(0, c0, c1, _digger_.cellSize() - 1);
+                break;
+            case 3:
+                path = utils.line(c0, 0, _digger_.cellSize() - 1, c1);
+                break;
+            case 4:
+                path = utils.line(c0, _digger_.cellSize() - 1, c1, 0);
+                break;
+            case 5:
+                path = utils.line(c0, 0, c1, 0);
+                break;
             }
             
-            var otherNumber = _digger_.randomI(0, passableTiles.length/3);
-            for (var i = 0; i < otherNumber; i++) {
-                var position = passableTiles.pop();
+            var len = path.length;
+            for (var i = 0; i < len; i++) {
+                utils.log('coord: ' + path[i].x + ' ' + path[i].y);
+                _digger_.digCellTile(path[i].x, path[i].y, _mat_GOLD_BLOCK_0);
                 
-                var roll = _digger_.randomI(0, 4);
-                
-                switch (roll) {
-                case 0:
-                    _digger_.breed('BONES_0', position.x, position.y);
-                    break;
-                case 1:
-                    _digger_.breed('BONES_1', position.x, position.y);
-                    break;
-                case 2:
-                    _digger_.breed('BOULDER_0', position.x, position.y);
-                    break;
-                case 3:
-                    _digger_.breed('ROCKS_0', position.x, position.y);
-                    break;
-                default:
-                    break;
-                }
+                switch (direction) {
+	            case 0:
+	            case 2:
+	            case 3:
+	                _digger_.digCellTile(path[i].x, path[i].y - 1, _mat_GOLD_BLOCK_0);
+	                _digger_.digCellTile(path[i].x, path[i].y + 1, _mat_GOLD_BLOCK_0);
+	                break;
+	            case 1:
+	                _digger_.digCellTile(path[i].x + 1, path[i].y, _mat_GOLD_BLOCK_0);
+	                _digger_.digCellTile(path[i].x - 1, path[i].y, _mat_GOLD_BLOCK_0);
+	                break;
+	            case 4:
+	                path = utils.line(c0, _digger_.cellSize() - 1, c1, 0);
+	                break;
+	            case 5:
+	                path = utils.line(c0, 0, c1, 0);
+	                break;
+	            }
             }
-            
             ]]>
         </script>
     </event>

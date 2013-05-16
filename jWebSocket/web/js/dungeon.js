@@ -214,3 +214,18 @@ RUINS.DungeonRenderer.prototype.showLevel = function(depth) {
 		that.scene.add(sprite);
 	});
 };
+
+///TEMP/////////////////////////////
+RUINS.DungeonRenderer.prototype.debug = function() {
+	var count = 0;
+	var a = mainui.dungeonRenderer.entities[mainui.dungeonRenderer.currentDepth];
+		
+	for (var i in a) {
+	    if (a.hasOwnProperty(i)) {
+	        count++;
+	    }
+	}
+	
+	console.debug('entities: ' + count);
+};
+////////////////////////////////////

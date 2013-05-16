@@ -72,15 +72,17 @@ public class Digger {
 		tile.setCorridor(this.corridorFlag);
 		tile.setRoom(this.roomFlag);
 		
-		//FIXME vale pere tutti i materiali?
-		if (cellx == 0)
-			addCellWestEntrance(celly);
-		if (cellx == this.currentCell.size() - 1)
-			addCellEastEntrance(celly);
-		if (celly == 0)
-			addCellNorthEntrance(cellx);
-		if (celly == this.currentCell.size() - 1)
-			addCellSouthEntrance(cellx);
+		//vale pere tutti i materiali? NO, solo per quelli "passabili"
+		if (material.isPassable()) {
+			if (cellx == 0)
+				addCellWestEntrance(celly);
+			if (cellx == this.currentCell.size() - 1)
+				addCellEastEntrance(celly);
+			if (celly == 0)
+				addCellNorthEntrance(cellx);
+			if (celly == this.currentCell.size() - 1)
+				addCellSouthEntrance(cellx);
+		}
 	}
 	
 	public void digTile(int x, int y, int depth, Material material) {
