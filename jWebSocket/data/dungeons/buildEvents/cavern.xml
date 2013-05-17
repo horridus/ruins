@@ -48,14 +48,12 @@
 	                _digger_.breed('BONES_0', position.x, position.y);
 	                
 	                index = _digger_.randomI(0, passableTiles.length);
-	                utils.log(index);
 	                position = passableTiles[index];
 	                passableTiles.splice(index, 1);
 	                _digger_.breed('BONES_0', position.x, position.y);
 	            }
 	            else if (corpseRoll > 80) { //bones
 	                var index = _digger_.randomI(0, passableTiles.length);
-	                utils.log(index);
 	                var position = passableTiles[index];
 	                passableTiles.splice(index, 1);
 	                _digger_.breed('BONES_1', position.x, position.y);

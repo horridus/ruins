@@ -11,60 +11,29 @@
             ]]>
         </script>
     </event>
-    <event id="mineralvein">
+    <event id="river">
         <script>
             <![CDATA[
-            var c0 = _digger_.randomI(0, _digger_.cellSize());
-            var c1 = _digger_.randomI(0, _digger_.cellSize());
+            //choose a starting cell from those along map's borders
+            var side = _digger_.randomI(0, 4);
+            var offset = _digger_.randomI(0, _digger_.numCellsPerSide());
             
-            var direction = _digger_.randomI(0, 6);
-            
-            var path = [];
-            switch (direction) {
-            case 0:
-                path = utils.line(0, c0, _digger_.cellSize() - 1, c1);
+            switch (side) {
+            case 0: //north
+                _digger_.setCurrentCell(offset, 0, _depth_);
                 break;
-            case 1:
-                path = utils.line(c0, 0, c1, _digger_.cellSize() - 1);
+            case 1: //east
+                _digger_.setCurrentCell(_digger_.numCellsPerSide() - 1, offset, _depth_);
                 break;
-            case 2:
-                path = utils.line(0, c0, c1, _digger_.cellSize() - 1);
+            case 2: //south
+                _digger_.setCurrentCell(offset, _digger_.numCellsPerSide() - 1, _depth_);
                 break;
-            case 3:
-                path = utils.line(c0, 0, _digger_.cellSize() - 1, c1);
-                break;
-            case 4:
-                path = utils.line(c0, _digger_.cellSize() - 1, c1, 0);
-                break;
-            case 5:
-                path = utils.line(c0, 0, c1, 0);
+            case 3: //west
+                _digger_.setCurrentCell(0, offset, _depth_);
                 break;
             }
             
-            var len = path.length;
-            for (var i = 0; i < len; i++) {
-                utils.log('coord: ' + path[i].x + ' ' + path[i].y);
-                _digger_.digCellTile(path[i].x, path[i].y, _mat_GOLD_BLOCK_0);
-                
-                switch (direction) {
-	            case 0:
-	            case 2:
-	            case 3:
-	                _digger_.digCellTile(path[i].x, path[i].y - 1, _mat_GOLD_BLOCK_0);
-	                _digger_.digCellTile(path[i].x, path[i].y + 1, _mat_GOLD_BLOCK_0);
-	                break;
-	            case 1:
-	                _digger_.digCellTile(path[i].x + 1, path[i].y, _mat_GOLD_BLOCK_0);
-	                _digger_.digCellTile(path[i].x - 1, path[i].y, _mat_GOLD_BLOCK_0);
-	                break;
-	            case 4:
-	                path = utils.line(c0, _digger_.cellSize() - 1, c1, 0);
-	                break;
-	            case 5:
-	                path = utils.line(c0, 0, c1, 0);
-	                break;
-	            }
-            }
+            //TODO
             ]]>
         </script>
     </event>

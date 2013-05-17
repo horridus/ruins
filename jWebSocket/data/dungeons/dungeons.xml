@@ -20,58 +20,84 @@
                 utils.shuffle(cellsList);
                 
                 return cellsList;
-            }
+            };
             
-            //primordial age
+            //select and set a cell taken from cells array 
+            function selectCell(cellsList) {
+                var cellNumber = cellsList.pop();
+                _digger_.setCurrentCell(cellNumber%_digger_.numCellsPerSide(), Math.floor(cellNumber/_digger_.numCellsPerSide()), _depth_);
+            };
+            
+            /* Primordial Age */
+            
             //for every dungeon level roll N events
-            for (var depth = 0; depth < _digger_.dungeonDepth(); depth++) {
+            for (; _depth_ < _digger_.dungeonDepth(); _depth_++) {
                 
                 var cellsList = shuffledCellsArray();
                 var numPrimordialEvents = _digger_.numCellsPerSide()*_digger_.numCellsPerSide()/4;
                 
                 for (var n = 0; n < numPrimordialEvents; n++) {
-                    //select a random cell
-                    var cellNumber = cellsList.pop();
-                    _digger_.setCurrentCell(cellNumber%_digger_.numCellsPerSide(), Math.floor(cellNumber/_digger_.numCellsPerSide()), depth);
-
                     //select an event
                     var roll = _digger_.randomI(0, 10); 
                     switch (roll) {
                     case 0:
+                        selectCell(cellsList)
                          _digger_.event('mineralvein', {});
                         break;
                     case 1:
+                        selectCell(cellsList)
                          _digger_.event('mineralvein', {});
                         break;
                     case 2:
+                        selectCell(cellsList)
                          _digger_.event('mineralvein', {});
                         break;
                     case 3:
-                        _digger_.event('mineralvein', {});
+                        selectCell(cellsList)
+                         _digger_.event('mineralvein', {});
                         break;
                     case 4:
-                        _digger_.event('mineralvein', {});
+                        selectCell(cellsList)
+                         _digger_.event('mineralvein', {});
                         break;
                     case 5:
-                        _digger_.event('mineralvein', {});
+                        selectCell(cellsList)
+                         _digger_.event('cavern', {});
                         break;
                     case 6:
-                        _digger_.event('mineralvein', {});
+                        selectCell(cellsList)
+                         _digger_.event('cavern', {});
                         break;
                     case 7:
-                        _digger_.event('mineralvein', {});
+                        selectCell(cellsList)
+                         _digger_.event('cavern', {});
                         break;
                     case 8:
-                        _digger_.event('mineralvein', {});
+                        selectCell(cellsList)
+                         _digger_.event('cavern', {});
                         break;
                     case 9:
-                        _digger_.event('mineralvein', {});
+                        selectCell(cellsList)
+                         _digger_.event('cavern', {});
                         break;
                     default:
                         break;
                     }
                 }
             }
+            
+            //cleaning
+            cellsList = undefined;
+            
+            /* The Age of Civilization (dwarven) */
+            
+            //build starting outpost
+            var currentCoord = { x:0, y:0, depth:0 }
+            currentCoord.x = 0;//_digger_.randomI(0, _digger_.numCellsPerSide());
+            currentCoord.y = 0;//_digger_.randomI(0, _digger_.numCellsPerSide());
+            
+            _digger_.setCurrentCell(currentCoord.x, currentCoord.y, currentCoord.depth);
+            _digger_.event('dwarvenstart', {});
             
             /*
             _digger_.initCellsIterator(0);

@@ -205,7 +205,7 @@ public class DungeonsCreationListener extends GenericListener {
 			scriptsGlobalObjects.put("_mat_" + materialEntry.getKey(), materialEntry.getValue());
 		}
 		
-		scriptsGlobalObjects.put("_depth_", 0); //FIXME serve?
+		scriptsGlobalObjects.put("_depth_", 0);
 		
 		//init subsystems
 		digger.setDungeon(dungeon);
