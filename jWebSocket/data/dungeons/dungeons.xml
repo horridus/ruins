@@ -1,111 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons>
-    <dungeon id="generic" size="512" cells="32" depth="5">
+    <dungeon id="generic" size="256" cells="16" depth="5">
         <init>
             <![CDATA[
-                var size = _dungeon_.size();
-                for (var y=0; y<size; y++) {
-                    for (var x=0; x<size; x++) {
-                        _digger_.digTile(x, y, _depth_, _mat_DIRT_BLOCK_0);
-                    }
+            var size = DIGGER.size;
+            for (var y=0; y<size; y++) {
+                for (var x=0; x<size; x++) {
+                    DIGGER.digTile(x, y, DIGGER.depth, MAT_DIRT_BLOCK_0);
                 }
+            }
             ]]>
         </init>
         <build>
             <![CDATA[
-                function squareSection(centerx, centery, depth, roomId) {
-                    _digger_.setCurrentCell(centerx, centery, depth);
-                    _digger_.createRoom(roomId, {});
-                    
-                    if (centerx > 0) {
-                        _digger_.setCurrentCell(centerx - 1, centery, depth);
-                        _digger_.createRoom(roomId, {});
-                    }
-                    
-                    if (centerx < _dungeon_.numCellsPerSide() - 1) {
-                        _digger_.setCurrentCell(centerx + 1, centery, depth);
-                        _digger_.createRoom(roomId, {});
-                    }
-                    
-                    if (centery > 0) {
-                        _digger_.setCurrentCell(centerx, centery - 1, depth);
-                        _digger_.createRoom(roomId, {});
-                    }
-                    
-                    if (centery < _dungeon_.numCellsPerSide() - 1) {
-                        _digger_.setCurrentCell(centerx, centery + 1, depth);
-                        _digger_.createRoom(roomId, {});
-                    }
-                    
-                    if (centerx > 0 && centery > 0) {
-                        _digger_.setCurrentCell(centerx - 1, centery - 1, depth);
-                        _digger_.createRoom(roomId, {});
-                    }
-                    
-                    if (centerx < _dungeon_.numCellsPerSide() - 1 && centery < _dungeon_.numCellsPerSide() - 1) {
-                        _digger_.setCurrentCell(centerx + 1, centery + 1, depth);
-                        _digger_.createRoom(roomId, {});
-                    }
-                    
-                    if (centerx > 0 && centery < _dungeon_.numCellsPerSide() - 1) {
-                        _digger_.setCurrentCell(centerx - 1, centery + 1, depth);
-                        _digger_.createRoom(roomId, {});
-                    }
-                    
-                    if (centerx < _dungeon_.numCellsPerSide() - 1 && centery > 0) {
-                        _digger_.setCurrentCell(centerx + 1, centery - 1, depth);
-                        _digger_.createRoom(roomId, {});
-                    }
-                };    
+            function shuffledCellsArray() {
+                var cellsList = [];
+                for (var i = 0; i < DIGGER.cellssize * DIGGER.cellssize; i++)
+                    cellsList.push(i);
+                utils.shuffle(cellsList);
+                
+                return cellsList;
+            };
             
-                squareSection(_digger_.randomI(0, _dungeon_.numCellsPerSide()), _digger_.randomI(0, _dungeon_.numCellsPerSide()), _depth_, 'multiple');
-                squareSection(_digger_.randomI(0, _dungeon_.numCellsPerSide()), _digger_.randomI(0, _dungeon_.numCellsPerSide()), _depth_, 'multiple');
-                squareSection(_digger_.randomI(0, _dungeon_.numCellsPerSide()), _digger_.randomI(0, _dungeon_.numCellsPerSide()), _depth_, 'multiple');
-                squareSection(_digger_.randomI(0, _dungeon_.numCellsPerSide()), _digger_.randomI(0, _dungeon_.numCellsPerSide()), _depth_, 'multiple');
-                squareSection(_digger_.randomI(0, _dungeon_.numCellsPerSide()), _digger_.randomI(0, _dungeon_.numCellsPerSide()), _depth_, 'multiple');
+            //select and set a cell taken from cells array 
+            function selectCell(cellsList) {
+                var cellNumber = cellsList.pop();
+                DIGGER.move(cellNumber%DIGGER.cellsnum, Math.floor(cellNumber/DIGGER.cellsnum), DIGGER.depth);
+            };
+            
+            /* Primordial Age */
+            
+            //for every dungeon level roll N events
+            for (var depth = 0; depth < DIGGER.dungeondepth; depth++) {
                 
-                _digger_.setCurrentCell(0, 0, _depth_);
-                _digger_.createRoom('bigroom00', {});
-                _digger_.setCurrentCell(0, 1, _depth_);
-                _digger_.createRoom('bigroom01', {});
-                _digger_.setCurrentCell(1, 0, _depth_);
-                _digger_.createRoom('bigroom10', {});
-                _digger_.setCurrentCell(1, 1, _depth_);
-                _digger_.createRoom('bigroom11', {});
+                var cellsList = shuffledCellsArray();
+                var numPrimordialEvents = (DIGGER.cellsnum * DIGGER.cellsnum) / 4;
                 
-                _digger_.setCurrentCell(0, 2, _depth_);
-                _digger_.createRoom('square', {});
-                
-                _digger_.setCurrentCell(1, 2, _depth_);
-                _digger_.createRoom('square', {});
-                
-                
-                /*
-	            _digger_.initCellsIterator(0);
-	            while (_digger_.nextCell()) {
-	                 var choose = _digger_.randomI(0, 2);
-	                 if (choose == 0)
-	                     _digger_.createRoom('square', {});
-	            }
-	            
-	            _digger_.initCellsIterator(0);
-	            while (_digger_.nextCell()) {
-	                 if (_digger_.currentRoomId() == '') {
-	                     var choose = _digger_.randomI(0, 2);
-	                     if (choose == 0)
-	                         _digger_.createRoom('cavern', {});
-	                 }
-	            }
-	            
-	            _digger_.initCellsIterator(0);
-	            while (_digger_.nextCell()) {
-	                 if (_digger_.currentRoomId() == '') {
-	                     var choose = _digger_.randomI(0, 2);
-	                     if (choose == 0)
-	                         _digger_.createRoom('corridors', {});
-	                 }
-	            }
-	            */
+                for (var n = 0; n < numPrimordialEvents; n++) {
+                    //select an event
+                    var roll = DIGGER.randomI(0, 10); 
+                    switch (roll) {
+                    case 0:
+                        selectCell(cellsList)
+                         DIGGER.event('mineralvein', {});
+                        break;
+                    case 1:
+                        selectCell(cellsList)
+                         DIGGER.event('mineralvein', {});
+                        break;
+                    case 2:
+                        selectCell(cellsList)
+                         DIGGER.event('mineralvein', {});
+                        break;
+                    case 3:
+                        selectCell(cellsList)
+                         DIGGER.event('mineralvein', {});
+                        break;
+                    case 4:
+                        selectCell(cellsList)
+                         DIGGER.event('mineralvein', {});
+                        break;
+                    case 5:
+                        selectCell(cellsList)
+                         DIGGER.event('cavern', {});
+                        break;
+                    case 6:
+                        selectCell(cellsList)
+                         DIGGER.event('cavern', {});
+                        break;
+                    case 7:
+                        selectCell(cellsList)
+                         DIGGER.event('cavern', {});
+                        break;
+                    case 8:
+                        selectCell(cellsList)
+                         DIGGER.event('cavern', {});
+                        break;
+                    case 9:
+                        selectCell(cellsList)
+                         DIGGER.event('cavern', {});
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+            
+            //cleaning
+            cellsList = undefined;
+            
+            /* The Age of Civilization (dwarven) */
+            
+            //build starting outpost
+            var currentCoord = { x:0, y:0, depth:0 }
+            currentCoord.x = 0;//DIGGER.randomI(0, DIGGER.numCellsPerSide());
+            currentCoord.y = 0;//DIGGER.randomI(0, DIGGER.numCellsPerSide());
+            
+            DIGGER.move(currentCoord.x, currentCoord.y, currentCoord.depth);
+            DIGGER.event('dwarvenstart', {});
+            
+            /*
+            DIGGER.initCellsIterator(0);
+            while (DIGGER.nextCell()) {
+                 var choose = DIGGER.randomI(0, 2);
+                 if (choose == 0)
+                     DIGGER.event('test', {});
+            }
+            */
             ]]>
         </build>
     </dungeon>

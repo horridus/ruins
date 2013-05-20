@@ -2,14 +2,25 @@ package cek.ruins.world.locations.dungeons;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
+import java.util.Map.Entry;
 
+import org.dom4j.Document;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
+import org.mozilla.javascript.ScriptableObject;
 
 import cek.ruins.Point;
 import cek.ruins.ScriptExecutor;
+import cek.ruins.world.locations.dungeons.entities.Entity;
+import cek.ruins.world.locations.dungeons.entities.EntityComponent;
+import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
+import cek.ruins.world.locations.dungeons.entities.components.ComponentMessageId;
 import cek.ruins.world.locations.dungeons.materials.Material;
 import cek.ruins.world.locations.dungeons.materials.Materials;
 import cek.ruins.world.locations.dungeons.templates.BuildEventTemplate;
@@ -17,12 +28,14 @@ import cek.ruins.world.locations.dungeons.templates.RoomTemplate;
 
 //import com.infomatiq.jsi.rtree.RTree;
 
-public class Digger {
+public class Digger extends ScriptableObject {
+	private static final long serialVersionUID = 1L;
+	
 	private DungeonsArchitect dungeonsArchitect;
 	private Dungeon dungeon;
-	private int depth;
 	private Point iterator;
 	private DungeonCell currentCell;
+	private int depth;
 	private Random generator;
 	private boolean corridorFlag;
 	private boolean roomFlag;
@@ -30,24 +43,165 @@ public class Digger {
 	
 	//private RTree roomsTree;
 	
-	public Digger(DungeonsArchitect dungeonsArchitect, Random generator, Map<String, Object> executorScope) {
-		this.dungeonsArchitect = dungeonsArchitect;
-		this.generator = generator;
-		this.corridorFlag = false;
-		this.roomFlag = false;
-		this.executorScope = executorScope;
-		
-		//this.roomsTree = new RTree();
-		//this.roomsTree.init(null);
+	public void setDungeon(Dungeon dungeon) {
+		this.dungeon = dungeon;
 	}
-	
 	
 	public void setGenerator(Random generator) {
 		this.generator = generator;
 	}
 	
+	public void setExecutorScope(Map<String, Object> executorScope) {
+		this.executorScope = executorScope;
+	}
+	
+	public List<Entity> entities(int depth) {
+		return this.dungeon.entities(depth);
+	}
+	
+	public void setPosition(int column, int row, int depth) {
+		this.currentCell = this.dungeon.cell(column, row, depth);
+	}
+	
+	/* javascript side methods */
+	
+	@Override
+	public String getClassName() {
+		return Digger.class.getSimpleName();
+	}
+	
+	//this exists only for being called from ScriptableObject.defineClass method 
+	public Digger() throws Exception {}
+	
+	public void jsConstructor(Object dungeonsArchitect, Object generator) {
+		this.dungeonsArchitect = (DungeonsArchitect) dungeonsArchitect;
+		this.generator = (Random) generator;
+		this.corridorFlag = false;
+		this.roomFlag = false;
+		this.executorScope = new HashMap<String, Object>();
+		
+		//this.roomsTree = new RTree();
+		//this.roomsTree.init(null);
+	}
+	
+	/**
+	 * Gets number of tiles per side.
+	 * @return number of tiles per side.
+	 */
+	public int jsGet_size() {
+		return this.dungeon.size();
+	}
+	
+	/**
+	 * Gets number of cells per side.
+	 * @return number of cells per side.
+	 */
+	public int jsGet_cellsnum() {
+		return this.dungeon.numCellsPerSide();
+	}
+	
+	/**
+	 * Gets number of tiles per cell's side.
+	 * @return number of tiles per cell's side.
+	 */
+	public int jsGet_cellsize() {
+		return this.cellSize();
+	}
+	
+	/**
+	 * Gets maximum depth of current dungeon.
+	 * @return maximum depth of dungeon.
+	 */
+	public int jsGet_dungeondepth() {
+		return this.dungeon.depth();
+	}
+	
+	/**
+	 * Returns digger's current depth.
+	 * @return digger's current depth.
+	 */
+	public int jsGet_depth() {
+		return this.currentCell.depth();
+	}
+	
+	/**
+	 * Returns digger's current x coordinate.
+	 * @return digger's current x coordinate.
+	 */
+	public int jsGet_x() {
+		return this.currentCell.column();
+	}
+	
+	/**
+	 * Returns digger's current y coordinate.
+	 * @return digger's current y coordinate.
+	 */
+	public int jsGet_y() {
+		return this.currentCell.row();
+	}
+	
+	/**
+	 * Moves digger to the cell at coordinates (x,y,depth).
+	 * @param x
+	 * @param y
+	 * @param depth
+	 */
+	public void jsFunction_move(int x, int y, int depth) {
+		this.setPosition(x, y, depth);
+	}
+	
+	/**
+	 * Moves digger to the first cell at depth <code>depth</code>.
+	 * @param depth
+	 */
+	public void jsFunction_toDepth(int depth) {
+		this.setPosition(0, 0, depth);
+	}
+	
+	/**
+	 * Sets selected tile's material to <code>material</code>.
+	 * @param x related to whole map, NOT to cell internal coordinates.
+	 * @param y related to whole map, NOT to cell internal coordinates.
+	 * @param depth
+	 * @param material
+	 */
+	public void jsFunction_digTile(int x, int y, int depth, Object material) {
+		this.digTile(x, y, depth, (Material) Context.jsToJava(material, Material.class));
+	}
+	
+	/**
+	 * Returns a random integer between [min,max). 
+	 * @param min
+	 * @param max
+	 * @return a random integer between [min,max).
+	 */
+	public int jsFunction_randomI(int min, int max) {
+		return this.randomI(min, max);
+	}
+	
+	/**
+	 * Execute an event.
+	 * @param eventId event id.
+	 * @param args optional arguments to called event script.
+	 */
+	public void jsFunction_event(String eventId, NativeObject args) {
+		this.event(eventId, args);
+	}
+	
+	/**
+	 * Create a room at current cell's position.
+	 * @param roomId room id.
+	 * @param args optional arguments to called room script.
+	 */
+	public void jsFunction_createRoom(String roomId, NativeObject args) {
+		this.createRoom(roomId, args);
+	}
+	
+	/* *** */
+	
 	/* scripts utility functions */
-	public void digCellTile(int cellx, int celly, Material material) {
+	
+	private void digCellTile(int cellx, int celly, Material material) {
 		int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
 		int dungeony = celly + this.currentCell.row() * this.currentCell.size();
 		
@@ -56,18 +210,20 @@ public class Digger {
 		tile.setCorridor(this.corridorFlag);
 		tile.setRoom(this.roomFlag);
 		
-		//FIXME vale pere tutti i materiali?
-		if (cellx == 0)
-			addCellWestEntrance(celly);
-		if (cellx == this.currentCell.size() - 1)
-			addCellEastEntrance(celly);
-		if (celly == 0)
-			addCellNorthEntrance(cellx);
-		if (celly == this.currentCell.size() - 1)
-			addCellSouthEntrance(cellx);
+		//vale per tutti i materiali? NO, solo per quelli "passabili"
+		if (material.isPassable()) {
+			if (cellx == 0)
+				addCellWestEntrance(celly);
+			if (cellx == this.currentCell.size() - 1)
+				addCellEastEntrance(celly);
+			if (celly == 0)
+				addCellNorthEntrance(cellx);
+			if (celly == this.currentCell.size() - 1)
+				addCellSouthEntrance(cellx);
+		}
 	}
 	
-	public void digTile(int x, int y, int depth, Material material) {
+	private void digTile(int x, int y, int depth, Material material) {
 		DungeonTile tile = tile(x, y, depth);
 		tile.setMaterial(material);
 		
@@ -75,22 +231,25 @@ public class Digger {
 		tile.setRoom(this.roomFlag);
 	}
 	
-	public Material cellTileMaterial(int cellx, int celly) {
+	private Material cellTileMaterial(int cellx, int celly) {
 		int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
 		int dungeony = celly + this.currentCell.row() * this.currentCell.size();
 		
 		return tile(dungeonx, dungeony, this.currentCell.depth()).material();
 	}
 	
-	public DungeonTile tile(int x, int y, int depth) {
+	private DungeonTile tile(int x, int y, int depth) {
 		return this.dungeon.tile(x, y, depth);
 	}
 	
-	public int randomI(int min, int max) {
-		return this.generator.nextInt(max - min) + min;
+	private int randomI(int min, int max) {
+		if ((max - min) <= 0)
+			return 0;
+		else
+			return this.generator.nextInt(max - min) + min;
 	}
 	
-	public boolean nextCell() {
+	private boolean nextCell() {
 		if (this.depth >= this.dungeon.depth())
 			return false;
 		
@@ -109,20 +268,12 @@ public class Digger {
 		return true;
 	}
 	
-	public void setCurrentCell(int column, int row, int depth) {
-		this.currentCell = this.dungeon.cell(column, row, depth);
-	}
-	
-	public void initCellsIterator(int depth) {
+	private void initCellsIterator(int depth) {
 		this.iterator = new Point(0, 0);
 		this.depth = depth;
 	}
 	
-	public String currentRoomId() {
-		return this.currentCell.roomId();
-	}
-	
-	public void createRoom(String roomId, NativeObject args) {
+	private void createRoom(String roomId, NativeObject args) {
 		ScriptExecutor executor = ScriptExecutor.executor();
 		RoomTemplate roomTemplate = this.dungeonsArchitect.roomsTemplates().get(roomId);
 		if (roomTemplate != null) {
@@ -131,7 +282,6 @@ public class Digger {
 			//set function args
 			this.executorScope.put("_args_", args);
 			//generate room and fill cell
-			this.currentCell.setRoomId(roomId);
 			executor.executeScript(roomTemplate.roomGenerator(), this.executorScope);
 			//rest function args
 			this.executorScope.put("_args_", null);
@@ -140,11 +290,11 @@ public class Digger {
 		}
 	}
 	
-	public int cellSize() {
+	private int cellSize() {
 		return this.dungeon.size()/this.dungeon.numCellsPerSide();
 	}
 	
-	public void digCorridor(int cellx0, int celly0, int cellx1, int celly1, Material material, Material wallMaterial) {
+	private void digCorridor(int cellx0, int celly0, int cellx1, int celly1, Material material, Material wallMaterial) {
 		int dungeonx = cellx0 + this.currentCell.column() * this.currentCell.size();
 		int dungeony = celly0 + this.currentCell.row() * this.currentCell.size();
 		DungeonTile start = this.tile(dungeonx, dungeony, this.currentCell.depth());
@@ -196,56 +346,56 @@ public class Digger {
 					
 					if (tile.x() > 0 && skipDir != 1) {
 						DungeonTile neighbor = this.tile(tile.x() - 1, tile.y(), tile.depth());
-						if (!neighbor.isRoom()) {
+						if (!neighbor.isRoom() && !neighbor.isCorridor()) {
 							digTile(tile.x() - 1, tile.y(), tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() < this.dungeon.size() - 1 && skipDir != 2) {
 						DungeonTile neighbor = this.tile(tile.x() + 1, tile.y(), tile.depth());
-						if (!neighbor.isRoom()) {
+						if (!neighbor.isRoom() && !neighbor.isCorridor()) {
 							digTile(tile.x() + 1, tile.y(), tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.y() > 0 && skipDir != 3) {
 						DungeonTile neighbor = this.tile(tile.x(), tile.y() - 1, tile.depth());
-						if (!neighbor.isRoom()) {
+						if (!neighbor.isRoom() && !neighbor.isCorridor()) {
 							digTile(tile.x(), tile.y() - 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.y() < this.dungeon.size() - 1 && skipDir != 4) {
 						DungeonTile neighbor = this.tile(tile.x(), tile.y() + 1, tile.depth());
-						if (!neighbor.isRoom()) {
+						if (!neighbor.isRoom() && !neighbor.isCorridor()) {
 							digTile(tile.x(), tile.y() + 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() > 0 && tile.y() > 0) {
 						DungeonTile neighbor = this.tile(tile.x() - 1, tile.y() - 1, tile.depth());
-						if (!neighbor.isRoom()) {
+						if (!neighbor.isRoom() && !neighbor.isCorridor()) {
 							digTile(tile.x() - 1, tile.y() - 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() > 0 && tile.y() < this.dungeon.size() - 1) {
 						DungeonTile neighbor = this.tile(tile.x() - 1, tile.y() + 1, tile.depth());
-						if (!neighbor.isRoom()) {
+						if (!neighbor.isRoom() && !neighbor.isCorridor()) {
 							digTile(tile.x() - 1, tile.y() + 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() < this.dungeon.size() - 1 && tile.y() > 0) {
 						DungeonTile neighbor = this.tile(tile.x() + 1, tile.y() - 1, tile.depth());
-						if (!neighbor.isRoom()) {
+						if (!neighbor.isRoom() && !neighbor.isCorridor()) {
 							digTile(tile.x() + 1, tile.y() - 1, tile.depth(), wallMaterial);
 						}
 					}
 					
 					if (tile.x() < this.dungeon.size() - 1 && tile.y() < this.dungeon.size() - 1) {
 						DungeonTile neighbor = this.tile(tile.x() + 1, tile.y() + 1, tile.depth());
-						if (!neighbor.isRoom()) {
+						if (!neighbor.isRoom() && !neighbor.isCorridor()) {
 							digTile(tile.x() + 1, tile.y() + 1, tile.depth(), wallMaterial);
 						}
 					}
@@ -256,51 +406,67 @@ public class Digger {
 		}
 	}
 	
-	public void addCellNorthEntrance(int cellx) {
+	private void digNorthExitCorridor(int startX, int startY, Material material, Material wallMaterial) {
+		digExitCorridor(0, startX, startY, material, wallMaterial);
+	}
+	
+	private void digEastExitCorridor(int startX, int startY, Material material, Material wallMaterial) {
+		digExitCorridor(1, startX, startY, material, wallMaterial);
+	}
+
+	private void digSouthExitCorridor(int startX, int startY, Material material, Material wallMaterial) {
+		digExitCorridor(2, startX, startY, material, wallMaterial);
+	}
+	
+	private void digWestExitCorridor(int startX, int startY, Material material, Material wallMaterial) {
+		digExitCorridor(3, startX, startY, material, wallMaterial);
+	}
+	
+	private void addCellNorthEntrance(int cellx) {
 		this.currentCell.markAsCellEntrance(DungeonCell.NORTH, cellx);
 		
 		if (this.currentCell.row() > 0)
 			this.dungeon.cell(this.currentCell.column(), this.currentCell.row() - 1, this.currentCell.depth()).markAsCellEntrance(DungeonCell.SOUTH, cellx);
 	}
 	
-	public void addCellSouthEntrance(int cellx) {
+	private void addCellSouthEntrance(int cellx) {
 		this.currentCell.markAsCellEntrance(DungeonCell.SOUTH, cellx);
 		
 		if (this.currentCell.row() < this.dungeon.numCellsPerSide() - 1)
 			this.dungeon.cell(this.currentCell.column(), this.currentCell.row() + 1, this.currentCell.depth()).markAsCellEntrance(DungeonCell.NORTH, cellx);
 	}
 
-	public void addCellEastEntrance(int celly) {
+	private void addCellEastEntrance(int celly) {
 		this.currentCell.markAsCellEntrance(DungeonCell.EAST, celly);
 		
 		if (this.currentCell.column() < this.dungeon.numCellsPerSide() - 1)
 			this.dungeon.cell(this.currentCell.column() + 1, this.currentCell.row(), this.currentCell.depth()).markAsCellEntrance(DungeonCell.WEST, celly);
 	}
 	
-	public void addCellWestEntrance(int celly) {
+	private void addCellWestEntrance(int celly) {
 		this.currentCell.markAsCellEntrance(DungeonCell.WEST, celly);
 		
 		if (this.currentCell.column() > 0)
 			this.dungeon.cell(this.currentCell.column() - 1, this.currentCell.row(), this.currentCell.depth()).markAsCellEntrance(DungeonCell.EAST, celly);
 	}
 	
-	public List<Point> getNorthCellEntrances() {
+	private List<Point> getNorthCellEntrances() {
 		return this.currentCell.entrances(DungeonCell.NORTH);
 	}
 	
-	public List<Point> getSouthCellEntrances() {
+	private List<Point> getSouthCellEntrances() {
 		return this.currentCell.entrances(DungeonCell.SOUTH);
 	}
 
-	public List<Point> getEastCellEntrances() {
+	private List<Point> getEastCellEntrances() {
 		return this.currentCell.entrances(DungeonCell.EAST);
 	}
 	
-	public List<Point> getWestCellEntrances() {
+	private List<Point> getWestCellEntrances() {
 		return this.currentCell.entrances(DungeonCell.WEST);
 	}
 	
-	public List<Point> getNotNorthCellEntrances() {
+	private List<Point> getNotNorthCellEntrances() {
 		List<Point> entrances = new ArrayList<Point>();
 		entrances.addAll(getSouthCellEntrances());
 		entrances.addAll(getEastCellEntrances());
@@ -309,7 +475,7 @@ public class Digger {
 		return entrances;
 	}
 	
-	public List<Point> getNotSouthCellEntrances() {
+	private List<Point> getNotSouthCellEntrances() {
 		List<Point> entrances = new ArrayList<Point>();
 		entrances.addAll(getNorthCellEntrances());
 		entrances.addAll(getEastCellEntrances());
@@ -318,7 +484,7 @@ public class Digger {
 		return entrances;
 	}
 
-	public List<Point> getNotEastCellEntrances() {
+	private List<Point> getNotEastCellEntrances() {
 		List<Point> entrances = new ArrayList<Point>();
 		entrances.addAll(getSouthCellEntrances());
 		entrances.addAll(getNorthCellEntrances());
@@ -327,7 +493,7 @@ public class Digger {
 		return entrances;
 	}
 	
-	public List<Point> getNotWestCellEntrances() {
+	private List<Point> getNotWestCellEntrances() {
 		List<Point> entrances = new ArrayList<Point>();
 		entrances.addAll(getSouthCellEntrances());
 		entrances.addAll(getEastCellEntrances());
@@ -336,7 +502,7 @@ public class Digger {
 		return entrances;
 	}
 	
-	public List<Point> entrances() {
+	private List<Point> entrances() {
 		List<Point> entrances = new ArrayList<Point>();
 		entrances.addAll(getSouthCellEntrances());
 		entrances.addAll(getEastCellEntrances());
@@ -346,7 +512,43 @@ public class Digger {
 		return entrances;
 	}
 	
-	public void executeEvent(String eventId, NativeObject args) {
+	private NativeArray room() {
+		List<Point> roomTiles = new ArrayList<Point>();
+		
+		for (int celly = 0; celly < this.cellSize(); celly++) {
+			for (int cellx = 0; cellx < this.cellSize(); cellx++) {
+				int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+				int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+				
+				if (tile(dungeonx, dungeony, this.currentCell.depth()).isRoom())
+					roomTiles.add(new Point(cellx, celly));
+			}
+		}
+		
+		NativeArray na = ScriptExecutor.executor().convertToJSArray(roomTiles.toArray(new Object[roomTiles.size()]));
+		
+		return na;
+	}
+	
+	private NativeArray passable() {
+		List<Point> passableTiles = new ArrayList<Point>();
+		
+		for (int celly = 0; celly < this.cellSize(); celly++) {
+			for (int cellx = 0; cellx < this.cellSize(); cellx++) {
+				int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+				int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+				
+				if (tile(dungeonx, dungeony, this.currentCell.depth()).material().isPassable())
+					passableTiles.add(new Point(cellx, celly));
+			}
+		}
+		
+		NativeArray na = ScriptExecutor.executor().convertToJSArray(passableTiles.toArray(new Object[passableTiles.size()]));
+		
+		return na;
+	}
+	
+	private void event(String eventId, NativeObject args) {
 		ScriptExecutor executor = ScriptExecutor.executor();
 		BuildEventTemplate eventTemplate = this.dungeonsArchitect.buildEventsTemplates().get(eventId);
 		if (eventTemplate != null) {
@@ -358,7 +560,51 @@ public class Digger {
 		}
 	}
 	
+	private Entity breed(String templateId, int cellx, int celly) throws Exception {
+		EntityTemplate template = this.dungeonsArchitect.entitiesTemplates().get(templateId);
+		
+		if (template != null) {
+			Entity entity = new Entity();
+			entity.setTemplateId(templateId);
+			entity.setId(generateUniqueId());
+			
+			for (Entry<String, Document> componentEntry : template.components().entrySet()) {
+				Class<?> componentClass = Class.forName(componentEntry.getKey());
+				EntityComponent component = (EntityComponent) componentClass.newInstance();
+				component.setOwnerEntity(entity);
+				component.configure(componentEntry.getValue());
+				
+				entity.addComponent(component);
+			}
+			
+			int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+			int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+			
+			//notify to entity's components its own creation
+			Map<String, Object> args = new HashMap<String, Object>();
+			args.put("position:x", dungeonx);
+			args.put("position:y", dungeony);
+			args.put("position:z", this.currentCell.depth());
+			
+			entity.processMessage(ComponentMessageId.CREATION, args);
+			
+			//insert new entity in existing entities map
+			this.dungeon.addEntity(entity);
+			return entity;
+		}
+		else
+			throw new Exception("Entity template " + templateId + " not found.");
+	}
+	
+	private void deleteEntity(String id) {
+		this.dungeon.deleteEntity(id);
+	}
+	
 	/* *** */
+	private String generateUniqueId() {
+		UUID uuid = UUID.randomUUID();
+		return uuid.toString().replace("-", "");
+	}
 	
 	private void startCorridor() {
 		this.corridorFlag = true;
@@ -375,8 +621,50 @@ public class Digger {
 	private void stopRoom() {
 		this.roomFlag = false;
 	}
-
-	public void setDungeon(Dungeon dungeon) {
-		this.dungeon = dungeon;
+	
+	private void digExitCorridor(int direction, int startX, int startY, Material material, Material wallMaterial) {
+		List<Point> entrances = new ArrayList<Point>();
+		Point selectedExit = new Point();
+		
+		switch (direction) {
+		case 0:
+			entrances = getNorthCellEntrances();
+			if (!entrances.isEmpty()) {
+				selectedExit = entrances.get(randomI(0, entrances.size()));
+			}
+			else {
+				selectedExit.set(randomI(0, cellSize()), 0);
+			}
+			break;
+		case 1:
+			entrances = getEastCellEntrances();
+			if (!entrances.isEmpty()) {
+				selectedExit = entrances.get(randomI(0, entrances.size()));
+			}
+			else {
+				selectedExit.set(cellSize() - 1, randomI(0, cellSize()));
+			}
+			break;
+		case 2:
+			entrances = getSouthCellEntrances();
+			if (!entrances.isEmpty()) {
+				selectedExit = entrances.get(randomI(0, entrances.size()));
+			}
+			else {
+				selectedExit.set(randomI(0, cellSize()), cellSize() - 1);
+			}
+			break;
+		case 3:
+			entrances = getWestCellEntrances();
+			if (!entrances.isEmpty()) {
+				selectedExit = entrances.get(randomI(0, entrances.size()));
+			}
+			else {
+				selectedExit.set(0, randomI(0, cellSize()));
+			}
+			break;
+		}
+		
+		digCorridor(startX, startY, (int)selectedExit.x, (int)selectedExit.y, material, wallMaterial);
 	}
 }
