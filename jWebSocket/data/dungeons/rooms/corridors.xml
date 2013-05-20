@@ -3,12 +3,12 @@
     <room id="corridors">
         <generator>
         <![CDATA[
-            var entrancesList = _digger_.getNorthCellEntrances();
-            var oppositeEntrancesList = _digger_.getNotNorthCellEntrances();
+            var entrancesList = DIGGER.getNorthCellEntrances();
+            var oppositeEntrancesList = DIGGER.getNotNorthCellEntrances();
             
             if (entrancesList.size() == 0) {
-                entrancesList = _digger_.getWestCellEntrances();
-                var oppositeEntrancesList = _digger_.getNotWestCellEntrances();
+                entrancesList = DIGGER.getWestCellEntrances();
+                var oppositeEntrancesList = DIGGER.getNotWestCellEntrances();
             }
             
             var eSize = entrancesList.size();
@@ -16,9 +16,9 @@
             if (eSize > 0) {
                var oeSize = oppositeEntrancesList.size();
                if (oeSize > 0) {
-                       var entrance = entrancesList.get(_digger_.randomI(0, eSize));
-                       var oppositeEntrance = oppositeEntrancesList.get(_digger_.randomI(0, oeSize));
-                       _digger_.digCorridor(entrance.x, entrance.y, oppositeEntrance.x, oppositeEntrance.y, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
+                       var entrance = entrancesList.get(DIGGER.randomI(0, eSize));
+                       var oppositeEntrance = oppositeEntrancesList.get(DIGGER.randomI(0, oeSize));
+                       DIGGER.digCorridor(entrance.x, entrance.y, oppositeEntrance.x, oppositeEntrance.y, MAT_DOLOMITE_FLOOR_0, MAT_DOLOMITE_WALL_0);
                }
             }
         ]]>

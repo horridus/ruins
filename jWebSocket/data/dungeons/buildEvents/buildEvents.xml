@@ -3,11 +3,11 @@
     <event id="test">
         <script>
             <![CDATA[
-            _digger_.createRoom('square', {x:4, y:4, size:6, exits:0x0000});
-            _digger_.createRoom('square', {x:11, y:4, size:5});
-            _digger_.digCorridor(9, 5, 11, 5, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
+            DIGGER.createRoom('square', {x:4, y:4, size:6, exits:0x0000});
+            DIGGER.createRoom('square', {x:11, y:4, size:5});
+            DIGGER.digCorridor(9, 5, 11, 5, MAT_DOLOMITE_FLOOR_0, MAT_DOLOMITE_WALL_0);
             
-            _digger_.breed('SINK_0', _digger_.randomI(5, 9), _digger_.randomI(5, 9));
+            DIGGER.breed('SINK_0', DIGGER.randomI(5, 9), DIGGER.randomI(5, 9));
             ]]>
         </script>
     </event>
@@ -15,21 +15,21 @@
         <script>
             <![CDATA[
             //choose a starting cell from those along map's borders
-            var side = _digger_.randomI(0, 4);
-            var offset = _digger_.randomI(0, _digger_.numCellsPerSide());
+            var side = DIGGER.randomI(0, 4);
+            var offset = DIGGER.randomI(0, DIGGER.numCellsPerSide());
             
             switch (side) {
             case 0: //north
-                _digger_.setCurrentCell(offset, 0, _depth_);
+                DIGGER.setCurrentCell(offset, 0, _depth_);
                 break;
             case 1: //east
-                _digger_.setCurrentCell(_digger_.numCellsPerSide() - 1, offset, _depth_);
+                DIGGER.setCurrentCell(DIGGER.numCellsPerSide() - 1, offset, _depth_);
                 break;
             case 2: //south
-                _digger_.setCurrentCell(offset, _digger_.numCellsPerSide() - 1, _depth_);
+                DIGGER.setCurrentCell(offset, DIGGER.numCellsPerSide() - 1, _depth_);
                 break;
             case 3: //west
-                _digger_.setCurrentCell(0, offset, _depth_);
+                DIGGER.setCurrentCell(0, offset, _depth_);
                 break;
             }
             

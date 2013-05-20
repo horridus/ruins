@@ -9,9 +9,8 @@ import org.apache.commons.io.FileUtils;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.Script;
+import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
-
-import cek.ruins.world.locations.Settlement;
 
 public class ScriptExecutor {
 	private ScriptableObject sharedScope;
@@ -26,28 +25,6 @@ public class ScriptExecutor {
 	
 	public static ScriptExecutor executor() {
 		return SingletonHolder.INSTANCE;
-	}
-	
-	private ScriptExecutor() {
-		Context ctx = Context.enter();
-		this.sharedScope = ctx.initStandardObjects(null, true);
-
-		//TODO add common objects
-		//this.sharedScope.sealObject();
-		Context.exit();
-	}
-	
-	private ScriptableObject prepareInstanceScope(Context ctx) {
-		ScriptableObject instanceScope = (ScriptableObject) ctx.newObject(this.sharedScope);
-	    instanceScope.setPrototype(this.sharedScope);
-	    instanceScope.setParentScope(null);
-	    
-	    return instanceScope;
-	}
-	
-	private void addObj(ScriptableObject scope, Object object, String jsObjectName) {
-		Object value = Context.javaToJS(object, scope);
-		ScriptableObject.putProperty(scope, jsObjectName, value);
 	}
 	
 	public Script compileScript(String source, String sourceName) {
@@ -89,7 +66,7 @@ public class ScriptExecutor {
 			addObj(instanceScope, entry.getValue(), entry.getKey());
 		}
 		
-		//TODO capire come e qunado fare seal
+		//TODO capire come e quando fare seal
 		//instanceScope.sealObject();
 		
 		//TODO gestire eventuale valore di ritorno
@@ -105,18 +82,36 @@ public class ScriptExecutor {
 		return (NativeArray) ctx.newArray(this.sharedScope, array);
 	}
 	
-	//TODO remove??
-	public void executeSettlementsArchitectScripts(String script, Settlement settlement) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Scriptable registerAndCreateObject(Class clazz, Object[] constructorArgs, boolean sealed) throws Exception {
+		ScriptableObject.defineClass(this.sharedScope, clazz, sealed);
+		
 		Context ctx = Context.enter();
-		
-		ScriptableObject instanceScope = this.prepareInstanceScope(ctx);
-		
-		this.addObj(instanceScope, settlement, "settlement");
-	    
-		instanceScope.sealObject();
-		
-	    ctx.evaluateString(instanceScope, script, "settlementsArchitect", 1, null);
-		
+		Scriptable newObj = ctx.newObject(this.sharedScope, clazz.getSimpleName(), constructorArgs);
 		Context.exit();
+		
+		return newObj;
+	}
+	
+	private ScriptExecutor() {
+		Context ctx = Context.enter();
+		this.sharedScope = ctx.initStandardObjects(null, true);
+
+		//TODO add common objects
+		//this.sharedScope.sealObject();
+		Context.exit();
+	}
+	
+	private ScriptableObject prepareInstanceScope(Context ctx) {
+		ScriptableObject instanceScope = (ScriptableObject) ctx.newObject(this.sharedScope);
+	    instanceScope.setPrototype(this.sharedScope);
+	    instanceScope.setParentScope(null);
+	    
+	    return instanceScope;
+	}
+	
+	private void addObj(ScriptableObject scope, Object object, String jsObjectName) {
+		Object value = Context.javaToJS(object, scope);
+		ScriptableObject.putProperty(scope, jsObjectName, value);
 	}
 }

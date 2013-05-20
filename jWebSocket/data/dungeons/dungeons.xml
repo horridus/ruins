@@ -3,10 +3,10 @@
     <dungeon id="generic" size="256" cells="16" depth="5">
         <init>
             <![CDATA[
-            var size = _dungeon_.size();
+            var size = DIGGER.size;
             for (var y=0; y<size; y++) {
                 for (var x=0; x<size; x++) {
-                    _digger_.digTile(x, y, _depth_, _mat_DIRT_BLOCK_0);
+                    DIGGER.digTile(x, y, DIGGER.depth, MAT_DIRT_BLOCK_0);
                 }
             }
             ]]>
@@ -15,7 +15,7 @@
             <![CDATA[
             function shuffledCellsArray() {
                 var cellsList = [];
-                for (var i = 0; i < _digger_.numCellsPerSide()*_digger_.numCellsPerSide(); i++)
+                for (var i = 0; i < DIGGER.cellssize * DIGGER.cellssize; i++)
                     cellsList.push(i);
                 utils.shuffle(cellsList);
                 
@@ -25,60 +25,60 @@
             //select and set a cell taken from cells array 
             function selectCell(cellsList) {
                 var cellNumber = cellsList.pop();
-                _digger_.setCurrentCell(cellNumber%_digger_.numCellsPerSide(), Math.floor(cellNumber/_digger_.numCellsPerSide()), _depth_);
+                DIGGER.move(cellNumber%DIGGER.cellsnum, Math.floor(cellNumber/DIGGER.cellsnum), DIGGER.depth);
             };
             
             /* Primordial Age */
             
             //for every dungeon level roll N events
-            for (; _depth_ < _digger_.dungeonDepth(); _depth_++) {
+            for (var depth = 0; depth < DIGGER.dungeondepth; depth++) {
                 
                 var cellsList = shuffledCellsArray();
-                var numPrimordialEvents = _digger_.numCellsPerSide()*_digger_.numCellsPerSide()/4;
+                var numPrimordialEvents = (DIGGER.cellsnum * DIGGER.cellsnum) / 4;
                 
                 for (var n = 0; n < numPrimordialEvents; n++) {
                     //select an event
-                    var roll = _digger_.randomI(0, 10); 
+                    var roll = DIGGER.randomI(0, 10); 
                     switch (roll) {
                     case 0:
                         selectCell(cellsList)
-                         _digger_.event('mineralvein', {});
+                         DIGGER.event('mineralvein', {});
                         break;
                     case 1:
                         selectCell(cellsList)
-                         _digger_.event('mineralvein', {});
+                         DIGGER.event('mineralvein', {});
                         break;
                     case 2:
                         selectCell(cellsList)
-                         _digger_.event('mineralvein', {});
+                         DIGGER.event('mineralvein', {});
                         break;
                     case 3:
                         selectCell(cellsList)
-                         _digger_.event('mineralvein', {});
+                         DIGGER.event('mineralvein', {});
                         break;
                     case 4:
                         selectCell(cellsList)
-                         _digger_.event('mineralvein', {});
+                         DIGGER.event('mineralvein', {});
                         break;
                     case 5:
                         selectCell(cellsList)
-                         _digger_.event('cavern', {});
+                         DIGGER.event('cavern', {});
                         break;
                     case 6:
                         selectCell(cellsList)
-                         _digger_.event('cavern', {});
+                         DIGGER.event('cavern', {});
                         break;
                     case 7:
                         selectCell(cellsList)
-                         _digger_.event('cavern', {});
+                         DIGGER.event('cavern', {});
                         break;
                     case 8:
                         selectCell(cellsList)
-                         _digger_.event('cavern', {});
+                         DIGGER.event('cavern', {});
                         break;
                     case 9:
                         selectCell(cellsList)
-                         _digger_.event('cavern', {});
+                         DIGGER.event('cavern', {});
                         break;
                     default:
                         break;
@@ -93,18 +93,18 @@
             
             //build starting outpost
             var currentCoord = { x:0, y:0, depth:0 }
-            currentCoord.x = 0;//_digger_.randomI(0, _digger_.numCellsPerSide());
-            currentCoord.y = 0;//_digger_.randomI(0, _digger_.numCellsPerSide());
+            currentCoord.x = 0;//DIGGER.randomI(0, DIGGER.numCellsPerSide());
+            currentCoord.y = 0;//DIGGER.randomI(0, DIGGER.numCellsPerSide());
             
-            _digger_.setCurrentCell(currentCoord.x, currentCoord.y, currentCoord.depth);
-            _digger_.event('dwarvenstart', {});
+            DIGGER.move(currentCoord.x, currentCoord.y, currentCoord.depth);
+            DIGGER.event('dwarvenstart', {});
             
             /*
-            _digger_.initCellsIterator(0);
-            while (_digger_.nextCell()) {
-                 var choose = _digger_.randomI(0, 2);
+            DIGGER.initCellsIterator(0);
+            while (DIGGER.nextCell()) {
+                 var choose = DIGGER.randomI(0, 2);
                  if (choose == 0)
-                     _digger_.event('test', {});
+                     DIGGER.event('test', {});
             }
             */
             ]]>

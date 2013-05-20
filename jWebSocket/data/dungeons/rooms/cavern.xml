@@ -3,12 +3,12 @@
 	<room id="cavern">
 	    <generator>
 	    <![CDATA[
-	    var xOffset = _digger_.randomI(0, _digger_.cellSize()/2);
-        var yOffset = _digger_.randomI(0, _digger_.cellSize()/2);
-        var remainingRoom = Math.min(_digger_.cellSize() - xOffset, _digger_.cellSize() - yOffset); 
-        var size = _digger_.randomI(4, remainingRoom);
-        var floorMaterial = _mat_DIRT_FLOOR_0;
-        var wallMaterial = _mat_DIRT_BLOCK_0;
+	    var xOffset = DIGGER.randomI(0, DIGGER.cellsize / 2);
+        var yOffset = DIGGER.randomI(0, DIGGER.cellsize / 2);
+        var remainingRoom = Math.min(DIGGER.cellsize - xOffset, DIGGER.cellsize - yOffset); 
+        var size = DIGGER.randomI(4, remainingRoom);
+        var floorMaterial = MAT_DIRT_FLOOR_0;
+        var wallMaterial = MAT_DIRT_BLOCK_0;
         
         if (_args_.x != undefined) {
            xOffset = _args_.x; 
@@ -31,7 +31,7 @@
         }
         
 	    function isFloor(probability) {
-	        var randomProb = _digger_.randomI(0, 100);
+	        var randomProb = DIGGER.randomI(0, 100);
 	        if (randomProb < probability)
 	            return false;
 	        else
@@ -47,7 +47,7 @@
 	    
 	                for (var ii = -1; ii <= 1; ii++) {
 	                    for (var jj = -1; jj <= 1; jj++) {
-	                        var material = _digger_.cellTileMaterial(xi+jj, yi+ii);
+	                        var material = DIGGER.cellTileMaterial(xi+jj, yi+ii);
 	                        if (!material.equals(wallMaterial))
 	                             adjcount_r1++;
 	                    }
@@ -61,7 +61,7 @@
 	                        if (ii < 0 || jj < 0 || ii >= size || jj >= size)
 	                            continue;
 	                    
-	                        var material = _digger_.cellTileMaterial(jj, ii);
+	                        var material = DIGGER.cellTileMaterial(jj, ii);
 	                        if (!material.equals(wallMaterial))
 	                             adjcount_r2++;
 	                    }
@@ -84,7 +84,7 @@
 	        
 	        for (var yi = yOffset + 1; yi < yOffset + size - 1; yi++) {
                 for (var xi = xOffset + 1; xi < xOffset + size - 1; xi++) {
-                    _digger_.digCellTile(xi, yi, helperGrid[xi][yi]);
+                    DIGGER.digCellTile(xi, yi, helperGrid[xi][yi]);
                 }
             }
 	    }
@@ -94,22 +94,22 @@
             helperGrid[x] = new Array();
             for (var y = yOffset; y < yOffset + size; y++) {
                 //init helper grid
-                helperGrid[x][y] =  _digger_.cellTileMaterial(x, y);
+                helperGrid[x][y] =  DIGGER.cellTileMaterial(x, y);
              
                 //init cell map
                 if (isFloor(40))
-                    _digger_.digCellTile(x, y, floorMaterial);
+                    DIGGER.digCellTile(x, y, floorMaterial);
             }
         }
 	    
 	    for (var i = xOffset; i < xOffset + size; i++) {
-	       _digger_.digCellTile(i, yOffset,  wallMaterial);
-	       _digger_.digCellTile(i, yOffset + size-1,  wallMaterial);
+	       DIGGER.digCellTile(i, yOffset,  wallMaterial);
+	       DIGGER.digCellTile(i, yOffset + size-1,  wallMaterial);
 	    }
 	    
 	    for (var i = yOffset; i < yOffset + size; i++) {
-           _digger_.digCellTile(xOffset, i,  wallMaterial);
-           _digger_.digCellTile(xOffset + size-1, i,  wallMaterial);
+           DIGGER.digCellTile(xOffset, i,  wallMaterial);
+           DIGGER.digCellTile(xOffset + size-1, i,  wallMaterial);
         }
 	    
 	    for (var i = 0; i < 4; i++) {

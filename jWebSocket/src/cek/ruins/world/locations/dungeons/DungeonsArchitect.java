@@ -118,7 +118,7 @@ public class DungeonsArchitect {
 					}
 					else {
 						RoomTemplate roomTemplate = new RoomTemplate();
-						Script roomGeneratorScript = ScriptExecutor.executor().compileScript(roomGenerator.getText(), "DungeonsArchitect");
+						Script roomGeneratorScript = ScriptExecutor.executor().compileScript(roomGenerator.getText(), id);
 						
 						roomTemplate.setId(id);
 						roomTemplate.setRoomGenerator(roomGeneratorScript);
@@ -158,7 +158,7 @@ public class DungeonsArchitect {
 					}
 					else {
 						BuildEventTemplate eventTemplate = new BuildEventTemplate();
-						Script buildScript = ScriptExecutor.executor().compileScript(script.getText(), "DungeonsArchitect");
+						Script buildScript = ScriptExecutor.executor().compileScript(script.getText(), id);
 						
 						eventTemplate.setId(id);
 						eventTemplate.setBuildScript(buildScript);
@@ -192,10 +192,10 @@ public class DungeonsArchitect {
 					
 					//read and compile template's scripts
 					Element init = (Element) dungeon.selectSingleNode("./init");
-					Script dungeonInitScript = ScriptExecutor.executor().compileScript(init.getText(), "DungeonsArchitect");
+					Script dungeonInitScript = ScriptExecutor.executor().compileScript(init.getText(), id + ":init");
 					
 					Element build = (Element) dungeon.selectSingleNode("./build");
-					Script dungeonBuildScript = ScriptExecutor.executor().compileScript(build.getText(), "DungeonsArchitect");
+					Script dungeonBuildScript = ScriptExecutor.executor().compileScript(build.getText(), id + ":build");
 					
 					dungeonTemplate.setId(id);
 					dungeonTemplate.setSize(Integer.parseInt(size));
@@ -210,8 +210,10 @@ public class DungeonsArchitect {
 		}
 	}
 	
-	public Digger newDigger(Random generator) {
-		return new Digger(this, generator);
+	public Digger newDigger(Random generator) throws Exception {
+		Object[] args = {this, generator};
+		Digger digger = (Digger) ScriptExecutor.executor().registerAndCreateObject(Digger.class, args, true);
+		return digger;
 	}
 	
 	public Master newMaster(Random generator) {

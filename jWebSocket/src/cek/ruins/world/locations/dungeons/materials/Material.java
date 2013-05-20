@@ -1,17 +1,14 @@
 package cek.ruins.world.locations.dungeons.materials;
 
-public class Material {
+import org.mozilla.javascript.ScriptableObject;
+
+public class Material extends ScriptableObject {
+	private static final long serialVersionUID = 1L;
+	
 	private String id;
 	private int x,y;
 	private String name;
 	private boolean isPassable;
-	
-	public Material() {
-		this.id = "";
-		this.x = this.y = 0;
-		this.name = "";
-		this.isPassable = false;
-	}
 	
 	public Material(String id, int x, int y) {
 		this();
@@ -69,5 +66,25 @@ public class Material {
 	
 	public void setPassable(boolean passable) {
 		this.isPassable = passable;
+	}
+
+	/* javascript side methods */
+	
+	@Override
+	public String getClassName() {
+		return Material.class.getSimpleName();
+	}
+	
+	public Material() {
+		this.id = "";
+		this.x = this.y = 0;
+		this.name = "";
+		this.isPassable = false;
+	}
+	
+	public void jsConstructor(String id, int x, int y) {
+		this.id = id;
+		this.x = x;
+		this.y = y;
 	}
 }

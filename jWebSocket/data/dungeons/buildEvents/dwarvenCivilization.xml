@@ -4,10 +4,10 @@
         <script>
             <![CDATA[
             var startingSize = 8;
-            var xcorner = (_digger_.cellSize() - startingSize)/2;
-            var ycorner = (_digger_.cellSize() - startingSize)/2;
-            _digger_.createRoom('square', {x:xcorner, y:ycorner, size:startingSize});
-            _digger_.breed('STAIRS_UP_0', xcorner + startingSize/2, ycorner + startingSize/2);
+            var xcorner = (DIGGER.cellSize() - startingSize)/2;
+            var ycorner = (DIGGER.cellSize() - startingSize)/2;
+            DIGGER.createRoom('square', {x:xcorner, y:ycorner, size:startingSize});
+            DIGGER.breed('STAIRS_UP_0', xcorner + startingSize/2, ycorner + startingSize/2);
             ]]>
         </script>
     </event>

@@ -166,16 +166,16 @@ public class DungeonsCreationListener extends GenericListener {
 		
 		//init global objects map for scripts
 		Map<String, Object> scriptsGlobalObjects = new HashMap<String, Object>();
-		scriptsGlobalObjects.put("_digger_", digger);
-		scriptsGlobalObjects.put("_master_", master);
+		scriptsGlobalObjects.put("DIGGER", digger);
+		//scriptsGlobalObjects.put("_master_", master);
 		
 		//create new dungeon and level 0
 		Dungeon dungeon = new Dungeon(dungeonId, template.size(), template.cells(), template.depth());
-		scriptsGlobalObjects.put("_dungeon_", dungeon);
+		//scriptsGlobalObjects.put("_dungeon_", dungeon);
 		
 		//add materials
 		for (Map.Entry<String, Material> materialEntry : materials.templates().entrySet()) {
-			scriptsGlobalObjects.put("_mat_" + materialEntry.getKey(), materialEntry.getValue());
+			scriptsGlobalObjects.put("MAT_" + materialEntry.getKey(), materialEntry.getValue());
 		}
 		
 		//init subsystems
@@ -185,8 +185,7 @@ public class DungeonsCreationListener extends GenericListener {
 		master.setExecutorScope(scriptsGlobalObjects);
 		
 		for (int d = 0; d < dungeon.depth(); d++) {
-			scriptsGlobalObjects.put("_depth_", d);
-			
+			digger.setPosition(0, 0, d);
 			executor.executeScript(template.initScript(), scriptsGlobalObjects);
 		}
 		
@@ -196,22 +195,22 @@ public class DungeonsCreationListener extends GenericListener {
 	protected void build(DungeonTemplate dungeonTemplate, Dungeon dungeon, Digger digger, Master master, Materials materials) {
 		//init global objects map for scripts
 		Map<String, Object> scriptsGlobalObjects = new HashMap<String, Object>();
-		scriptsGlobalObjects.put("_digger_", digger);
-		scriptsGlobalObjects.put("_master_", master);
-		scriptsGlobalObjects.put("_dungeon_", dungeon);
+		scriptsGlobalObjects.put("DIGGER", digger);
+		
+		//scriptsGlobalObjects.put("_master_", master);
+		//scriptsGlobalObjects.put("_dungeon_", dungeon);
 		
 		//add materials
 		for (Map.Entry<String, Material> materialEntry : materials.templates().entrySet()) {
-			scriptsGlobalObjects.put("_mat_" + materialEntry.getKey(), materialEntry.getValue());
+			scriptsGlobalObjects.put("MAT_" + materialEntry.getKey(), materialEntry.getValue());
 		}
 		
-		scriptsGlobalObjects.put("_depth_", 0);
-		
-		//init subsystems
+		//init digger
+		digger.setPosition(0, 0, 0);
 		digger.setDungeon(dungeon);
 		digger.setExecutorScope(scriptsGlobalObjects);
-		master.setDungeon(dungeon);
-		master.setExecutorScope(scriptsGlobalObjects);
+		//master.setDungeon(dungeon);
+		//master.setExecutorScope(scriptsGlobalObjects);
 		
 		//dig dungeon
 		ScriptExecutor executor = ScriptExecutor.executor();
