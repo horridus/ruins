@@ -3,7 +3,37 @@
     <event id="test">
         <script>
             <![CDATA[
-                
+            DIGGER.createRoom('square', {x:4, y:4, size:6, exits:0x0000});
+            DIGGER.createRoom('square', {x:11, y:4, size:5});
+            DIGGER.digCorridor(9, 5, 11, 5, MAT_DOLOMITE_FLOOR_0, MAT_DOLOMITE_WALL_0);
+            
+            DIGGER.breed('SINK_0', DIGGER.randomI(5, 9), DIGGER.randomI(5, 9));
+            ]]>
+        </script>
+    </event>
+    <event id="river">
+        <script>
+            <![CDATA[
+            //choose a starting cell from those along map's borders
+            var side = DIGGER.randomI(0, 4);
+            var offset = DIGGER.randomI(0, DIGGER.numCellsPerSide());
+            
+            switch (side) {
+            case 0: //north
+                DIGGER.setCurrentCell(offset, 0, _depth_);
+                break;
+            case 1: //east
+                DIGGER.setCurrentCell(DIGGER.numCellsPerSide() - 1, offset, _depth_);
+                break;
+            case 2: //south
+                DIGGER.setCurrentCell(offset, DIGGER.numCellsPerSide() - 1, _depth_);
+                break;
+            case 3: //west
+                DIGGER.setCurrentCell(0, offset, _depth_);
+                break;
+            }
+            
+            //TODO
             ]]>
         </script>
     </event>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+    <event id="mineralvein">
+        <script>
+            <![CDATA[
+            var veinMaterial = MAT_GOLD_BLOCK_0;
+            if (_args_.material != undefined) {
+               veinMaterial = _args_.material; 
+            }
+            
+            var c0 = DIGGER.randomI(0, DIGGER.cellsize);
+            var c1 = DIGGER.randomI(0, DIGGER.cellsize);
+            
+            var direction = DIGGER.randomI(0, 6);
+            
+            //now choose vein's slope
+            var path = [];
+            switch (direction) {
+            case 0:
+                path = utils.line(0, c0, DIGGER.cellsize - 1, c1);
+                break;
+            case 1:
+                path = utils.line(c0, 0, c1, DIGGER.cellsize - 1);
+                break;
+            case 2:
+                path = utils.line(0, c0, c1, DIGGER.cellsize - 1);
+                break;
+            case 3:
+                path = utils.line(c0, 0, DIGGER.cellsize - 1, c1);
+                break;
+            case 4:
+                path = utils.line(c0, DIGGER.cellsize - 1, DIGGER.cellsize - 1, c1);
+                break;
+            case 5:
+                path = utils.line(0, c0, c1, 0);
+                break;
+            }
+            
+            var dx = Math.abs(path[0].x - path[path.length - 1].x);
+            var dy = Math.abs(path[0].y - path[path.length - 1].y);
+            
+            var slope = 0;
+            if (dx == 0 || dy/dx >= 1)
+                slope = 1;
+            
+            //draw vein and make it fatter
+            var len = path.length;
+            for (var i = 0; i < len; i++) {
+                DIGGER.digCellTile(path[i].x, path[i].y, veinMaterial);
+                
+                var extension = DIGGER.randomI(1, 3);
+                
+                switch (slope) {
+	            case 0:
+	                for (var n = 1; n < extension; n++) {
+	                   if (path[i].y - n >= 0)
+	                       DIGGER.digCellTile(path[i].x, path[i].y - n, veinMaterial);
+	                   if (path[i].y + n < DIGGER.cellSize())
+	                       DIGGER.digCellTile(path[i].x, path[i].y + n, veinMaterial);
+	                }
+	                break;
+	            case 1:
+	                for (var n = 1; n < extension; n++) {
+	                   if (path[i].x - n >= 0)
+	                       DIGGER.digCellTile(path[i].x - n, path[i].y, veinMaterial);
+	                   if (path[i].x + n < DIGGER.cellSize())
+	                       DIGGER.digCellTile(path[i].x + n, path[i].y, veinMaterial);
+                    }
+	                break;
+	            }
+            }
+            ]]>
+        </script>
+    </event>
+</events>

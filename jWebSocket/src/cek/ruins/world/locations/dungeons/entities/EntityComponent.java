@@ -12,12 +12,10 @@ public abstract class EntityComponent implements Observer {
 	public void setOwnerEntity(Entity ownerEntity) {
 		this.ownerEntity = ownerEntity;
 	}
-	
-	public abstract void configure(Document configuration) throws Exception;
-	
-	public abstract void statusToJSON(BasicDBObjectBuilder builder);
-
 	public Entity getOwnerEntity() {
 		return ownerEntity;
 	}
+	
+	public abstract void configure(Document configuration) throws Exception;
+	public abstract void statusToJSON(BasicDBObjectBuilder builder);
 }

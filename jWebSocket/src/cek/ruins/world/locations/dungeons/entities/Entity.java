@@ -1,9 +1,12 @@
 package cek.ruins.world.locations.dungeons.entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+
+import cek.ruins.world.locations.dungeons.entities.components.ComponentMessageId;
 
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
@@ -17,6 +20,7 @@ public class Entity extends Observable {
 	public Entity() {
 		this.setId("");
 		this.attributes = new HashMap<String, Object>();
+		this.components = new ArrayList<EntityComponent>();
 	}
 	
 	public String id() {
@@ -43,6 +47,8 @@ public class Entity extends Observable {
 	public DBObject statusToJSON() {
 		BasicDBObjectBuilder builder = BasicDBObjectBuilder.start();
 		
+		builder.add("id", this.id);
+		
 		for (EntityComponent component : this.components) {
 			component.statusToJSON(builder);
 		}
@@ -56,5 +62,15 @@ public class Entity extends Observable {
 	
 	public void setAttribute(String key, Object value) {
 		this.attributes.put(key, value);
+	}
+	
+	public boolean hasAttribute(String key) {
+		return this.attributes.containsKey(key);
+	}
+	
+	public void processMessage(ComponentMessageId messageId, Map<String, Object> args) {
+		args.put("_messageid_", messageId); //FIXME si può fare meglio
+		this.setChanged();
+		this.notifyObservers(args);
 	}
 }

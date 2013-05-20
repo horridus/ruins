@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.dom4j.Element;
 
+import cek.ruins.ScriptExecutor;
 import cek.ruins.XmlDocument;
 
 public class Materials {
@@ -62,7 +63,9 @@ public class Materials {
 							int coordX = Integer.parseInt(coords.attributeValue("x", "0"));
 							int coordY = Integer.parseInt(coords.attributeValue("y", "0"));
 							
-							Material material = new Material(id, coordX, coordY);
+							Object[] args = {id, coordX, coordY};
+							
+							Material material = (Material) ScriptExecutor.executor().registerAndCreateObject(Material.class, args, true);
 							material.setName(name.getText());
 							material.setPassable(Boolean.parseBoolean(passable.getTextTrim()));
 							

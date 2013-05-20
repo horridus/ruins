@@ -3,104 +3,73 @@
 	<room id="square">
 	    <generator>
 	        <![CDATA[
-	        var xOffset = _digger_.randomI(0, _digger_.cellSize()/2);
-	        var yOffset = _digger_.randomI(0, _digger_.cellSize()/2);
-	        var size = _digger_.randomI(4, _digger_.cellSize() - Math.max(xOffset, yOffset));
+	        var xOffset = DIGGER.randomI(0, DIGGER.cellSize()/2);
+	        var yOffset = DIGGER.randomI(0, DIGGER.cellSize()/2);
+	        var size = DIGGER.randomI(4, DIGGER.cellSize() - Math.max(xOffset, yOffset));
+	        var floorMaterial = MAT_DOLOMITE_FLOOR_0;
+	        var wallMaterial = MAT_DOLOMITE_WALL_0;
+	        
+	        if (_args_.x != undefined) {
+	           xOffset = _args_.x; 
+	        }
+	        
+	        if (_args_.y != undefined) {
+               yOffset = _args_.y; 
+            }
+            
+            if (_args_.size != undefined) {
+               size = _args_.size; 
+            }
+            
+            if (_args_.floor != undefined) {
+               floorMaterial = _args_.floor; 
+            }
+            
+            if (_args_.wall != undefined) {
+               wallMaterial = _args_.wall; 
+            }
 	        
 	        //south and north walls
 	        for (var x = xOffset; x < xOffset + size; x++) {
-	            _digger_.digCellTile(x, yOffset, _mat_DOLOMITE_WALL_0);
-	            _digger_.digCellTile(x, yOffset + size-1, _mat_DOLOMITE_WALL_0);
+	            DIGGER.digCellTile(x, yOffset, wallMaterial);
+	            DIGGER.digCellTile(x, yOffset + size-1, wallMaterial);
 	        }
 	        
 	        //south and north walls
 	        for (var y = yOffset; y < yOffset + size; y++) {
-	            _digger_.digCellTile(xOffset, y, _mat_DOLOMITE_WALL_0);
-	            _digger_.digCellTile(xOffset + size-1, y, _mat_DOLOMITE_WALL_0);
+	            DIGGER.digCellTile(xOffset, y, wallMaterial);
+	            DIGGER.digCellTile(xOffset + size-1, y, wallMaterial);
 	        }
 	        
 	        //floor
 	        for (var y = yOffset + 1; y < yOffset + size-1; y++) {
 	            for (var x = xOffset + 1; x < xOffset + size-1; x++) {
-	                _digger_.digCellTile(x, y, _mat_DOLOMITE_FLOOR_0);
+	                DIGGER.digCellTile(x, y, floorMaterial);
 	            }
 	        }
 	        
-	        var entrancesList = _digger_.entrances();            
+	        var entrancesList = DIGGER.entrances();            
 	        var eSize = entrancesList.size();
 	        
-	        if (eSize > 0) {
-	            for (var n = 0; n < eSize; n++) {
-	                var ePoint = entrancesList.get(n);
-	                var start = _digger_.randomI(1, size - 1); //don't select room's corners
-	                
-	                var side = _digger_.randomI(0, 4);
-	                switch (side) {
-	                case 0:
-	                     _digger_.digCorridor(xOffset, yOffset + start, ePoint.x, ePoint.y, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	                    break;
-	                case 1:
-	                    _digger_.digCorridor(xOffset + start, yOffset, ePoint.x, ePoint.y, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	                    break;
-	                case 2:
-	                    _digger_.digCorridor(xOffset + size - 1, yOffset + start, ePoint.x, ePoint.y, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	                    break;
-	                case 3:
-	                    _digger_.digCorridor(xOffset + start, yOffset + size - 1, ePoint.x, ePoint.y, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	                    break;
-	                }
-	            }
+	        if (_args_.exits & 0x000F == 0x000F) {
+	           var start = DIGGER.randomI(1, size - 1); //don't select room's corners
+	           DIGGER.digNorthExitCorridor(xOffset + start, yOffset, floorMaterial, wallMaterial);
 	        }
-	        else {
-	            //add entrances
-	            var entrances = _digger_.randomI(0, 4);
-	            switch (entrances) {
-	            case 0:
-	               var start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               var goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset, yOffset + start, 0, goal, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               break;
-	            case 1:
-	               var start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               var goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset, yOffset + start, 0, goal, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               
-	               start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset + start, yOffset, goal, 0, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               break;
-	            case 2:
-	               var start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               var goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset, yOffset + start, 0, goal, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               
-	               start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset + start, yOffset, goal, 0, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               
-	               start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset + size - 1, yOffset + start, _digger_.cellSize() - 1, goal, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               break;
-	            case 3:
-	                var start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               var goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset, yOffset + start, 0, goal, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               
-	               start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset + start, yOffset, goal, 0, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               
-	               start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset + size - 1, yOffset + start, _digger_.cellSize() - 1, goal, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	            
-	               start = _digger_.randomI(1, size - 1); //don't select room's corners
-	               goal = _digger_.randomI(0, _digger_.cellSize());
-	               _digger_.digCorridor(xOffset + start, yOffset + size - 1, goal, _digger_.cellSize() - 1, _mat_DOLOMITE_FLOOR_0, _mat_DOLOMITE_WALL_0);
-	               break;
-	            }
-	        }
+	        
+	        if (_args_.exits & 0x00F0 == 0x00F0) {
+		        start = DIGGER.randomI(1, size - 1); //don't select room's corners
+		        DIGGER.digEastExitCorridor(xOffset + size - 1, yOffset + start, floorMaterial, wallMaterial);
+		    }
+	        
+	        if (_args_.exits & 0x0F00 == 0x0F00) {
+		        start = DIGGER.randomI(1, size - 1); //don't select room's corners
+		        DIGGER.digSouthExitCorridor(xOffset + start, yOffset + size - 1, floorMaterial, wallMaterial);
+            }
+            	        
+	        if (_args_.exits & 0xF000 == 0xF000) {
+		        start = DIGGER.randomI(1, size - 1); //don't select room's corners
+		        DIGGER.digWestExitCorridor(xOffset, yOffset + start, floorMaterial, wallMaterial);
+            }	        
 	        ]]>
 	    </generator>
 	</room>

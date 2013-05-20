@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+    <event id="cavern">
+        <script>
+            <![CDATA[
+            var cavesNumber = DIGGER.randomI(1, 4);
+            for (var i = 0; i < cavesNumber; i++) {
+                DIGGER.createRoom('cavern', {});
+            }
+               
+            var passableTiles = DIGGER.passable();
+            utils.shuffle(passableTiles);
+            
+            //add boulders and rocks with 80% probability
+            if (DIGGER.randomI(0, 100) < 80) {
+                var bouldersAndRocksNumber = DIGGER.randomI(0, Math.min(5, passableTiles.length));
+                var startingIndex = DIGGER.randomI(0, passableTiles.length - bouldersAndRocksNumber)
+                for (var i = 0; i < bouldersAndRocksNumber; i++) {
+                    var position = passableTiles[startingIndex + i];
+                    
+                    if (DIGGER.randomI(0, 100) < 50) {        
+                        DIGGER.breed('BOULDER_0', position.x, position.y);
+                    }
+                    else {
+                        DIGGER.breed('ROCKS_0', position.x, position.y);
+                    }
+                }
+            }
+            
+            //add webs with 50% probability
+            if (DIGGER.randomI(0, 100) < 50) {
+                var websNumber = DIGGER.randomI(0, Math.min(10, passableTiles.length));
+                for (var i = 0; i < websNumber; i++) {
+                    var position = passableTiles.pop();
+                    DIGGER.breed('WEB_0', position.x, position.y);
+                }
+            }
+            
+            //add corpses
+            passableTiles = DIGGER.passable();
+            
+            if (passableTiles.length > 0) {
+	            var corpseRoll = DIGGER.randomI(0, 100);
+	            if (corpseRoll > 95) { // two corpses
+	                var index = DIGGER.randomI(0, passableTiles.length);
+	                var position = passableTiles[index];
+	                passableTiles.splice(index, 1);
+	                DIGGER.breed('BONES_0', position.x, position.y);
+	                
+	                index = DIGGER.randomI(0, passableTiles.length);
+	                position = passableTiles[index];
+	                passableTiles.splice(index, 1);
+	                DIGGER.breed('BONES_0', position.x, position.y);
+	            }
+	            else if (corpseRoll > 80) { //bones
+	                var index = DIGGER.randomI(0, passableTiles.length);
+	                var position = passableTiles[index];
+	                passableTiles.splice(index, 1);
+	                DIGGER.breed('BONES_1', position.x, position.y);
+	            }
+	        }
+            
+            ]]>
+        </script>
+    </event>
+</events>

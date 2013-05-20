@@ -218,10 +218,24 @@ mainui.showWorld = function(id) {
 
 mainui.showDungeon = function(dungeonData) {
 	var container = mainui.clearContent();
-	main.dungeon = new RUINS.Dungeon(dungeonData.id, dungeonData.name, dungeonData.size, dungeonData.data);
+	main.dungeon = new RUINS.Dungeon(dungeonData.id, dungeonData.name, dungeonData.size, dungeonData.depth);
 	mainui.dungeonRenderer = new RUINS.DungeonRenderer(main.dungeon, $('#column1').width(), $('#column1').height(), '/dungeons/' + dungeonData.id, container, 32);
 	
-	mainui.animateDungeon();
+	//TEMP////////////////////////////
+	var header = mainui.clearHeader();
+	
+	var button = WIDGETS.createButton('down one level', 'dol', 180);
+	button.on('click', null, null, actions.showDeeperLevel);
+	header.append(button);
+	
+	button = WIDGETS.createButton('up one level', 'uol', 180);
+	button.on('click', null, null, actions.showShallowerLevel);
+	header.append(button);
+	
+	button = WIDGETS.createButton('debug', 'debug', 180);
+	button.on('click', null, null, mainui.dungeonRenderer.debug);
+	header.append(button);
+	//////////////////////////////////
 };
 
 mainui.updateDate = function() {

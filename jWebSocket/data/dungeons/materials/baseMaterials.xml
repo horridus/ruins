@@ -10,14 +10,29 @@
         <name>dolomite floor</name>
         <passable>true</passable>
     </material>
+    <material id="DOLOMITE_BLOCK_0">
+        <coords x="5" y="0"/>
+        <name>dolomite</name>
+        <passable>false</passable>
+    </material>
     <material id="GRANITE_WALL_0">
         <coords x="1" y="0"/>
         <name>granite wall</name>
         <passable>false</passable>
     </material>
-    <material id="DIRT_FLOOR_0">
+    <material id="GRANITE_FLOOR_0">
         <coords x="1" y="1"/>
-        <name>dirt</name>
+        <name>granite floor</name>
+        <passable>true</passable>
+    </material>
+    <material id="GRANITE_BLOCK_0">
+        <coords x="3" y="0"/>
+        <name>granite</name>
+        <passable>false</passable>
+    </material>
+    <material id="DIRT_FLOOR_0">
+        <coords x="2" y="1"/>
+        <name>dirt floor</name>
         <passable>true</passable>
     </material>
     <material id="DIRT_BLOCK_0">
@@ -25,9 +40,9 @@
         <name>dirt</name>
         <passable>false</passable>
     </material>
-    <material id="GRANITE_BLOCK_0">
-        <coords x="3" y="0"/>
-        <name>granite</name>
+    <material id="GOLD_BLOCK_0">
+        <coords x="4" y="0"/>
+        <name>gold</name>
         <passable>false</passable>
     </material>
     <!-- 

@@ -1,3 +1,5 @@
+import java.io.File;
+
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
@@ -8,13 +10,13 @@ import org.jwebsocket.factory.JWebSocketFactory;
 import org.jwebsocket.server.TokenServer;
 
 import cek.ruins.ApplicationMap;
+import cek.ruins.ScriptExecutor;
 import cek.ruins.jws.listeners.AdminListener;
 import cek.ruins.jws.listeners.DungeonsCreationListener;
 import cek.ruins.world.civilizations.CivilizationsTemplates;
 import cek.ruins.world.civilizations.CivilizationsHerald;
 import cek.ruins.world.environment.Biomes;
 import cek.ruins.world.environment.Resources;
-import cek.ruins.world.locations.dungeons.DungeonMaster;
 import cek.ruins.world.locations.dungeons.DungeonsArchitect;
 import cek.ruins.world.locations.dungeons.materials.Materials;
 import cek.ruins.world.locations.settlements.SettlementsArchitect;
@@ -79,11 +81,10 @@ public class Main {
 		materials.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/materials");
 		ApplicationMap.set("materials", materials);
 		
-		//load dungeon's entities
-		logger.info("Reading " + Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
-		DungeonMaster dungeonMaster = new DungeonMaster();
-		dungeonMaster.loadData(Configuration.DATA_FOLDER_LOCATION + "/dungeons/entities");
-		ApplicationMap.set("dungeonMaster", dungeonMaster);
+		//load javascript libraries
+		logger.info("Reading " + Configuration.DATA_FOLDER_LOCATION + "/jslib");
+		ScriptExecutor executor = ScriptExecutor.executor();
+		executor.loadLibraries(new File(Configuration.DATA_FOLDER_LOCATION + "/jslib"));
 		
 		Server fileServer = null;
 		try {

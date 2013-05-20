@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+    <event id="dwarvenstart">
+        <script>
+            <![CDATA[
+            var startingSize = 8;
+            var xcorner = (DIGGER.cellSize() - startingSize)/2;
+            var ycorner = (DIGGER.cellSize() - startingSize)/2;
+            DIGGER.createRoom('square', {x:xcorner, y:ycorner, size:startingSize});
+            DIGGER.breed('STAIRS_UP_0', xcorner + startingSize/2, ycorner + startingSize/2);
+            ]]>
+        </script>
+    </event>
+    <event id="todo">
+        <script>
+            <![CDATA[
+            
+            ]]>
+        </script>
+    </event>
+</events>

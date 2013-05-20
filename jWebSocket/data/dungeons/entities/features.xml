@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+    <entity id="STAIRS_UP_0">
+        <drawable>
+            <img>staircase_up_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="STAIRS_UP_1">
+        <drawable>
+            <img>staircase_up_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="STAIRS_DOWN_0">
+        <drawable>
+            <img>staircase_down_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="WEB_0">
+        <drawable>
+            <img>web_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="ROCKS_0">
+        <drawable>
+            <img>rocks_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="BOULDER_0">
+        <drawable>
+            <img>boulder_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="BONES_0">
+        <drawable>
+            <img>bones_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="BONES_1">
+        <drawable>
+            <img>bones_1.png</img>
+        </drawable>
+        <position/>
+    </entity>
+</entities>
