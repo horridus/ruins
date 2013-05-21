@@ -10,7 +10,7 @@ import java.util.Vector;
 import com.mongodb.DBObject;
 
 import cek.ruins.Marshallable;
-import cek.ruins.world.locations.dungeons.entities.Entity;
+import cek.ruins.world.locations.dungeons.entities.ObservableEntity;
 
 public class Dungeon implements Marshallable {
 	private UUID id;
@@ -19,7 +19,7 @@ public class Dungeon implements Marshallable {
 	private int numCellsPerSide;
 	private List<List<List<DungeonTile>>> levels;
 	private List<List<List<DungeonCell>>> cells;
-	private Map<String, Entity> entities;
+	private Map<String, ObservableEntity> entities;
 
 	public Dungeon(UUID id, int size, int numCellsPerSide, int depth) {
 		this.id = id;
@@ -27,7 +27,7 @@ public class Dungeon implements Marshallable {
 		this.numCellsPerSide = numCellsPerSide;
 		this.levels = new Vector<List<List<DungeonTile>>>();
 		this.cells = new Vector<List<List<DungeonCell>>>();
-		this.entities = new HashMap<String, Entity>();
+		this.entities = new HashMap<String, ObservableEntity>();
 		
 		for (int d = 0; d < depth; d++)
 			addLevel();
@@ -93,10 +93,10 @@ public class Dungeon implements Marshallable {
 		return this.levels.size() - 1;
 	}
 
-	public List<Entity> entities(int depth) {
-		List<Entity> entities = new LinkedList<Entity>(); 
-		for (Map.Entry<String, Entity> entityEntry : this.entities.entrySet()) {
-			Entity entity = entityEntry.getValue();
+	public List<ObservableEntity> entities(int depth) {
+		List<ObservableEntity> entities = new LinkedList<ObservableEntity>(); 
+		for (Map.Entry<String, ObservableEntity> entityEntry : this.entities.entrySet()) {
+			ObservableEntity entity = entityEntry.getValue();
 			if (entity.hasAttribute("position:z") && ((Integer)entity.attribute("position:z")) == depth) {
 				entities.add(entity);
 			}
@@ -105,7 +105,7 @@ public class Dungeon implements Marshallable {
 		return entities;
 	}
 	
-	public void addEntity(Entity entity) {
+	public void addEntity(ObservableEntity entity) {
 		this.entities.put(entity.id(), entity);
 	}
 	

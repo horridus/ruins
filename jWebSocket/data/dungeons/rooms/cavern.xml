@@ -47,8 +47,8 @@
 	    
 	                for (var ii = -1; ii <= 1; ii++) {
 	                    for (var jj = -1; jj <= 1; jj++) {
-	                        var material = DIGGER.cellTileMaterial(xi+jj, yi+ii);
-	                        if (!material.equals(wallMaterial))
+	                        var material = DIGGER.material(xi+jj, yi+ii);
+	                        if (material != wallMaterial)
 	                             adjcount_r1++;
 	                    }
 	                }
@@ -61,8 +61,8 @@
 	                        if (ii < 0 || jj < 0 || ii >= size || jj >= size)
 	                            continue;
 	                    
-	                        var material = DIGGER.cellTileMaterial(jj, ii);
-	                        if (!material.equals(wallMaterial))
+	                        var material = DIGGER.material(jj, ii);
+	                        if (material != wallMaterial)
 	                             adjcount_r2++;
 	                    }
 	                }
@@ -84,7 +84,7 @@
 	        
 	        for (var yi = yOffset + 1; yi < yOffset + size - 1; yi++) {
                 for (var xi = xOffset + 1; xi < xOffset + size - 1; xi++) {
-                    DIGGER.digCellTile(xi, yi, helperGrid[xi][yi]);
+                    DIGGER.dig(xi, yi, helperGrid[xi][yi]);
                 }
             }
 	    }
@@ -94,22 +94,22 @@
             helperGrid[x] = new Array();
             for (var y = yOffset; y < yOffset + size; y++) {
                 //init helper grid
-                helperGrid[x][y] =  DIGGER.cellTileMaterial(x, y);
+                helperGrid[x][y] =  DIGGER.material(x, y);
              
                 //init cell map
                 if (isFloor(40))
-                    DIGGER.digCellTile(x, y, floorMaterial);
+                    DIGGER.dig(x, y, floorMaterial);
             }
         }
 	    
 	    for (var i = xOffset; i < xOffset + size; i++) {
-	       DIGGER.digCellTile(i, yOffset,  wallMaterial);
-	       DIGGER.digCellTile(i, yOffset + size-1,  wallMaterial);
+	       DIGGER.dig(i, yOffset,  wallMaterial);
+	       DIGGER.dig(i, yOffset + size-1,  wallMaterial);
 	    }
 	    
 	    for (var i = yOffset; i < yOffset + size; i++) {
-           DIGGER.digCellTile(xOffset, i,  wallMaterial);
-           DIGGER.digCellTile(xOffset + size-1, i,  wallMaterial);
+           DIGGER.dig(xOffset, i,  wallMaterial);
+           DIGGER.dig(xOffset + size-1, i,  wallMaterial);
         }
 	    
 	    for (var i = 0; i < 4; i++) {

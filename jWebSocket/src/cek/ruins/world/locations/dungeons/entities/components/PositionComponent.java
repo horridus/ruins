@@ -8,7 +8,7 @@ import org.dom4j.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 
-import cek.ruins.world.locations.dungeons.entities.Entity;
+import cek.ruins.world.locations.dungeons.entities.ObservableEntity;
 import cek.ruins.world.locations.dungeons.entities.EntityComponent;
 
 public class PositionComponent extends EntityComponent {
@@ -16,7 +16,7 @@ public class PositionComponent extends EntityComponent {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) {
-		Entity owner = (Entity) o;
+		ObservableEntity owner = (ObservableEntity) o;
 		Map<String, Object> updateArgs = (Map<String, Object>) arg;
 		
 		ComponentMessageId msgId = (ComponentMessageId) updateArgs.get("_messageid_");

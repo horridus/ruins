@@ -3,9 +3,9 @@
 	<room id="square">
 	    <generator>
 	        <![CDATA[
-	        var xOffset = DIGGER.randomI(0, DIGGER.cellSize()/2);
-	        var yOffset = DIGGER.randomI(0, DIGGER.cellSize()/2);
-	        var size = DIGGER.randomI(4, DIGGER.cellSize() - Math.max(xOffset, yOffset));
+	        var xOffset = DIGGER.randomI(0, DIGGER.cellsize/2);
+	        var yOffset = DIGGER.randomI(0, DIGGER.cellsize/2);
+	        var size = DIGGER.randomI(4, DIGGER.cellsize - Math.max(xOffset, yOffset));
 	        var floorMaterial = MAT_DOLOMITE_FLOOR_0;
 	        var wallMaterial = MAT_DOLOMITE_WALL_0;
 	        
@@ -31,26 +31,24 @@
 	        
 	        //south and north walls
 	        for (var x = xOffset; x < xOffset + size; x++) {
-	            DIGGER.digCellTile(x, yOffset, wallMaterial);
-	            DIGGER.digCellTile(x, yOffset + size-1, wallMaterial);
+	            DIGGER.dig(x, yOffset, wallMaterial);
+	            DIGGER.dig(x, yOffset + size-1, wallMaterial);
 	        }
 	        
 	        //south and north walls
 	        for (var y = yOffset; y < yOffset + size; y++) {
-	            DIGGER.digCellTile(xOffset, y, wallMaterial);
-	            DIGGER.digCellTile(xOffset + size-1, y, wallMaterial);
+	            DIGGER.dig(xOffset, y, wallMaterial);
+	            DIGGER.dig(xOffset + size-1, y, wallMaterial);
 	        }
 	        
 	        //floor
 	        for (var y = yOffset + 1; y < yOffset + size-1; y++) {
 	            for (var x = xOffset + 1; x < xOffset + size-1; x++) {
-	                DIGGER.digCellTile(x, y, floorMaterial);
+	                DIGGER.dig(x, y, floorMaterial);
 	            }
 	        }
 	        
-	        var entrancesList = DIGGER.entrances();            
-	        var eSize = entrancesList.size();
-	        
+	        /*
 	        if (_args_.exits & 0x000F == 0x000F) {
 	           var start = DIGGER.randomI(1, size - 1); //don't select room's corners
 	           DIGGER.digNorthExitCorridor(xOffset + start, yOffset, floorMaterial, wallMaterial);
@@ -69,7 +67,8 @@
 	        if (_args_.exits & 0xF000 == 0xF000) {
 		        start = DIGGER.randomI(1, size - 1); //don't select room's corners
 		        DIGGER.digWestExitCorridor(xOffset, yOffset + start, floorMaterial, wallMaterial);
-            }	        
+            }
+            */       
 	        ]]>
 	    </generator>
 	</room>

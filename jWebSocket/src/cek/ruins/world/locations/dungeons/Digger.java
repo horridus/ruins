@@ -17,7 +17,7 @@ import org.mozilla.javascript.ScriptableObject;
 
 import cek.ruins.Point;
 import cek.ruins.ScriptExecutor;
-import cek.ruins.world.locations.dungeons.entities.Entity;
+import cek.ruins.world.locations.dungeons.entities.ObservableEntity;
 import cek.ruins.world.locations.dungeons.entities.EntityComponent;
 import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
 import cek.ruins.world.locations.dungeons.entities.components.ComponentMessageId;
@@ -55,7 +55,7 @@ public class Digger extends ScriptableObject {
 		this.executorScope = executorScope;
 	}
 	
-	public List<Entity> entities(int depth) {
+	public List<ObservableEntity> entities(int depth) {
 		return this.dungeon.entities(depth);
 	}
 	
@@ -195,6 +195,46 @@ public class Digger extends ScriptableObject {
 	 */
 	public void jsFunction_createRoom(String roomId, NativeObject args) {
 		this.createRoom(roomId, args);
+	}
+	
+	/**
+	 * Sets selected tile's material to <code>material</code>.
+	 * @param cellx x related to current cell internal coordinates.
+	 * @param celly y related to current cell internal coordinates.
+	 * @param material
+	 */
+	public void jsFunction_dig(int cellx, int celly, Material material) {
+		this.digCellTile(cellx, celly, material);
+	}
+	
+	/**
+	 * Returns tile's material.
+	 * @param cellx
+	 * @param celly
+	 * @return
+	 */
+	public Material jsFunction_material(int cellx, int celly) {
+		return this.cellTileMaterial(cellx, celly);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public NativeArray jsFunction_passable() {
+		return this.passable();
+	}
+	
+	/**
+	 * 
+	 * @param templateId
+	 * @param cellx
+	 * @param celly
+	 * @return
+	 * @throws Exception
+	 */
+	public ObservableEntity jsFunction_breed(String templateId, int cellx, int celly) throws Exception {
+		return this.breed(templateId, cellx, celly);
 	}
 	
 	/* *** */
@@ -560,11 +600,11 @@ public class Digger extends ScriptableObject {
 		}
 	}
 	
-	private Entity breed(String templateId, int cellx, int celly) throws Exception {
+	private ObservableEntity breed(String templateId, int cellx, int celly) throws Exception {
 		EntityTemplate template = this.dungeonsArchitect.entitiesTemplates().get(templateId);
 		
 		if (template != null) {
-			Entity entity = new Entity();
+			ObservableEntity entity = new ObservableEntity();
 			entity.setTemplateId(templateId);
 			entity.setId(generateUniqueId());
 			
