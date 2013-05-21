@@ -274,10 +274,39 @@ public class Digger extends ScriptableObject {
 	 * @param wallMaterial material used to build corridor's walls.
 	 */
 	public void jsFunction_corridor(int cellx0, int celly0, int cellx1, int celly1, Material material, Material wallMaterial) {
-		this.digCorridor(cellx0, celly0, cellx1, celly1, material, wallMaterial);
+		int dungeonx0 = cellx0 + this.currentCell.column() * this.currentCell.size();
+		int dungeony0 = celly0 + this.currentCell.row() * this.currentCell.size();
+		int dungeonx1 = cellx1 + this.currentCell.column() * this.currentCell.size();
+		int dungeony1 = celly1 + this.currentCell.row() * this.currentCell.size();
+		
+		this.digCorridor(dungeonx0, dungeony0, dungeonx1, dungeony1, this.currentCell.depth(), material, wallMaterial);
 	}
 	
+	/**
+	 * Mark tile as possible exit point for cells linking 
+	 * @param cellx x related to current cell internal coordinates.
+	 * @param celly y related to current cell internal coordinates.
+	 */
 	public void jsFunction_exit(int cellx, int celly) {
+		int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+		int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+		this.currentCell.markAsExit(dungeonx, dungeony);
+	}
+	
+	/**
+	 * 
+	 * @param column0
+	 * @param row0
+	 * @param column1
+	 * @param row1
+	 * @param material
+	 * @param wallMaterial
+	 * @throws Exception
+	 */
+	public void jsFunction_link(int column0, int row0, int column1, int row1, Material material, Material wallMaterial) throws Exception {
+		DungeonCell cell0 = this.cell(column0, row0, this.currentCell.depth());
+		DungeonCell cell1 = this.cell(column1, row1, this.currentCell.depth());
+		this.linkCells(cell0, cell1, material, wallMaterial);
 	}
 	
 	/**
@@ -450,16 +479,19 @@ public class Digger extends ScriptableObject {
 		return na;
 	}
 	
-	private void digCorridor(int cellx0, int celly0, int cellx1, int celly1, Material material, Material wallMaterial) {
-		int dungeonx = cellx0 + this.currentCell.column() * this.currentCell.size();
-		int dungeony = celly0 + this.currentCell.row() * this.currentCell.size();
-		DungeonTile start = this.tile(dungeonx, dungeony, this.currentCell.depth());
+	private void digCorridor(int dungeonx0, int dungeony0, int dungeonx1, int dungeony1, int depth, Material material, Material wallMaterial) {
+		DungeonTile start = this.tile(dungeonx0, dungeony0, depth);
+		DungeonTile goal = this.tile(dungeonx1, dungeony1, depth);
 		
-		dungeonx = cellx1 + this.currentCell.column() * this.currentCell.size();
-		dungeony = celly1 + this.currentCell.row() * this.currentCell.size();
-		DungeonTile goal = this.tile(dungeonx, dungeony, this.currentCell.depth());
+		DungeonCell cell0 = this.cell(dungeonx0/this.dungeon.numCellsPerSide(), dungeony0/this.dungeon.numCellsPerSide(), depth);
+		DungeonCell cell1 = this.cell(dungeonx1/this.dungeon.numCellsPerSide(), dungeony1/this.dungeon.numCellsPerSide(), depth);
 		
-		CorridorsDigger corridorsDigger = new CorridorsDigger(this.dungeon, this.currentCell);
+		int minx = Math.min(cell0.column()*cellSize(), cell1.column()*cellSize());
+		int miny = Math.min(cell0.row()*cellSize(), cell1.row()*cellSize());
+		int maxx = Math.max(cell0.column()*cellSize(), cell1.column()*cellSize());
+		int maxy = Math.max(cell0.row()*cellSize(), cell1.row()*cellSize());
+		
+		CorridorsDigger corridorsDigger = new CorridorsDigger(this.dungeon, minx, miny, maxx + cellSize(), maxy + cellSize()); 
 		List<DungeonTile> corridor = corridorsDigger.dig(start, goal);
 		
 		if (corridor != null) {
@@ -552,64 +584,44 @@ public class Digger extends ScriptableObject {
 		}
 	}
 	
-	private void connectCells(int direction, int startX, int startY, Material material, Material wallMaterial) {
-		List<Point> exits;
-		Point selectedExit = null;
-		Point midpoint = null;
+	private void linkCells(DungeonCell cell0, DungeonCell cell1, Material material, Material wallMaterial) throws Exception {
+		if (cell0.depth() != cell1.depth())
+			throw new Exception("cell0 and cell1 must lay at the same depth. cell0: " + cell0.depth() + " cell1: " + cell1.depth());
 		
-		switch (direction) {
-		case DungeonCell.NORTH:
-			exits = getNeighborCellExits(DungeonCell.NORTH);
-			if (!exits.isEmpty()) {
-				selectedExit = exits.get(randomI(0, exits.size()));
-			}
-			break;
-		case DungeonCell.EAST:
-			exits = getNeighborCellExits(DungeonCell.EAST);
-			if (!exits.isEmpty()) {
-				selectedExit = exits.get(randomI(0, exits.size()));
-			}
-			break;
-		case DungeonCell.SOUTH:
-			exits = getNeighborCellExits(DungeonCell.SOUTH);
-			if (!exits.isEmpty()) {
-				selectedExit = exits.get(randomI(0, exits.size()));
-			}
-			break;
-		case DungeonCell.WEST:
-			exits = getNeighborCellExits(DungeonCell.WEST);
-			if (!exits.isEmpty()) {
-				selectedExit = exits.get(randomI(0, exits.size()));
-			}
-			break;
-		}
+		Point selectedExit0 = null;
+		Point selectedExit1 = null;
 		
-		digCorridor(startX, startY, (int)selectedExit.x, (int)selectedExit.y, material, wallMaterial);
+		List<Point> exits = cell0.exits();
+		if (!exits.isEmpty())
+			selectedExit0 = exits.get(randomI(0, exits.size()));
+		
+		exits = cell1.exits();
+		if (!exits.isEmpty())
+			selectedExit1 = exits.get(randomI(0, exits.size()));
+		
+		if (selectedExit0 != null && selectedExit1 != null)
+			digCorridor((int)selectedExit0.x, (int)selectedExit0.y, (int)selectedExit1.x, (int)selectedExit1.y, cell0.depth(), material, wallMaterial);
 	}
 	
-	private List<Point> getNeighborCellExits(int direction) {
-		List<Point> entrances = new ArrayList<Point>();
-		
-		switch (direction) {
-		case DungeonCell.NORTH:
-			if (this.currentCell.row() > 0)
-				entrances = this.cell(this.currentCell.column(), this.currentCell.row() - 1, this.currentCell.depth()).exits();
-			break;
-		case DungeonCell.SOUTH:
-			if (this.currentCell.row() < this.dungeon.numCellsPerSide() - 1)
-				entrances = this.cell(this.currentCell.column(), this.currentCell.row() + 1, this.currentCell.depth()).exits();
-			break;
-		case DungeonCell.EAST:
-			if (this.currentCell.column() < this.dungeon.numCellsPerSide() - 1)
-				entrances = this.cell(this.currentCell.column() + 1, this.currentCell.row(), this.currentCell.depth()).exits();
-			break;
-		case DungeonCell.WEST:
-			if (this.currentCell.column() > 0)
-				entrances = this.cell(this.currentCell.column() - 1, this.currentCell.row(), this.currentCell.depth()).exits();
-			break;
-		}
-		
-		return entrances;
+	private String generateUniqueId() {
+		UUID uuid = UUID.randomUUID();
+		return uuid.toString().replace("-", "");
+	}
+	
+	private void startCorridor() {
+		this.corridorFlag = true;
+	}
+	
+	private void stopCorridor() {
+		this.corridorFlag = false;
+	}
+	
+	private void startRoom() {
+		this.roomFlag = true;
+	}
+	
+	private void stopRoom() {
+		this.roomFlag = false;
 	}
 	
 	/*
@@ -659,26 +671,4 @@ public class Digger extends ScriptableObject {
 		this.dungeon.deleteEntity(id);
 	}
 	*/
-	
-	/* *** */
-	private String generateUniqueId() {
-		UUID uuid = UUID.randomUUID();
-		return uuid.toString().replace("-", "");
-	}
-	
-	private void startCorridor() {
-		this.corridorFlag = true;
-	}
-	
-	private void stopCorridor() {
-		this.corridorFlag = false;
-	}
-	
-	private void startRoom() {
-		this.roomFlag = true;
-	}
-	
-	private void stopRoom() {
-		this.roomFlag = false;
-	}
 }

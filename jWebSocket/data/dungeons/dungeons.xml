@@ -99,6 +99,10 @@
             
             DIGGER.move(currentCoord.x, currentCoord.y, currentCoord.depth);
             DIGGER.event('dwarvenstart', {});
+            DIGGER.move(currentCoord.x + 1, currentCoord.y, currentCoord.depth);
+            DIGGER.event('dwarvenstart', {});
+            
+            DIGGER.link(currentCoord.x, currentCoord.y, currentCoord.x + 1, currentCoord.y, MAT_DIRT_FLOOR_0, MAT_NOMATERIAL);
             
             /*
             DIGGER.initCellsIterator(0);

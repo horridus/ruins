@@ -46,7 +46,7 @@
         <passable>false</passable>
     </material>
     <!-- 
-    <material id="">
+    <material id="NOMATERIAL">
         <coords x="" y=""/>
         <name></name>
     </material>

@@ -48,6 +48,11 @@
 	            }
 	        }
 	        
+	        var exitx = DIGGER.randomI(1, size - 1);
+			DIGGER.dig(xOffset + exitx, yOffset, floorMaterial);
+	        DIGGER.exit(xOffset + exitx, yOffset);
+	        
+	        /*
 	        if (_args_.exits & 0x000F == 0x000F) {
 	           var start = DIGGER.randomI(1, size - 1); //don't select room's corners
 	           DIGGER.exitNorth(xOffset + start, yOffset, floorMaterial, wallMaterial);
@@ -67,6 +72,7 @@
 		        start = DIGGER.randomI(1, size - 1); //don't select room's corners
 		        DIGGER.exitWest(xOffset, yOffset + start, floorMaterial, wallMaterial);
             }
+            */
 	        ]]>
 	    </generator>
 	</room>
