@@ -8,7 +8,7 @@
 	        var size = DIGGER.randomI(4, DIGGER.cellsize - Math.max(xOffset, yOffset));
 	        var floorMaterial = MAT_DOLOMITE_FLOOR_0;
 	        var wallMaterial = MAT_DOLOMITE_WALL_0;
-	        
+	     	        
 	        if (_args_.x != undefined) {
 	           xOffset = _args_.x; 
 	        }
@@ -28,7 +28,7 @@
             if (_args_.wall != undefined) {
                wallMaterial = _args_.wall; 
             }
-	        
+                      
 	        //south and north walls
 	        for (var x = xOffset; x < xOffset + size; x++) {
 	            DIGGER.dig(x, yOffset, wallMaterial);
@@ -48,27 +48,25 @@
 	            }
 	        }
 	        
-	        /*
 	        if (_args_.exits & 0x000F == 0x000F) {
 	           var start = DIGGER.randomI(1, size - 1); //don't select room's corners
-	           DIGGER.digNorthExitCorridor(xOffset + start, yOffset, floorMaterial, wallMaterial);
+	           DIGGER.exitNorth(xOffset + start, yOffset, floorMaterial, wallMaterial);
 	        }
 	        
 	        if (_args_.exits & 0x00F0 == 0x00F0) {
 		        start = DIGGER.randomI(1, size - 1); //don't select room's corners
-		        DIGGER.digEastExitCorridor(xOffset + size - 1, yOffset + start, floorMaterial, wallMaterial);
+		        DIGGER.exitEast(xOffset + size - 1, yOffset + start, floorMaterial, wallMaterial);
 		    }
 	        
 	        if (_args_.exits & 0x0F00 == 0x0F00) {
 		        start = DIGGER.randomI(1, size - 1); //don't select room's corners
-		        DIGGER.digSouthExitCorridor(xOffset + start, yOffset + size - 1, floorMaterial, wallMaterial);
+		        DIGGER.exitSouth(xOffset + start, yOffset + size - 1, floorMaterial, wallMaterial);
             }
             	        
 	        if (_args_.exits & 0xF000 == 0xF000) {
 		        start = DIGGER.randomI(1, size - 1); //don't select room's corners
-		        DIGGER.digWestExitCorridor(xOffset, yOffset + start, floorMaterial, wallMaterial);
+		        DIGGER.exitWest(xOffset, yOffset + start, floorMaterial, wallMaterial);
             }
-            */       
 	        ]]>
 	    </generator>
 	</room>

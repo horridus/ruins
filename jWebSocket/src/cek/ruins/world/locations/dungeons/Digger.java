@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.Vector;
 import java.util.Map.Entry;
 
 import org.dom4j.Document;
@@ -35,7 +36,7 @@ public class Digger extends ScriptableObject {
 	private Dungeon dungeon;
 	private Point iterator;
 	private DungeonCell currentCell;
-	private int depth;
+	private List<List<List<DungeonCell>>> cells;
 	private Random generator;
 	private boolean corridorFlag;
 	private boolean roomFlag;
@@ -45,6 +46,23 @@ public class Digger extends ScriptableObject {
 	
 	public void setDungeon(Dungeon dungeon) {
 		this.dungeon = dungeon;
+		
+		//reset dungeon's cells list.
+		cells.clear();
+		
+		for (int d = 0; d < this.dungeon.depth(); d++) {
+			List<List<DungeonCell>> cellsLevel = new Vector<List<DungeonCell>>();
+			for (int n = 0; n < this.dungeon.numCellsPerSide(); n++) {
+				List<DungeonCell> row = new Vector<DungeonCell>();
+				for (int r = 0; r < this.dungeon.numCellsPerSide(); r++) {
+					DungeonCell cell = new DungeonCell(r, n, d, this.dungeon.size()/this.dungeon.numCellsPerSide());
+					row.add(cell);
+				}
+				cellsLevel.add(row);
+			}
+			
+			this.cells.add(cellsLevel);
+		}
 	}
 	
 	public void setGenerator(Random generator) {
@@ -60,7 +78,7 @@ public class Digger extends ScriptableObject {
 	}
 	
 	public void setPosition(int column, int row, int depth) {
-		this.currentCell = this.dungeon.cell(column, row, depth);
+		this.currentCell = this.cell(column, row, depth);
 	}
 	
 	/* javascript side methods */
@@ -79,6 +97,7 @@ public class Digger extends ScriptableObject {
 		this.corridorFlag = false;
 		this.roomFlag = false;
 		this.executorScope = new HashMap<String, Object>();
+		this.cells = new Vector<List<List<DungeonCell>>>();
 		
 		//this.roomsTree = new RTree();
 		//this.roomsTree.init(null);
@@ -180,6 +199,14 @@ public class Digger extends ScriptableObject {
 	}
 	
 	/**
+	 * Returns a random integer between [0,100). 
+	 * @return a random integer between [0,100).
+	 */
+	public int jsFunction_roll() {
+		return this.randomI(0, 100);
+	}
+	
+	/**
 	 * Execute an event.
 	 * @param eventId event id.
 	 * @param args optional arguments to called event script.
@@ -209,8 +236,8 @@ public class Digger extends ScriptableObject {
 	
 	/**
 	 * Returns tile's material.
-	 * @param cellx
-	 * @param celly
+	 * @param cellx x related to current cell internal coordinates.
+	 * @param celly y related to current cell internal coordinates.
 	 * @return
 	 */
 	public Material jsFunction_material(int cellx, int celly) {
@@ -218,28 +245,87 @@ public class Digger extends ScriptableObject {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Returns an array of all passable tiles in current cell.
+	 * @return an array of tiles.
 	 */
 	public NativeArray jsFunction_passable() {
 		return this.passable();
 	}
 	
 	/**
-	 * 
-	 * @param templateId
-	 * @param cellx
-	 * @param celly
-	 * @return
+	 * Spawns a new entity.
+	 * @param templateId entity's template id.
+	 * @param cellx x related to current cell internal coordinates.
+	 * @param celly y related to current cell internal coordinates.
+	 * @return the spawned entity.
 	 * @throws Exception
 	 */
 	public ObservableEntity jsFunction_breed(String templateId, int cellx, int celly) throws Exception {
 		return this.breed(templateId, cellx, celly);
 	}
 	
+	/**
+	 * Digs a corridor between two point in a cell.
+	 * @param cellx0 x related to current cell internal coordinates.
+	 * @param celly0 y related to current cell internal coordinates.
+	 * @param cellx1 x related to current cell internal coordinates.
+	 * @param celly1 y related to current cell internal coordinates.
+	 * @param material material used to build the corridor.
+	 * @param wallMaterial material used to build corridor's walls.
+	 */
+	public void jsFunction_corridor(int cellx0, int celly0, int cellx1, int celly1, Material material, Material wallMaterial) {
+		this.digCorridor(cellx0, celly0, cellx1, celly1, material, wallMaterial);
+	}
+	
+	public void jsFunction_exit(int cellx, int celly) {
+	}
+	
+	/**
+	 * Digs a corridor that exits the cell from north side.
+	 * @param startX x related to current cell internal coordinates.
+	 * @param startY y related to current cell internal coordinates.
+	 * @param material material used to build the corridor.
+	 * @param wallMaterial material used to build corridor's walls.
+	 */
+	public void jsFunction_exitNorth(int startX, int startY, Material material, Material wallMaterial) {
+	}
+	
+	/**
+	 * Digs a corridor that exits the cell from north side.
+	 * @param startX x related to current cell internal coordinates.
+	 * @param startY y related to current cell internal coordinates.
+	 * @param material material used to build the corridor.
+	 * @param wallMaterial material used to build corridor's walls.
+	 */
+	public void jsFunction_exitSouth(int startX, int startY, Material material, Material wallMaterial) {
+	}
+	
+	/**
+	 * Digs a corridor that exits the cell from north side.
+	 * @param startX x related to current cell internal coordinates.
+	 * @param startY y related to current cell internal coordinates.
+	 * @param material material used to build the corridor.
+	 * @param wallMaterial material used to build corridor's walls.
+	 */
+	public void jsFunction_exitWest(int startX, int startY, Material material, Material wallMaterial) {
+	}
+	
+	/**
+	 * Digs a corridor that exits the cell from north side.
+	 * @param startX x related to current cell internal coordinates.
+	 * @param startY y related to current cell internal coordinates.
+	 * @param material material used to build the corridor.
+	 * @param wallMaterial material used to build corridor's walls.
+	 */
+	public void jsFunction_exitEast(int startX, int startY, Material material, Material wallMaterial) {
+	}
+	
 	/* *** */
 	
 	/* scripts utility functions */
+	public DungeonCell cell(int column, int row, int depth) {
+		return this.cells.get(depth).get(column).get(row);
+	}
 	
 	private void digCellTile(int cellx, int celly, Material material) {
 		int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
@@ -249,18 +335,6 @@ public class Digger extends ScriptableObject {
 		tile.setMaterial(material);
 		tile.setCorridor(this.corridorFlag);
 		tile.setRoom(this.roomFlag);
-		
-		//vale per tutti i materiali? NO, solo per quelli "passabili"
-		if (material.isPassable()) {
-			if (cellx == 0)
-				addCellWestEntrance(celly);
-			if (cellx == this.currentCell.size() - 1)
-				addCellEastEntrance(celly);
-			if (celly == 0)
-				addCellNorthEntrance(cellx);
-			if (celly == this.currentCell.size() - 1)
-				addCellSouthEntrance(cellx);
-		}
 	}
 	
 	private void digTile(int x, int y, int depth, Material material) {
@@ -289,28 +363,8 @@ public class Digger extends ScriptableObject {
 			return this.generator.nextInt(max - min) + min;
 	}
 	
-	private boolean nextCell() {
-		if (this.depth >= this.dungeon.depth())
-			return false;
-		
-		if (this.iterator.y >= this.dungeon.numCellsPerSide())
-			return false;
-		
-		this.currentCell = this.dungeon.cell((int)this.iterator.x, (int)this.iterator.y, this.depth);
-		
-		if (this.iterator.x >= this.dungeon.numCellsPerSide() - 1) {
-			this.iterator.x = 0;
-			this.iterator.y += 1;
-		}
-		else
-			this.iterator.x += 1;
-		
-		return true;
-	}
-	
-	private void initCellsIterator(int depth) {
-		this.iterator = new Point(0, 0);
-		this.depth = depth;
+	private int cellSize() {
+		return this.dungeon.size()/this.dungeon.numCellsPerSide();
 	}
 	
 	private void createRoom(String roomId, NativeObject args) {
@@ -330,8 +384,70 @@ public class Digger extends ScriptableObject {
 		}
 	}
 	
-	private int cellSize() {
-		return this.dungeon.size()/this.dungeon.numCellsPerSide();
+	private void event(String eventId, NativeObject args) {
+		ScriptExecutor executor = ScriptExecutor.executor();
+		BuildEventTemplate eventTemplate = this.dungeonsArchitect.buildEventsTemplates().get(eventId);
+		if (eventTemplate != null) {
+			//set function args
+			this.executorScope.put("_args_", args);
+			executor.executeScript(eventTemplate.buildScript(), this.executorScope);
+			//rest function args
+			this.executorScope.put("_args_", null);
+		}
+	}
+	
+	private ObservableEntity breed(String templateId, int cellx, int celly) throws Exception {
+		EntityTemplate template = this.dungeonsArchitect.entitiesTemplates().get(templateId);
+		
+		if (template != null) {
+			ObservableEntity entity = new ObservableEntity();
+			entity.setTemplateId(templateId);
+			entity.setId(generateUniqueId());
+			
+			for (Entry<String, Document> componentEntry : template.components().entrySet()) {
+				Class<?> componentClass = Class.forName(componentEntry.getKey());
+				EntityComponent component = (EntityComponent) componentClass.newInstance();
+				component.setOwnerEntity(entity);
+				component.configure(componentEntry.getValue());
+				
+				entity.addComponent(component);
+			}
+			
+			int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+			int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+			
+			//notify to entity's components its own creation
+			Map<String, Object> args = new HashMap<String, Object>();
+			args.put("position:x", dungeonx);
+			args.put("position:y", dungeony);
+			args.put("position:z", this.currentCell.depth());
+			
+			entity.processMessage(ComponentMessageId.CREATION, args);
+			
+			//insert new entity in existing entities map
+			this.dungeon.addEntity(entity);
+			return entity;
+		}
+		else
+			throw new Exception("Entity template " + templateId + " not found.");
+	}
+	
+	private NativeArray passable() {
+		List<Point> passableTiles = new ArrayList<Point>();
+		
+		for (int celly = 0; celly < this.cellSize(); celly++) {
+			for (int cellx = 0; cellx < this.cellSize(); cellx++) {
+				int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
+				int dungeony = celly + this.currentCell.row() * this.currentCell.size();
+				
+				if (tile(dungeonx, dungeony, this.currentCell.depth()).material().isPassable())
+					passableTiles.add(new Point(cellx, celly));
+			}
+		}
+		
+		NativeArray na = ScriptExecutor.executor().convertToJSArray(passableTiles.toArray(new Object[passableTiles.size()]));
+		
+		return na;
 	}
 	
 	private void digCorridor(int cellx0, int celly0, int cellx1, int celly1, Material material, Material wallMaterial) {
@@ -351,16 +467,6 @@ public class Digger extends ScriptableObject {
 			
 			for (DungeonTile tile : corridor) {
 				digTile(tile.x(), tile.y(), tile.depth(), material);
-				
-				//FIXME vale per tutti i materiali?
-				if (tile.x%this.cellSize() == 0)
-					addCellWestEntrance(tile.y%this.cellSize());
-				if (tile.x%this.cellSize() == this.currentCell.size() - 1)
-					addCellEastEntrance(tile.y%this.cellSize());
-				if (tile.y%this.cellSize() == 0)
-					addCellNorthEntrance(tile.x%this.cellSize());
-				if (tile.y%this.cellSize() == this.currentCell.size() - 1)
-					addCellSouthEntrance(tile.x%this.cellSize());
 			}
 			
 			if (!wallMaterial.equals(Materials.NOMATERIAL())) {
@@ -446,110 +552,89 @@ public class Digger extends ScriptableObject {
 		}
 	}
 	
-	private void digNorthExitCorridor(int startX, int startY, Material material, Material wallMaterial) {
-		digExitCorridor(0, startX, startY, material, wallMaterial);
-	}
-	
-	private void digEastExitCorridor(int startX, int startY, Material material, Material wallMaterial) {
-		digExitCorridor(1, startX, startY, material, wallMaterial);
-	}
-
-	private void digSouthExitCorridor(int startX, int startY, Material material, Material wallMaterial) {
-		digExitCorridor(2, startX, startY, material, wallMaterial);
-	}
-	
-	private void digWestExitCorridor(int startX, int startY, Material material, Material wallMaterial) {
-		digExitCorridor(3, startX, startY, material, wallMaterial);
-	}
-	
-	private void addCellNorthEntrance(int cellx) {
-		this.currentCell.markAsCellEntrance(DungeonCell.NORTH, cellx);
+	private void connectCells(int direction, int startX, int startY, Material material, Material wallMaterial) {
+		List<Point> exits;
+		Point selectedExit = null;
+		Point midpoint = null;
 		
-		if (this.currentCell.row() > 0)
-			this.dungeon.cell(this.currentCell.column(), this.currentCell.row() - 1, this.currentCell.depth()).markAsCellEntrance(DungeonCell.SOUTH, cellx);
-	}
-	
-	private void addCellSouthEntrance(int cellx) {
-		this.currentCell.markAsCellEntrance(DungeonCell.SOUTH, cellx);
+		switch (direction) {
+		case DungeonCell.NORTH:
+			exits = getNeighborCellExits(DungeonCell.NORTH);
+			if (!exits.isEmpty()) {
+				selectedExit = exits.get(randomI(0, exits.size()));
+			}
+			break;
+		case DungeonCell.EAST:
+			exits = getNeighborCellExits(DungeonCell.EAST);
+			if (!exits.isEmpty()) {
+				selectedExit = exits.get(randomI(0, exits.size()));
+			}
+			break;
+		case DungeonCell.SOUTH:
+			exits = getNeighborCellExits(DungeonCell.SOUTH);
+			if (!exits.isEmpty()) {
+				selectedExit = exits.get(randomI(0, exits.size()));
+			}
+			break;
+		case DungeonCell.WEST:
+			exits = getNeighborCellExits(DungeonCell.WEST);
+			if (!exits.isEmpty()) {
+				selectedExit = exits.get(randomI(0, exits.size()));
+			}
+			break;
+		}
 		
-		if (this.currentCell.row() < this.dungeon.numCellsPerSide() - 1)
-			this.dungeon.cell(this.currentCell.column(), this.currentCell.row() + 1, this.currentCell.depth()).markAsCellEntrance(DungeonCell.NORTH, cellx);
-	}
-
-	private void addCellEastEntrance(int celly) {
-		this.currentCell.markAsCellEntrance(DungeonCell.EAST, celly);
-		
-		if (this.currentCell.column() < this.dungeon.numCellsPerSide() - 1)
-			this.dungeon.cell(this.currentCell.column() + 1, this.currentCell.row(), this.currentCell.depth()).markAsCellEntrance(DungeonCell.WEST, celly);
+		digCorridor(startX, startY, (int)selectedExit.x, (int)selectedExit.y, material, wallMaterial);
 	}
 	
-	private void addCellWestEntrance(int celly) {
-		this.currentCell.markAsCellEntrance(DungeonCell.WEST, celly);
-		
-		if (this.currentCell.column() > 0)
-			this.dungeon.cell(this.currentCell.column() - 1, this.currentCell.row(), this.currentCell.depth()).markAsCellEntrance(DungeonCell.EAST, celly);
-	}
-	
-	private List<Point> getNorthCellEntrances() {
-		return this.currentCell.entrances(DungeonCell.NORTH);
-	}
-	
-	private List<Point> getSouthCellEntrances() {
-		return this.currentCell.entrances(DungeonCell.SOUTH);
-	}
-
-	private List<Point> getEastCellEntrances() {
-		return this.currentCell.entrances(DungeonCell.EAST);
-	}
-	
-	private List<Point> getWestCellEntrances() {
-		return this.currentCell.entrances(DungeonCell.WEST);
-	}
-	
-	private List<Point> getNotNorthCellEntrances() {
+	private List<Point> getNeighborCellExits(int direction) {
 		List<Point> entrances = new ArrayList<Point>();
-		entrances.addAll(getSouthCellEntrances());
-		entrances.addAll(getEastCellEntrances());
-		entrances.addAll(getWestCellEntrances());
+		
+		switch (direction) {
+		case DungeonCell.NORTH:
+			if (this.currentCell.row() > 0)
+				entrances = this.cell(this.currentCell.column(), this.currentCell.row() - 1, this.currentCell.depth()).exits();
+			break;
+		case DungeonCell.SOUTH:
+			if (this.currentCell.row() < this.dungeon.numCellsPerSide() - 1)
+				entrances = this.cell(this.currentCell.column(), this.currentCell.row() + 1, this.currentCell.depth()).exits();
+			break;
+		case DungeonCell.EAST:
+			if (this.currentCell.column() < this.dungeon.numCellsPerSide() - 1)
+				entrances = this.cell(this.currentCell.column() + 1, this.currentCell.row(), this.currentCell.depth()).exits();
+			break;
+		case DungeonCell.WEST:
+			if (this.currentCell.column() > 0)
+				entrances = this.cell(this.currentCell.column() - 1, this.currentCell.row(), this.currentCell.depth()).exits();
+			break;
+		}
 		
 		return entrances;
 	}
 	
-	private List<Point> getNotSouthCellEntrances() {
-		List<Point> entrances = new ArrayList<Point>();
-		entrances.addAll(getNorthCellEntrances());
-		entrances.addAll(getEastCellEntrances());
-		entrances.addAll(getWestCellEntrances());
+	/*
+	private boolean nextCell() {
+		if (this.depth >= this.dungeon.depth())
+			return false;
 		
-		return entrances;
-	}
-
-	private List<Point> getNotEastCellEntrances() {
-		List<Point> entrances = new ArrayList<Point>();
-		entrances.addAll(getSouthCellEntrances());
-		entrances.addAll(getNorthCellEntrances());
-		entrances.addAll(getWestCellEntrances());
+		if (this.iterator.y >= this.dungeon.numCellsPerSide())
+			return false;
 		
-		return entrances;
-	}
-	
-	private List<Point> getNotWestCellEntrances() {
-		List<Point> entrances = new ArrayList<Point>();
-		entrances.addAll(getSouthCellEntrances());
-		entrances.addAll(getEastCellEntrances());
-		entrances.addAll(getNorthCellEntrances());
+		this.currentCell = this.cell((int)this.iterator.x, (int)this.iterator.y, this.depth);
 		
-		return entrances;
+		if (this.iterator.x >= this.dungeon.numCellsPerSide() - 1) {
+			this.iterator.x = 0;
+			this.iterator.y += 1;
+		}
+		else
+			this.iterator.x += 1;
+		
+		return true;
 	}
 	
-	private List<Point> entrances() {
-		List<Point> entrances = new ArrayList<Point>();
-		entrances.addAll(getSouthCellEntrances());
-		entrances.addAll(getEastCellEntrances());
-		entrances.addAll(getNorthCellEntrances());
-		entrances.addAll(getWestCellEntrances());
-		
-		return entrances;
+	private void initCellsIterator(int depth) {
+		this.iterator = new Point(0, 0);
+		this.depth = depth;
 	}
 	
 	private NativeArray room() {
@@ -570,75 +655,10 @@ public class Digger extends ScriptableObject {
 		return na;
 	}
 	
-	private NativeArray passable() {
-		List<Point> passableTiles = new ArrayList<Point>();
-		
-		for (int celly = 0; celly < this.cellSize(); celly++) {
-			for (int cellx = 0; cellx < this.cellSize(); cellx++) {
-				int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
-				int dungeony = celly + this.currentCell.row() * this.currentCell.size();
-				
-				if (tile(dungeonx, dungeony, this.currentCell.depth()).material().isPassable())
-					passableTiles.add(new Point(cellx, celly));
-			}
-		}
-		
-		NativeArray na = ScriptExecutor.executor().convertToJSArray(passableTiles.toArray(new Object[passableTiles.size()]));
-		
-		return na;
-	}
-	
-	private void event(String eventId, NativeObject args) {
-		ScriptExecutor executor = ScriptExecutor.executor();
-		BuildEventTemplate eventTemplate = this.dungeonsArchitect.buildEventsTemplates().get(eventId);
-		if (eventTemplate != null) {
-			//set function args
-			this.executorScope.put("_args_", args);
-			executor.executeScript(eventTemplate.buildScript(), this.executorScope);
-			//rest function args
-			this.executorScope.put("_args_", null);
-		}
-	}
-	
-	private ObservableEntity breed(String templateId, int cellx, int celly) throws Exception {
-		EntityTemplate template = this.dungeonsArchitect.entitiesTemplates().get(templateId);
-		
-		if (template != null) {
-			ObservableEntity entity = new ObservableEntity();
-			entity.setTemplateId(templateId);
-			entity.setId(generateUniqueId());
-			
-			for (Entry<String, Document> componentEntry : template.components().entrySet()) {
-				Class<?> componentClass = Class.forName(componentEntry.getKey());
-				EntityComponent component = (EntityComponent) componentClass.newInstance();
-				component.setOwnerEntity(entity);
-				component.configure(componentEntry.getValue());
-				
-				entity.addComponent(component);
-			}
-			
-			int dungeonx = cellx + this.currentCell.column() * this.currentCell.size();
-			int dungeony = celly + this.currentCell.row() * this.currentCell.size();
-			
-			//notify to entity's components its own creation
-			Map<String, Object> args = new HashMap<String, Object>();
-			args.put("position:x", dungeonx);
-			args.put("position:y", dungeony);
-			args.put("position:z", this.currentCell.depth());
-			
-			entity.processMessage(ComponentMessageId.CREATION, args);
-			
-			//insert new entity in existing entities map
-			this.dungeon.addEntity(entity);
-			return entity;
-		}
-		else
-			throw new Exception("Entity template " + templateId + " not found.");
-	}
-	
 	private void deleteEntity(String id) {
 		this.dungeon.deleteEntity(id);
 	}
+	*/
 	
 	/* *** */
 	private String generateUniqueId() {
@@ -660,51 +680,5 @@ public class Digger extends ScriptableObject {
 	
 	private void stopRoom() {
 		this.roomFlag = false;
-	}
-	
-	private void digExitCorridor(int direction, int startX, int startY, Material material, Material wallMaterial) {
-		List<Point> entrances = new ArrayList<Point>();
-		Point selectedExit = new Point();
-		
-		switch (direction) {
-		case 0:
-			entrances = getNorthCellEntrances();
-			if (!entrances.isEmpty()) {
-				selectedExit = entrances.get(randomI(0, entrances.size()));
-			}
-			else {
-				selectedExit.set(randomI(0, cellSize()), 0);
-			}
-			break;
-		case 1:
-			entrances = getEastCellEntrances();
-			if (!entrances.isEmpty()) {
-				selectedExit = entrances.get(randomI(0, entrances.size()));
-			}
-			else {
-				selectedExit.set(cellSize() - 1, randomI(0, cellSize()));
-			}
-			break;
-		case 2:
-			entrances = getSouthCellEntrances();
-			if (!entrances.isEmpty()) {
-				selectedExit = entrances.get(randomI(0, entrances.size()));
-			}
-			else {
-				selectedExit.set(randomI(0, cellSize()), cellSize() - 1);
-			}
-			break;
-		case 3:
-			entrances = getWestCellEntrances();
-			if (!entrances.isEmpty()) {
-				selectedExit = entrances.get(randomI(0, entrances.size()));
-			}
-			else {
-				selectedExit.set(0, randomI(0, cellSize()));
-			}
-			break;
-		}
-		
-		digCorridor(startX, startY, (int)selectedExit.x, (int)selectedExit.y, material, wallMaterial);
 	}
 }

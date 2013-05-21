@@ -30,8 +30,6 @@
             
             /* Primordial Age */
             
-            utils.log('DIGGER.dungeondepth ' + DIGGER.dungeondepth);
-            
             //for every dungeon level roll N events
             for (var depth = 0; depth < DIGGER.dungeondepth; depth++) {
                 

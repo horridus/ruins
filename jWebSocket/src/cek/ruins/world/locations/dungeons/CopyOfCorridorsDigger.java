@@ -5,18 +5,15 @@ import java.util.List;
 
 import cek.ruins.utils.AStar;
 
-public class CorridorsDigger extends AStar<DungeonTile> {
+public class CopyOfCorridorsDigger extends AStar<DungeonTile> {
 	private Dungeon dungeon;
+	private DungeonCell cell;
 	private DungeonTile start;
 	private DungeonTile goal;
-	private int x0, y0, x1, y1;
 	
-	public CorridorsDigger(Dungeon dungeon, int x0, int y0, int x1, int y1) {
+	public CopyOfCorridorsDigger(Dungeon dungeon, DungeonCell cell) {
 		this.dungeon = dungeon;
-		this.x0 = x0;
-		this.y0 = y0;
-		this.x1 = x1;
-		this.y1 = y1;
+		this.cell = cell;
 	}
 
 	public List<DungeonTile> dig(DungeonTile start, DungeonTile goal) {
@@ -58,10 +55,10 @@ public class CorridorsDigger extends AStar<DungeonTile> {
 	protected List<DungeonTile> generateSuccessors(DungeonTile tile) {
 		List<DungeonTile> successors = new ArrayList<DungeonTile>();
 		
-		int cellBoundX0 = Math.min(x0, x1);
-		int cellBoundX1 = Math.max(x0, x1);
-		int cellBoundY0 = Math.min(y0, y1);
-		int cellBoundY1 = Math.max(y0, y1);
+		int cellBoundX0 = this.cell.column() * this.cell.size();
+		int cellBoundX1 = ((this.cell.column() + 1) * this.cell.size()) - 1;
+		int cellBoundY0 = this.cell.row() * this.cell.size();
+		int cellBoundY1 = ((this.cell.row() + 1) * this.cell.size()) - 1;
 		
 		if (tile.x() > cellBoundX0) {
 			DungeonTile successor = dungeon.tile(tile.x() - 1, tile.y(), tile.depth());

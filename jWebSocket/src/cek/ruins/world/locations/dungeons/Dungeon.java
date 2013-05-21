@@ -18,7 +18,6 @@ public class Dungeon implements Marshallable {
 	private int size;
 	private int numCellsPerSide;
 	private List<List<List<DungeonTile>>> levels;
-	private List<List<List<DungeonCell>>> cells;
 	private Map<String, ObservableEntity> entities;
 
 	public Dungeon(UUID id, int size, int numCellsPerSide, int depth) {
@@ -26,7 +25,6 @@ public class Dungeon implements Marshallable {
 		this.size = size;
 		this.numCellsPerSide = numCellsPerSide;
 		this.levels = new Vector<List<List<DungeonTile>>>();
-		this.cells = new Vector<List<List<DungeonCell>>>();
 		this.entities = new HashMap<String, ObservableEntity>();
 		
 		for (int d = 0; d < depth; d++)
@@ -37,16 +35,8 @@ public class Dungeon implements Marshallable {
 		return this.levels.get(depth);
 	}
 	
-	public List<List<DungeonCell>> cells(int depth) {
-		return cells.get(depth);
-	}
-	
 	public DungeonTile tile(int x, int y, int depth) {
 		return this.level(depth).get(x).get(y);
-	}
-	
-	public DungeonCell cell(int column, int row, int depth) {
-		return this.cells(depth).get(column).get(row);
 	}
 	
 	@Override
@@ -77,18 +67,7 @@ public class Dungeon implements Marshallable {
 			level.add(row);
 		}
 		
-		List<List<DungeonCell>> cellsLevel = new Vector<List<DungeonCell>>();
-		for (int n = 0; n < this.numCellsPerSide(); n++) {
-			List<DungeonCell> row = new Vector<DungeonCell>();
-			for (int r = 0; r < this.numCellsPerSide(); r++) {
-				DungeonCell cell = new DungeonCell(r, n, this.levels.size(), this.size/this.numCellsPerSide());
-				row.add(cell);
-			}
-			cellsLevel.add(row);
-		}
-		
 		this.levels.add(level);
-		this.cells.add(cellsLevel);
 		
 		return this.levels.size() - 1;
 	}
