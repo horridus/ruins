@@ -9,6 +9,16 @@
 
             DIGGER.createRoom('square', {x:xcorner, y:ycorner, size:startingSize});
             DIGGER.breed('STAIRS_UP_0', xcorner + startingSize/2, ycorner + startingSize/2);
+			
+			for (var n = 0; n < 3; n++)
+				DIGGER.breed('BARREL_0', xcorner + 1 + n, ycorner + startingSize -2);
+			for (var n = 0; n < 2; n++)
+				DIGGER.breed('BARREL_0', xcorner + 1 + n, ycorner + startingSize -3);
+			DIGGER.breed('BARREL_1', xcorner + 1, ycorner + startingSize -4);
+			
+			DIGGER.breed('CHEST_0', xcorner  + startingSize -2, ycorner + 1);
+			DIGGER.breed('ANVIL_0', xcorner  + startingSize -3, ycorner + 1);
+				
             ]]>
         </script>
     </event>

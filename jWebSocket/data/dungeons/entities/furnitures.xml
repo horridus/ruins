@@ -6,4 +6,28 @@
         </drawable>
         <position/>
     </entity>
+    <entity id="BARREL_0">
+        <drawable>
+            <img>barrel_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="BARREL_1">
+        <drawable>
+            <img>barrel_1.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="ANVIL_0">
+        <drawable>
+            <img>anvil_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="CHEST_0">
+        <drawable>
+            <img>chest_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
 </entities>
