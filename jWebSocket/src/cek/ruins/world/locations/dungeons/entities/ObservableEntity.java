@@ -11,13 +11,13 @@ import cek.ruins.world.locations.dungeons.entities.components.ComponentMessageId
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 
-public class Entity extends Observable {
+public class ObservableEntity extends Observable {
 	private String id;
 	private String templateId;
 	private List<EntityComponent> components;
 	private Map<String, Object> attributes;
 	
-	public Entity() {
+	public ObservableEntity() {
 		this.setId("");
 		this.attributes = new HashMap<String, Object>();
 		this.components = new ArrayList<EntityComponent>();

@@ -46,7 +46,7 @@
             //draw vein and make it fatter
             var len = path.length;
             for (var i = 0; i < len; i++) {
-                DIGGER.digCellTile(path[i].x, path[i].y, veinMaterial);
+                DIGGER.dig(path[i].x, path[i].y, veinMaterial);
                 
                 var extension = DIGGER.randomI(1, 3);
                 
@@ -54,17 +54,17 @@
 	            case 0:
 	                for (var n = 1; n < extension; n++) {
 	                   if (path[i].y - n >= 0)
-	                       DIGGER.digCellTile(path[i].x, path[i].y - n, veinMaterial);
-	                   if (path[i].y + n < DIGGER.cellSize())
-	                       DIGGER.digCellTile(path[i].x, path[i].y + n, veinMaterial);
+	                       DIGGER.dig(path[i].x, path[i].y - n, veinMaterial);
+	                   if (path[i].y + n < DIGGER.cellsize)
+	                       DIGGER.dig(path[i].x, path[i].y + n, veinMaterial);
 	                }
 	                break;
 	            case 1:
 	                for (var n = 1; n < extension; n++) {
 	                   if (path[i].x - n >= 0)
-	                       DIGGER.digCellTile(path[i].x - n, path[i].y, veinMaterial);
-	                   if (path[i].x + n < DIGGER.cellSize())
-	                       DIGGER.digCellTile(path[i].x + n, path[i].y, veinMaterial);
+	                       DIGGER.dig(path[i].x - n, path[i].y, veinMaterial);
+	                   if (path[i].x + n < DIGGER.cellsize)
+	                       DIGGER.dig(path[i].x + n, path[i].y, veinMaterial);
                     }
 	                break;
 	            }

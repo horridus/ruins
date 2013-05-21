@@ -29,7 +29,7 @@ import cek.ruins.world.locations.dungeons.Digger;
 import cek.ruins.world.locations.dungeons.Dungeon;
 import cek.ruins.world.locations.dungeons.DungeonsArchitect;
 import cek.ruins.world.locations.dungeons.Master;
-import cek.ruins.world.locations.dungeons.entities.Entity;
+import cek.ruins.world.locations.dungeons.entities.ObservableEntity;
 import cek.ruins.world.locations.dungeons.materials.Material;
 import cek.ruins.world.locations.dungeons.materials.Materials;
 import cek.ruins.world.locations.dungeons.templates.DungeonTemplate;
@@ -115,8 +115,8 @@ public class DungeonsCreationListener extends GenericListener {
 					Digger digger = (Digger) sstorage.get("digger");
 					
 					BasicDBList jsonList = new BasicDBList();
-					List<Entity> entities = digger.entities(depth);
-					for (Entity entity : entities) {
+					List<ObservableEntity> entities = digger.entities(depth);
+					for (ObservableEntity entity : entities) {
 						jsonList.add(entity.statusToJSON());
 					}
 					response.setList("entities", jsonList);

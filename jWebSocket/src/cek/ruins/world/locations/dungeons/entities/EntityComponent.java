@@ -7,12 +7,12 @@ import org.dom4j.Document;
 import com.mongodb.BasicDBObjectBuilder;
 
 public abstract class EntityComponent implements Observer {
-	private Entity ownerEntity;
+	private ObservableEntity ownerEntity;
 	
-	public void setOwnerEntity(Entity ownerEntity) {
+	public void setOwnerEntity(ObservableEntity ownerEntity) {
 		this.ownerEntity = ownerEntity;
 	}
-	public Entity getOwnerEntity() {
+	public ObservableEntity getOwnerEntity() {
 		return ownerEntity;
 	}
 	

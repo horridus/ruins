@@ -15,7 +15,7 @@
             <![CDATA[
             function shuffledCellsArray() {
                 var cellsList = [];
-                for (var i = 0; i < DIGGER.cellssize * DIGGER.cellssize; i++)
+                for (var i = 0; i < DIGGER.cellsnum * DIGGER.cellsnum; i++)
                     cellsList.push(i);
                 utils.shuffle(cellsList);
                 
@@ -30,9 +30,12 @@
             
             /* Primordial Age */
             
+            utils.log('DIGGER.dungeondepth ' + DIGGER.dungeondepth);
+            
             //for every dungeon level roll N events
             for (var depth = 0; depth < DIGGER.dungeondepth; depth++) {
                 
+                DIGGER.toDepth(depth);
                 var cellsList = shuffledCellsArray();
                 var numPrimordialEvents = (DIGGER.cellsnum * DIGGER.cellsnum) / 4;
                 

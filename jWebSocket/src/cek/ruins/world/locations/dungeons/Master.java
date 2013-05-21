@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 import org.dom4j.Document;
 
-import cek.ruins.world.locations.dungeons.entities.Entity;
+import cek.ruins.world.locations.dungeons.entities.ObservableEntity;
 import cek.ruins.world.locations.dungeons.entities.EntityComponent;
 import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
 import cek.ruins.world.locations.dungeons.entities.components.ComponentMessageId;
@@ -19,13 +19,13 @@ public class Master {
 	private DungeonsArchitect dungeonArchitect;
 	private Random generator;
 	private Dungeon dungeon;
-	private Map<String, Entity> bredEntities;
+	private Map<String, ObservableEntity> bredEntities;
 	private Map<String, Object> executorScope;
 	
 	public Master(DungeonsArchitect dungeonArchitect, Random generator) {
 		this.dungeonArchitect = dungeonArchitect;
 		this.generator = generator;
-		this.bredEntities = new HashMap<String, Entity>();
+		this.bredEntities = new HashMap<String, ObservableEntity>();
 		this.executorScope = new HashMap<String, Object>();
 	}
 	
@@ -41,11 +41,11 @@ public class Master {
 		this.executorScope = executorScope;
 	}
 	
-	public Entity breed(String id, int x, int y, int depth) throws Exception {
+	public ObservableEntity breed(String id, int x, int y, int depth) throws Exception {
 		EntityTemplate template = this.dungeonArchitect.entitiesTemplates().get(id);
 		
 		if (template != null) {
-			Entity entity = new Entity();
+			ObservableEntity entity = new ObservableEntity();
 			entity.setTemplateId(id);
 			entity.setId(generateUniqueId());
 			
@@ -74,10 +74,10 @@ public class Master {
 			throw new Exception("Entity template " + id + " not found.");
 	}
 	
-	public List<Entity> entities(int depth) {
-		List<Entity> entities = new LinkedList<Entity>(); 
-		for (Map.Entry<String, Entity> entityEntry : this.bredEntities.entrySet()) {
-			Entity entity = entityEntry.getValue();
+	public List<ObservableEntity> entities(int depth) {
+		List<ObservableEntity> entities = new LinkedList<ObservableEntity>(); 
+		for (Map.Entry<String, ObservableEntity> entityEntry : this.bredEntities.entrySet()) {
+			ObservableEntity entity = entityEntry.getValue();
 			if (entity.hasAttribute("position:z") && ((Integer)entity.attribute("position:z")) == depth) {
 				entities.add(entity);
 			}
