@@ -28,6 +28,42 @@
                 DIGGER.move(cellNumber%DIGGER.cellsnum, Math.floor(cellNumber/DIGGER.cellsnum), DIGGER.depth);
             };
             
+            function chooseNextCell(coord) {
+                var done = false;
+                
+                while (!done) {
+                    var direction = DIGGER.randomI(0, 4);
+                    switch (direction) {
+                    case 0:
+                        if (coord.y > 0) {
+                            coord.y -= 1;
+                            done = true;
+                        }
+                        break;
+                    case 1:
+                        if (coord.y < DIGGER.cellsnum - 1) {
+                            coord.y += 1;
+                            done = true;
+                        }
+                        break;
+                    case 2:
+                        if (coord.x > 0) {
+                            coord.x -= 1;
+                            done = true;
+                        }
+                        break;
+                    case 3:
+                        if (coord.x < DIGGER.cellsnum - 1) {
+                            coord.x += 1;
+                            done = true;
+                        }
+                        break;
+                    }
+                }
+                
+                return coord;
+            }
+            
             /* Primordial Age */
             
             //for every dungeon level roll N events
@@ -94,17 +130,27 @@
             
             //build starting outpost
             var currentCoord = { x:0, y:0, depth:0 }
-            currentCoord.x = 0;//DIGGER.randomI(0, DIGGER.numCellsPerSide());
-            currentCoord.y = 0;//DIGGER.randomI(0, DIGGER.numCellsPerSide());
+            currentCoord.x = DIGGER.randomI(0, DIGGER.cellsnum);
+            currentCoord.y = DIGGER.randomI(0, DIGGER.cellsnum);
             
             DIGGER.move(currentCoord.x, currentCoord.y, currentCoord.depth);
             DIGGER.event('dwarvenstart', {});
+            
+            for (var i = 0; i < 100; i++) {
+                var oldCoord = currentCoord;
+                currentCoord = chooseNextCell(currentCoord);
+                
+                DIGGER.move(currentCoord.x, currentCoord.y, currentCoord.depth);
+                DIGGER.event('dwarvenstart', {});
+                DIGGER.link(oldCoord.x, oldCoord.y, currentCoord.x, currentCoord.y, MAT_GRANITE_FLOOR_0, MAT_NOMATERIAL);
+            }
+            
+            /*
             DIGGER.move(currentCoord.x + 1, currentCoord.y, currentCoord.depth);
             DIGGER.event('dwarvenstart', {});
             
             DIGGER.link(currentCoord.x, currentCoord.y, currentCoord.x + 1, currentCoord.y, MAT_DIRT_FLOOR_0, MAT_NOMATERIAL);
             
-            /*
             DIGGER.initCellsIterator(0);
             while (DIGGER.nextCell()) {
                  var choose = DIGGER.randomI(0, 2);
