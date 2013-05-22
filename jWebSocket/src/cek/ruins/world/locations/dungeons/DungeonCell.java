@@ -1,7 +1,9 @@
 package cek.ruins.world.locations.dungeons;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cek.ruins.Point;
 
@@ -14,6 +16,7 @@ public class DungeonCell {
 	protected int row, column, depth;
 	protected int size;
 	protected List<Point> exits;
+	protected Map<String, Object> memories;
 	
 	public DungeonCell(int row, int column, int depth, int size) {
 		this.row = row;
@@ -22,6 +25,7 @@ public class DungeonCell {
 		this.size = size;
 		
 		this.exits = new ArrayList<Point>();
+		this.memories = new HashMap<String, Object>();
 	}
 	
 	public int size() {
@@ -46,5 +50,13 @@ public class DungeonCell {
 
 	public List<Point> exits() {
 		return this.exits;
+	}
+	
+	public void remeber(String name, Object value) {
+		this.memories.put(name, value);
+	}
+	
+	public Object remeber(String name) {
+		return this.memories.get(name);
 	}
 }
