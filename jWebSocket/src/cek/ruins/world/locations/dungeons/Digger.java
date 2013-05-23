@@ -323,9 +323,9 @@ public class Digger extends ScriptableObject {
 	 * @param name
 	 * @return
 	 */
-	public Object jsFunction_remember(String name) {
-		return this.currentCell.remeber(name);
-	}
+//	public Object jsFunction_remember(String name) {
+//		return this.currentCell.remeber(name);
+//	}
 	
 	/**
 	 * Digs a corridor that exits the cell from north side.
