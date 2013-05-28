@@ -48,4 +48,10 @@
         </drawable>
         <position/>
     </entity>
+    <entity id="TORCH_0">
+        <drawable>
+            <img>torch_1.png</img>
+        </drawable>
+        <position/>
+    </entity>
 </entities>

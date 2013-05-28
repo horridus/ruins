@@ -29,10 +29,23 @@
             ]]>
         </script>
     </event>
-    <event id="todo01">
+    <event id="meetinghall">
         <script>
             <![CDATA[
                 DIGGER.createRoom('octagon', {});
+                DIGGER.breed('DOOR_0', 8, 3);
+                DIGGER.breed('DOOR_0', 3, 8);
+                DIGGER.breed('DOOR_0', 8, 13);
+                DIGGER.breed('DOOR_0', 13, 8);
+                
+                DIGGER.breed('TORCH_0', 7, 3);
+                DIGGER.breed('TORCH_0', 9, 3);
+                DIGGER.breed('TORCH_0', 3, 7);
+                DIGGER.breed('TORCH_0', 3, 9);
+                DIGGER.breed('TORCH_0', 7, 13);
+                DIGGER.breed('TORCH_0', 9, 13);
+                DIGGER.breed('TORCH_0', 13, 7);
+                DIGGER.breed('TORCH_0', 13, 9);
             ]]>
         </script>
     </event>

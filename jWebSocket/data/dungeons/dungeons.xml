@@ -146,7 +146,7 @@
             DIGGER.event('todo00', {});
             
             DIGGER.move(1, 1, currentCoord.depth);
-            DIGGER.event('todo01', {});
+            DIGGER.event('meetinghall', {});
             
             DIGGER.move(1, 3, currentCoord.depth);
             DIGGER.event('todo02', {});

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+    <entity id="DOOR_0">
+        <drawable>
+            <img>door_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+</entities>
