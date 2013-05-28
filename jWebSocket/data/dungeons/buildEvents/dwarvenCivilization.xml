@@ -22,10 +22,24 @@
             ]]>
         </script>
     </event>
-    <event id="todo">
+    <event id="todo00">
         <script>
             <![CDATA[
-            
+                DIGGER.createRoom('triple0' + DIGGER.randomI(0,3), {});
+            ]]>
+        </script>
+    </event>
+    <event id="todo01">
+        <script>
+            <![CDATA[
+                DIGGER.createRoom('octagon', {});
+            ]]>
+        </script>
+    </event>
+    <event id="todo02">
+        <script>
+            <![CDATA[
+                DIGGER.createRoom('cells', {});
             ]]>
         </script>
     </event>

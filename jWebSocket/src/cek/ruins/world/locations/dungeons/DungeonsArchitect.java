@@ -2,8 +2,10 @@ package cek.ruins.world.locations.dungeons;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -12,6 +14,7 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.dom4j.Element;
 import org.mozilla.javascript.Script;
 
+import cek.ruins.Point;
 import cek.ruins.ScriptExecutor;
 import cek.ruins.XmlDocument;
 import cek.ruins.world.locations.dungeons.entities.EntityTemplate;
@@ -23,8 +26,8 @@ public class DungeonsArchitect {
 	private static String DEFAULT_COMPONENTS_NAMESPACE = "cek.ruins.world.locations.dungeons.entities.components";
 	
 	private static String DEFAULT_DEPTH_NUM = "5";
-	private static String DEFAULT_DUNGEON_SIZE = "512";
-	private static String DEFAULT_CELLS_NUM = "32";
+	private static String DEFAULT_CELLS_NUM = "16";
+	private static int DEFAULT_CELL_SIZE = 16;
 	
 	private Map<String, RoomTemplate> roomsTemplates;
 	private Map<String, BuildEventTemplate> eventsTemplates;
@@ -112,16 +115,55 @@ public class DungeonsArchitect {
 					Element room = roomsIt.next();
 					String id = room.attributeValue("id");
 					Element roomGenerator = (Element) room.selectSingleNode("./generator");
+					Element roomMap = (Element) room.selectSingleNode("./map");
 					
-					if (id == null || roomGenerator == null) {
-						throw new Exception(path + File.separator + templateFile.getName() + " malformed: generator and id is mandatory.");
+					if (id == null || (roomGenerator == null && roomMap == null)) {
+						throw new Exception(path + File.separator + templateFile.getName() + " malformed: id and generator or map are mandatory.");
 					}
 					else {
 						RoomTemplate roomTemplate = new RoomTemplate();
-						Script roomGeneratorScript = ScriptExecutor.executor().compileScript(roomGenerator.getText(), id);
-						
 						roomTemplate.setId(id);
-						roomTemplate.setRoomGenerator(roomGeneratorScript);
+						
+						if (roomGenerator != null) {
+							Script roomGeneratorScript = ScriptExecutor.executor().compileScript(roomGenerator.getText(), id);
+							roomTemplate.setRoomGenerator(roomGeneratorScript);
+						}
+						
+						if (roomMap != null) {
+							Map<Character, String> roomMaterialsMap = new HashMap<Character, String>();
+							String materialsAttr = roomMap.attributeValue("materials", "");
+							String[] materials = materialsAttr.split(",");
+							
+							for (String material : materials) {
+								String[] keyValue = material.split(":");
+								if (keyValue.length == 2) {
+									roomMaterialsMap.put(keyValue[0].charAt(0), keyValue[1]);
+								}
+							}
+							
+							List<Character> map = new ArrayList<Character>();
+							String mapLayout = roomMap.getText().trim();
+							for (int i = 0; i < mapLayout.length(); i++) {
+								Character tile = mapLayout.charAt(i);
+								
+								if (Character.isJavaIdentifierPart(tile)) {
+									map.add(tile);
+								}
+							}
+							
+							List<Point> exitsList = new ArrayList<Point>();
+							String exitsAttr = roomMap.attributeValue("exits", "");
+							String[] exits = exitsAttr.split(",");
+							
+							for (String exit : exits) {
+								String[] coords = exit.split(":");
+								if (coords.length == 2) {
+									exitsList.add(new Point(Integer.parseInt(coords[0]), Integer.parseInt(coords[1])));
+								}
+							}
+							
+							roomTemplate.setMap(map, roomMaterialsMap, exitsList);
+						}
 						
 						this.roomsTemplates.put(id, roomTemplate);
 					}
@@ -186,9 +228,9 @@ public class DungeonsArchitect {
 				else {
 					DungeonTemplate dungeonTemplate = new DungeonTemplate();
 					
-					String size = dungeon.attributeValue("size", DungeonsArchitect.DEFAULT_DUNGEON_SIZE);
-					String cells = dungeon.attributeValue("cells", DungeonsArchitect.DEFAULT_CELLS_NUM);
-					String depth = dungeon.attributeValue("depth", DungeonsArchitect.DEFAULT_DEPTH_NUM);
+					int cells = Integer.parseInt(dungeon.attributeValue("cells", DungeonsArchitect.DEFAULT_CELLS_NUM));
+					int depth = Integer.parseInt(dungeon.attributeValue("depth", DungeonsArchitect.DEFAULT_DEPTH_NUM));
+					int size = cells * DungeonsArchitect.DEFAULT_CELL_SIZE;
 					
 					//read and compile template's scripts
 					Element init = (Element) dungeon.selectSingleNode("./init");
@@ -198,9 +240,9 @@ public class DungeonsArchitect {
 					Script dungeonBuildScript = ScriptExecutor.executor().compileScript(build.getText(), id + ":build");
 					
 					dungeonTemplate.setId(id);
-					dungeonTemplate.setSize(Integer.parseInt(size));
-					dungeonTemplate.setCells(Integer.parseInt(cells));
-					dungeonTemplate.setDepth(Integer.parseInt(depth));
+					dungeonTemplate.setSize(size);
+					dungeonTemplate.setCells(cells);
+					dungeonTemplate.setDepth(depth);
 					dungeonTemplate.setInitScript(dungeonInitScript);
 					dungeonTemplate.setBuildScript(dungeonBuildScript);
 					

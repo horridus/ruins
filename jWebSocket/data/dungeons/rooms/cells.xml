@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rooms>
+	<room id="cells">
+	    <map materials="_:DOLOMITE_FLOOR_0,X:NOMATERIAL,x:DOLOMITE_WALL_0" exits="8:1,7:1">
+	        <![CDATA[
+	        XXXXXXXXXXXXXXXX
+	        xxxxxXx__xXxxxxx
+	        x___xxx__xxx___x
+	        x______________x
+	        x___xxx__xxx___x
+	        xxxxxXx__xXxxxxx
+	        xxxxxXx__xXxxxxx
+            x___xxx__xxx___x
+            x______________x
+            x___xxx__xxx___x
+            xxxxxXx__xXxxxxx
+	        xxxxxXx__xXxxxxx
+            x___xxx__xxx___x
+            x______________x
+            x___xxx__xxx___x
+            xxxxxXxxxxXxxxxx
+	        ]]>
+	    </map>
+	</room>
+</rooms>

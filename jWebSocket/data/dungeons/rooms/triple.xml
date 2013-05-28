@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rooms>
+	<room id="triple00">
+	    <map materials="_:DOLOMITE_FLOOR_0,X:NOMATERIAL,x:DOLOMITE_WALL_0" exits="14:11">
+	        <![CDATA[
+	        xxxxxxxXXXXXXXXX
+	        x_____xxxxxxxXXX
+	        x___________xXXX
+	        x_____xxxxx_xXXX
+	        x_____xXXXx_xXXX
+	        xxxxxxxXXXx_xXXX
+	        XXXXXXXXXXx_xXXX
+	        XXXXXXXXXXx_xXXX
+	        XXxxxxxxxxx_xxxX
+	        XXx_____x_____xX
+	        XXx_____x_____xX
+	        XXx____________X
+	        XXx_____x_____xX
+	        XXx_____x_____xX
+	        XXxxxxxxxxxxxxxX
+	        XXXXXXXXXXXXXXXX
+	        ]]>
+	    </map>
+	</room>
+	<room id="triple01">
+        <map materials="_:DOLOMITE_FLOOR_0,X:NOMATERIAL,x:DOLOMITE_WALL_0" exits="11:8">
+            <![CDATA[
+            XXXXXXXXXXXXXXXX
+            XXXXXXXXXXXXXXXX
+            XXXXXXXXXXXXXXXX
+            XXxxxxxxxxxXXXXX
+            XXx_______xXXXXX
+            XXx_______xXXXXX
+            XXx_______xXXXXX
+            XXx_______xXXXXX
+            XXxxx_xxxxx_xxxX
+            XXx_____x_____xX
+            XXx_____x_____xX
+            XXx___________xX
+            XXx_____x_____xX
+            XXx_____x_____xX
+            XXxxxxxxxxxxxxxX
+            XXXXXXXXXXXXXXXX
+            ]]>
+        </map>
+    </room>
+    <room id="triple02">
+        <map materials="_:DOLOMITE_FLOOR_0,X:NOMATERIAL,x:DOLOMITE_WALL_0" exits="1:8">
+            <![CDATA[
+            XxxxxxxxxxxxxxxX
+            Xx____________xX
+            Xx____________xX
+            Xx____________xX
+            Xx____________xX
+            Xx____________xX
+            Xx_xxxxxxxxxxxxX
+            Xx____________xX
+            X_____________xX
+            Xx____________xX
+            Xx____________xX
+            Xxxxxxxxxxxxx_xX
+            Xx____________xX
+            Xx____________xX
+            Xx____________xX
+            XxxxxxxxxxxxxxxX
+            ]]>
+        </map>
+    </room>
+</rooms>

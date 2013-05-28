@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rooms>
+	<room id="octagon">
+	    <map materials="_:DOLOMITE_FLOOR_0,X:NOMATERIAL,x:DOLOMITE_WALL_0" exits="8:3,3:8,8:13,13:8">
+	        <![CDATA[
+	        XXXXXXXXXXXXXXXX
+	        XXXXXXXXXXXXXXXX
+	        XXXXXXXXXXXXXXXX
+	        XXXXXXXx_xXXXXXX
+	        XXXXXXx___xXXXXX
+	        XXXXXx_____xXXXX
+	        XXXXx_______xXXX
+	        XXXx_________xXX
+	        XXX___________XX
+	        XXXx_________xXX
+	        XXXXx_______xXXX
+	        XXXXXx_____xXXXX
+	        XXXXXXx___xXXXXX
+	        XXXXXXXx_xXXXXXX
+	        XXXXXXXXXXXXXXXX
+	        XXXXXXXXXXXXXXXX
+	        ]]>
+	    </map>
+	</room>
+</rooms>

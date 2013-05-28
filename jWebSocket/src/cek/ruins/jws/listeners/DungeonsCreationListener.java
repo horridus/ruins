@@ -169,7 +169,7 @@ public class DungeonsCreationListener extends GenericListener {
 		scriptsGlobalObjects.put("DIGGER", digger);
 		//scriptsGlobalObjects.put("_master_", master);
 		
-		//create new dungeon and level 0
+		//create new dungeon
 		Dungeon dungeon = new Dungeon(dungeonId, template.size(), template.cells(), template.depth());
 		//scriptsGlobalObjects.put("_dungeon_", dungeon);
 		
@@ -181,8 +181,9 @@ public class DungeonsCreationListener extends GenericListener {
 		//init subsystems
 		digger.setDungeon(dungeon);
 		digger.setExecutorScope(scriptsGlobalObjects);
-		master.setDungeon(dungeon);
-		master.setExecutorScope(scriptsGlobalObjects);
+		digger.setMaterials(materials);
+		//master.setDungeon(dungeon);
+		//master.setExecutorScope(scriptsGlobalObjects);
 		
 		for (int d = 0; d < dungeon.depth(); d++) {
 			digger.setPosition(0, 0, d);
@@ -209,6 +210,7 @@ public class DungeonsCreationListener extends GenericListener {
 		digger.setPosition(0, 0, 0);
 		digger.setDungeon(dungeon);
 		digger.setExecutorScope(scriptsGlobalObjects);
+		digger.setMaterials(materials);
 		//master.setDungeon(dungeon);
 		//master.setExecutorScope(scriptsGlobalObjects);
 		

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons>
-    <dungeon id="generic" size="256" cells="16" depth="5">
+    <dungeon id="generic" cells="16" depth="5">
         <init>
             <![CDATA[
             var size = DIGGER.size;
@@ -123,9 +123,6 @@
                 }
             }
             
-            //cleaning
-            cellsList = undefined;
-            
             /* The Age of Civilization (dwarven) */
             
             //build starting outpost
@@ -136,6 +133,31 @@
             DIGGER.move(currentCoord.x, currentCoord.y, currentCoord.depth);
             DIGGER.event('dwarvenstart', {});
             
+            DIGGER.move(0, 0, currentCoord.depth);
+            DIGGER.event('todo00', {});
+            
+            DIGGER.move(1, 0, currentCoord.depth);
+            DIGGER.event('todo00', {});
+            
+            DIGGER.move(0, 2, currentCoord.depth);
+            DIGGER.event('todo00', {});
+            
+            DIGGER.move(1, 2, currentCoord.depth);
+            DIGGER.event('todo00', {});
+            
+            DIGGER.move(1, 1, currentCoord.depth);
+            DIGGER.event('todo01', {});
+            
+            DIGGER.move(1, 3, currentCoord.depth);
+            DIGGER.event('todo02', {});
+            
+            DIGGER.link(0, 0, 1, 1, MAT_GRANITE_FLOOR_0, MAT_NOMATERIAL);
+            DIGGER.link(1, 0, 1, 1, MAT_GRANITE_FLOOR_0, MAT_NOMATERIAL);
+            DIGGER.link(0, 2, 1, 1, MAT_GRANITE_FLOOR_0, MAT_NOMATERIAL);
+            DIGGER.link(1, 2, 1, 1, MAT_GRANITE_FLOOR_0, MAT_NOMATERIAL);
+            DIGGER.link(1, 2, 1, 3, MAT_GRANITE_FLOOR_0, MAT_NOMATERIAL);
+            
+            /*
             for (var i = 0; i < 100; i++) {
                 var oldCoord = currentCoord;
                 currentCoord = chooseNextCell(currentCoord);
@@ -144,13 +166,8 @@
                 DIGGER.event('dwarvenstart', {});
                 DIGGER.link(oldCoord.x, oldCoord.y, currentCoord.x, currentCoord.y, MAT_GRANITE_FLOOR_0, MAT_NOMATERIAL);
             }
-            
+            */
             /*
-            DIGGER.move(currentCoord.x + 1, currentCoord.y, currentCoord.depth);
-            DIGGER.event('dwarvenstart', {});
-            
-            DIGGER.link(currentCoord.x, currentCoord.y, currentCoord.x + 1, currentCoord.y, MAT_DIRT_FLOOR_0, MAT_NOMATERIAL);
-            
             DIGGER.initCellsIterator(0);
             while (DIGGER.nextCell()) {
                  var choose = DIGGER.randomI(0, 2);

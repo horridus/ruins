@@ -34,13 +34,14 @@ public class Digger extends ScriptableObject {
 	
 	private DungeonsArchitect dungeonsArchitect;
 	private Dungeon dungeon;
-	private Point iterator;
+	//private Point iterator;
 	private DungeonCell currentCell;
 	private List<List<List<DungeonCell>>> cells;
 	private Random generator;
 	private boolean corridorFlag;
 	private boolean roomFlag;
 	private Map<String, Object> executorScope;
+	private Materials materials;
 	
 	//private RTree roomsTree;
 	
@@ -71,6 +72,10 @@ public class Digger extends ScriptableObject {
 	
 	public void setExecutorScope(Map<String, Object> executorScope) {
 		this.executorScope = executorScope;
+	}
+	
+	public void setMaterials(Materials materials) {
+		this.materials = materials;
 	}
 	
 	public List<ObservableEntity> entities(int depth) {
@@ -420,12 +425,36 @@ public class Digger extends ScriptableObject {
 		if (roomTemplate != null) {
 			startRoom();
 			
-			//set function args
-			this.executorScope.put("_args_", args);
-			//generate room and fill cell
-			executor.executeScript(roomTemplate.roomGenerator(), this.executorScope);
-			//rest function args
-			this.executorScope.put("_args_", null);
+			//first try to draw static map...
+			if (roomTemplate.map() != null) {
+				for (int celly = 0; celly < this.currentCell.size(); celly++) {
+					for (int cellx = 0; cellx < this.currentCell.size(); cellx++) {
+						Character materialSymbol = roomTemplate.map().get(cellx + celly*this.currentCell.size());
+						
+						if (roomTemplate.roomMaterials().containsKey(materialSymbol)) {
+							String materialId = roomTemplate.roomMaterials().get(materialSymbol);
+							if (!materialId.equals(Materials.NOMATERIAL().id()))
+								digCellTile(cellx, celly, materials.get(materialId));
+						}
+					}
+				}
+				
+				for (Point exit : roomTemplate.exits()) {
+					int dungeonx = (int) (exit.x + this.currentCell.column() * this.currentCell.size());
+					int dungeony = (int) (exit.y + this.currentCell.row() * this.currentCell.size());
+					this.currentCell.markAsExit(dungeonx, dungeony);
+				}
+			}
+			
+			//... then execute the geenrator script (if exists)
+			if (roomTemplate.roomGenerator() != null) {
+				//set function args
+				this.executorScope.put("_args_", args);
+				//generate room and fill cell
+				executor.executeScript(roomTemplate.roomGenerator(), this.executorScope);
+				//rest function args
+				this.executorScope.put("_args_", null);
+			}
 			
 			stopRoom();
 		}
