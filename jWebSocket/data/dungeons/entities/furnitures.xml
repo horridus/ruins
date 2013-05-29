@@ -30,4 +30,46 @@
         </drawable>
         <position/>
     </entity>
+    <entity id="TABLE_WOOD_0">
+        <drawable>
+            <img>table_wood_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="TABLE_STONE_0">
+        <drawable>
+            <img>table_stone_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="CHAIR_WOOD_0">
+        <drawable>
+            <img>chair_wood_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="CHAIR_STONE_0">
+        <drawable>
+            <img>chair_stone_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="THRONE_0">
+        <drawable>
+            <img>throne_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="RUG_BEAR_0">
+        <drawable>
+            <img>rug_bear_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
+    <entity id="RUG_OLD_0">
+        <drawable>
+            <img>rug_old_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
 </entities>

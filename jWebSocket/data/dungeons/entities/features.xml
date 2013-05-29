@@ -54,4 +54,10 @@
         </drawable>
         <position/>
     </entity>
+    <entity id="COLUMN_0">
+        <drawable>
+            <img>column_0.png</img>
+        </drawable>
+        <position/>
+    </entity>
 </entities>

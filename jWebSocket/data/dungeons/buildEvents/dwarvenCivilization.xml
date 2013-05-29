@@ -46,6 +46,40 @@
                 DIGGER.breed('TORCH_0', 9, 13);
                 DIGGER.breed('TORCH_0', 13, 7);
                 DIGGER.breed('TORCH_0', 13, 9);
+                
+                DIGGER.breed('COLUMN_0', 7, 7);
+                DIGGER.breed('COLUMN_0', 9, 7);
+                DIGGER.breed('COLUMN_0', 7, 9);
+                DIGGER.breed('COLUMN_0', 9, 9);
+                
+                DIGGER.breed('COLUMN_0', 5, 7);
+                DIGGER.breed('COLUMN_0', 5, 9);
+                
+                DIGGER.breed('COLUMN_0', 7, 5);
+                DIGGER.breed('COLUMN_0', 9, 5);
+                
+                DIGGER.breed('COLUMN_0', 11, 7);
+                DIGGER.breed('COLUMN_0', 11, 9);
+                
+                DIGGER.breed('COLUMN_0', 7, 11);
+                DIGGER.breed('COLUMN_0', 9, 11);
+                
+                DIGGER.breed('CHAIR_WOOD_0', 5, 10);
+                DIGGER.breed('CHAIR_WOOD_0', 6, 11);
+                DIGGER.breed('RUG_BEAR_0', 6, 10);
+                
+                DIGGER.breed('CHAIR_WOOD_0', 5, 6);
+                DIGGER.breed('CHAIR_WOOD_0', 6, 5);
+                DIGGER.breed('RUG_BEAR_0', 6, 6);
+                
+                DIGGER.breed('CHAIR_WOOD_0', 11, 6);
+                DIGGER.breed('CHAIR_WOOD_0', 10, 5);
+                DIGGER.breed('RUG_BEAR_0', 10, 6);
+                
+                DIGGER.breed('CHAIR_WOOD_0', 11, 10);
+                DIGGER.breed('CHAIR_WOOD_0', 10, 11);
+                DIGGER.breed('RUG_BEAR_0', 11, 11);
+                
             ]]>
         </script>
     </event>
