@@ -61,7 +61,7 @@ UTILS.log = function(msg) {
 };
 
 UTILS.test = function() {
-	java.lang.System.out.println('utils library loaded!');
+	java.lang.System.out.println('utils library loaded! ' + DIGGER.roll());
 };
 
 (function() {

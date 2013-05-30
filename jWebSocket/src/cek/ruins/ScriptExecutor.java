@@ -3,6 +3,7 @@ package cek.ruins;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -14,6 +15,7 @@ import org.mozilla.javascript.ScriptableObject;
 
 public class ScriptExecutor {
 	private ScriptableObject sharedScope;
+	private Map<String, String> libraries = new HashMap<String, String>();
 	
 	/**
 	* SingletonHolder is loaded on the first execution of Singleton.getInstance() 
@@ -52,10 +54,12 @@ public class ScriptExecutor {
 	public void loadLibrary(File library, String sourceName, String encoding) throws IOException {
 		String source = FileUtils.readFileToString(library, encoding);
 		
-		Context ctx = Context.enter();
-		Object libraryObject = ctx.evaluateString(sharedScope, source, sourceName, 0, null);
-		addObj(sharedScope, libraryObject, sourceName);
-		Context.exit();
+		this.libraries.put(sourceName, source);
+		
+//		Context ctx = Context.enter();
+//		Object libraryObject = ctx.evaluateString(sharedScope, source, sourceName, 0, null);
+//		this.libraries.put(sourceName, libraryObject);
+//		Context.exit();
 	}
 	
 	public Object executeScript(Script script, Map<String, Object> objs) {
@@ -64,6 +68,12 @@ public class ScriptExecutor {
 		
 		for (Map.Entry<String, Object> entry : objs.entrySet()) {
 			addObj(instanceScope, entry.getValue(), entry.getKey());
+		}
+		
+		//inject libraries objects into instance scope
+		for (Map.Entry<String, String> entry : this.libraries.entrySet()) {
+			Object libraryObject = ctx.evaluateString(instanceScope, entry.getValue(), entry.getKey(), 0, null);
+			addObj(instanceScope, libraryObject, entry.getKey());
 		}
 		
 		//TODO capire come e quando fare seal
